@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments/header :: html_head(headTitle = 'Home')"></head>
+
+<body>
+<th:block th:replace="fragments/header :: navbar"></th:block>
+
+<!--    CODE HERE ...-->
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+<th:block th:replace="fragments/footer :: copy_right"></th:block>
+
+<th:block th:replace="fragments/script :: scripts"></th:block>
+
+</body>
+</html>

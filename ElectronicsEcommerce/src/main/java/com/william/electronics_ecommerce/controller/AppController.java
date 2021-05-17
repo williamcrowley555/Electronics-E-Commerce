@@ -63,7 +63,7 @@ public class AppController {
     public String viewRegisterForm(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-        return "user_registration_form";
+        return "register";
     }
 
     @PostMapping("/register")
@@ -73,7 +73,7 @@ public class AppController {
 
         if (existingUser != null) {
             model.addAttribute("uniqueEmailError", "Email đã được sử dụng");
-            return "user_registration_form";
+            return "register";
         }
 
         if (bindingResult.hasErrors()) {

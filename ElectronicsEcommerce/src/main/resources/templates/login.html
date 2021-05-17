@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments/header :: html_head(headTitle = 'Login')"></head>
+
+<body>
+<th:block th:replace="fragments/header :: navbar"></th:block>
+
+    <div id="all">
+        <div id="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- breadcrumb-->
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                                <li aria-current="page" class="breadcrumb-item active">Đăng nhập</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <div class="box">
+                            <h1>Đăng nhập</h1>
+                            <form th:action="@{/login}" method="POST">
+<!--                                <div th:if="${param.error}">-->
+<!--                                    <div class="col-sm-12 alert alert-danger" role="alert">Email hoặc mật khẩu không hợp lệ</div>-->
+<!--                                </div>-->
+<!--                                <div th:if="${param.logout}">-->
+<!--                                    <div class="col-sm-12 alert alert-info" role="alert">Bạn đã đăng xuất</div>-->
+<!--                                </div>-->
+
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input id="email" type="email" name="email" class="form-control">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="password">Mật khẩu:</label>
+                                    <input id="password" type="password" name="password" class="form-control">
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i>Đăng nhập</button>
+                                    <p class="lead my-0">Chưa có tài khoản? <a th:href="@{/register}" class="small">Đăng ký tại đây</a></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+<th:block th:replace="fragments/footer :: copy_right"></th:block>
+
+<th:block th:replace="fragments/script :: scripts"></th:block>
+
+</body>
+</html>
