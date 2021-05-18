@@ -76,8 +76,15 @@ public class AppController {
             return "register";
         }
 
+        existingUser = userService.getUserByPhone(user.getPhone());
+
+        if (existingUser != null) {
+            model.addAttribute("uniquePhoneError", "Số điện thoại đã được sử dụng");
+            return "register";
+        }
+
         if (bindingResult.hasErrors()) {
-            return "user_registration_form";
+            return "register";
         }
 
         userService.saveUserRegistration(user);

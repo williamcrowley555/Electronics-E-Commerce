@@ -15,7 +15,8 @@ import java.util.Set;
 @Entity(name = "User")
 @Table(name = "user",
         uniqueConstraints = {
-                        @UniqueConstraint(name = "user_email_unique", columnNames = "email")
+                        @UniqueConstraint(name = "user_email_unique", columnNames = "email"),
+                        @UniqueConstraint(name = "user_phone_unique", columnNames = "phone")
         })
 public class User {
 
@@ -45,6 +46,16 @@ public class User {
     @Max(value = 5)
     private Integer gender = 1;
 
+    @Column(name = "address", nullable = false)
+    @NotBlank(message = "Địa chỉ không được để trống")
+    @Pattern(regexp = "^[\\p{L}A-Za-z0-9.,\\s\\-\\/]+$", message = "Địa chỉ không hợp lệ")
+    private String address;
+
+    @Column(name = "phone", nullable = false)
+    @NotBlank(message = "Số điện thoại không được để trống")
+    @Pattern(regexp = "0{1}\\d{9,10}", message = "Số điện thoại không hợp lệ")
+    private String phone;
+
     @Column(name = "email", nullable = false)
     @NotBlank(message = "Email không được để trống")
     @Email(message = "Email không hợp lệ")
@@ -71,11 +82,13 @@ public class User {
         this.id = id;
     }
 
-    public User(@NotBlank(message = "Tên không được để trống") @Pattern(regexp = "^[\\p{L}A-Za-z ]+$", message = "Tên không hợp lệ") String firstName, @NotBlank(message = "Họ không được để trống") @Pattern(regexp = "^[\\p{L}A-Za-z]+$", message = "Họ không hợp lệ") String lastName, @NotNull(message = "Ngày sinh không được để trống") @Age LocalDate dob, @NotNull(message = "Hãy chọn giới tính") @Min(value = 0) @Max(value = 5) Integer gender, @NotBlank(message = "Email không được để trống") @Email(message = "Email không hợp lệ") String email, @Size(min = 5, message = "Mật khẩu tối thiểu 5 ký tự") String password, @Valid Set<Role> roles) {
+    public User(@NotBlank(message = "Tên không được để trống") @Pattern(regexp = "^[\\p{L}A-Za-z ]+$", message = "Tên không hợp lệ") String firstName, @NotBlank(message = "Họ không được để trống") @Pattern(regexp = "^[\\p{L}A-Za-z]+$", message = "Họ không hợp lệ") String lastName, @NotNull(message = "Ngày sinh không được để trống") @Age LocalDate dob, @NotNull(message = "Hãy chọn giới tính") @Min(value = 0) @Max(value = 5) Integer gender, @NotBlank(message = "Địa chỉ không được để trống") @Pattern(regexp = "^[A-Za-z0-9.,\\s\\-\\/]+$", message = "Địa chỉ không hợp lệ") String address, @NotBlank(message = "Số điện thoại không được để trống") @Pattern(regexp = "0{1}\\d{9,10}", message = "Số điện thoại không hợp lệ") String phone, @NotBlank(message = "Email không được để trống") @Email(message = "Email không hợp lệ") String email, @Size(min = 5, message = "Mật khẩu tối thiểu 5 ký tự") String password, @Valid Set<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
         this.gender = gender;
+        this.address = address;
+        this.phone = phone;
         this.email = email;
         this.password = password;
         this.roles = roles;
@@ -119,6 +132,22 @@ public class User {
 
     public void setGender(Integer gender) {
         this.gender = gender;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {

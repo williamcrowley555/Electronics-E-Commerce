@@ -3,6 +3,7 @@ package com.william.electronics_ecommerce.service.impl;
 import com.william.electronics_ecommerce.model.Role;
 import com.william.electronics_ecommerce.model.User;
 import com.william.electronics_ecommerce.repository.UserRepository;
+import com.william.electronics_ecommerce.service.RoleService;
 import com.william.electronics_ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleService roleService;
 
     @Override
     public List<User> getAllUser() {
@@ -58,6 +62,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByPhone(String phone) {
+        User user = null;
+        Optional<User> optional = userRepository.findByPhone(phone);
+
+        if (optional.isPresent()) {
+            user = optional.get();
+        }
+
+        return user;
+    }
+
+    @Override
     public User saveUser(User user) {
         return userRepository.save(user);
     }
@@ -65,8 +81,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUserRegistration(User user) {
         String encodedPassword = encoder.encode(user.getPassword());
+        Role customerRole = roleService.getRoleByNormalizedName("ROLE_CUSTOMER");
         user.setPassword(encodedPassword);
-        user.setRoles(Set.of(new Role(1L)));
+        user.setRoles(Set.of(customerRole));
         return userRepository.save(user);
     }
 
