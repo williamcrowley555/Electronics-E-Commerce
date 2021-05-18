@@ -31,12 +31,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/register", "/register**").permitAll()
-                .antMatchers("/css/**",
-                        "/js/**",
-                        "/img/**",
-                        "/vendor/**").permitAll()
+        http.requestMatchers()
+                .antMatchers("/user/**")
+                .and()
+                .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

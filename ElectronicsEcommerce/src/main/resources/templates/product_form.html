@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: html_head(headTitle = 'Product Form')"></head>
+<body>
+<div class="container">
+  <h1>Product Form</h1>
+  <form th:action="@{/product/save}" th:object="${product}" method="POST" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}">
+    <input type="text" th:field="*{name}" placeholder="Tên sản phẩm" class="form-control mb-4 col-4">
+    <input type="number" th:field="*{price}" placeholder="Giá tiền" class="form-control mb-4 col-4">
+    <textarea th:field="*{description}" placeholder="Mô tả" rows="15" class="form-control mb-4 col-4"></textarea>
+    <div class="form-group mb-4 col-4 row">
+      <label class="col-form-label col-sm-4">Chọn catalog:</label>
+      <div class="col-sm-8">
+        <select th:field="*{catalog}" class="form-control" required>
+          <th:block th:each="cat : ${catalogList}">
+            <option th:value="${cat.id}" th:text="${cat.name}"></option>
+          </th:block>
+        </select>
+      </div>
+    </div>
+    <p>
+      <label>Product Image: </label>
+      <input type="file" name="imageFile" id="imageFile" accept="image/jpeg, image/png">
+      <br/>
+    </p>
+    <input type="submit" class="btn btn-info col-2" value="Save">
+  </form>
+
+  <hr>
+
+</div>
+
+<th:block th:replace="fragments/script :: scripts"></th:block>
+</body>
+</html>
