@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: html_head(headTitle = 'Product Form')"></head>
+<body>
+<div class="container">
+  <h1>Product List</h1>
+    <th:block th:each="product : ${productList}">
+      <input type="text" th:value="${product.id}">
+      <input type="text" th:value="${product.name}">
+      <input type="number" th:value="${product.price}" placeholder="Giá tiền" class="form-control mb-4 col-4">
+      <textarea th:text="${product.description}" placeholder="Mô tả" rows="15" class="form-control mb-4 col-4"></textarea>
+      <input type="text" th:value="${product.catalog.name}" placeholder="" class="form-control mb-4 col-4">
+      <p>
+        <label>Product Image: </label>
+        <img th:src="*{'data:image/jpeg;base64,'+{product.image}}">
+        <br/>
+      </p>
+
+      <hr>
+    </th:block>
+
+</div>
+
+<th:block th:replace="fragments/script :: scripts"></th:block>
+</body>
+</html>
