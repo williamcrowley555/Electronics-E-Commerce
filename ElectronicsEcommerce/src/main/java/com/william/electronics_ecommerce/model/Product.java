@@ -37,28 +37,28 @@ public class Product {
     private boolean status = true;
 
     @ManyToOne
-    @JoinColumn(name = "catalog_id")
+    @JoinColumn(name = "brand_id")
     @Valid
-    private Catalog catalog;
+    private Brand brand;
 
     public Product() {
     }
 
-    public Product(String name, Long price, String description, boolean status, Catalog catalog) {
+    public Product(String name, Long price, String description, boolean status, Brand brand) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.status = status;
-        this.catalog = catalog;
+        this.brand = brand;
     }
 
-    public Product(String name, Long price, String description, String image, boolean status, Catalog catalog) {
+    public Product(String name, Long price, String description, String image, boolean status, Brand brand) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.image = image;
         this.status = status;
-        this.catalog = catalog;
+        this.brand = brand;
     }
 
     public Product(String name) {
@@ -113,11 +113,11 @@ public class Product {
         this.status = status;
     }
 
-    public Catalog getCatalog() {
-        return catalog;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setCatalog(Catalog catalog) {
-        this.catalog = catalog;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 }

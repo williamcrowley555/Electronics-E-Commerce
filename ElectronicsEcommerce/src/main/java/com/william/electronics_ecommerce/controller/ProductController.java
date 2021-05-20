@@ -1,8 +1,9 @@
 package com.william.electronics_ecommerce.controller;
 
+import com.william.electronics_ecommerce.model.Brand;
 import com.william.electronics_ecommerce.model.Catalog;
 import com.william.electronics_ecommerce.model.Product;
-import com.william.electronics_ecommerce.service.CatalogService;
+import com.william.electronics_ecommerce.service.BrandService;
 import com.william.electronics_ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class ProductController {
     private ProductService productService;
 
     @Autowired
-    private CatalogService catalogService;
+    private BrandService brandService;
 
     @GetMapping("")
     public String listProducts(Model model) {
@@ -46,10 +47,10 @@ public class ProductController {
     @GetMapping("/add")
     public String showAddProductForm(Model model) {
         Product product = new Product();
-        List<Catalog> catalogList = catalogService.getAllCatalog();
+        List<Brand> brandList = brandService.getAllBrands();
 
         model.addAttribute("product", product);
-        model.addAttribute("catalogList", catalogList);
+        model.addAttribute("brandList", brandList);
         return "product_form";
     }
 
@@ -74,6 +75,6 @@ public class ProductController {
 
         productService.saveProduct(product);
 
-        return "redirect:/product_list";
+        return "redirect:/product/add";
     }
 }

@@ -30,17 +30,11 @@
                             </div>
                             <div class="card-body">
                                 <ul class="nav nav-pills flex-column category-menu">
-                                    <li><a href="" class="nav-link">Laptop<span class="badge badge-secondary">42</span></a>
-                                        <ul class="list-unstyled">
-                                            <li><a href="" class="nav-link">T-shirts</a></li>
-                                            <li><a href="" class="nav-link">Shirts</a></li>
-                                        </ul>
+                                    <li>
+                                        <a href="" class="nav-link active">Laptop<span class="badge badge-secondary">10</span></a>
                                     </li>
-                                    <li><a href="" class="nav-link active">Phụ kiện<span class="badge badge-light">123</span></a>
-                                        <ul class="list-unstyled">
-                                            <li><a href="" class="nav-link">T-shirts</a></li>
-                                            <li><a href="" class="nav-link">Skirts</a></li>
-                                        </ul>
+                                    <li>
+                                        <a href="" class="nav-link">Phụ kiện<span class="badge badge-light">12</span></a>
                                     </li>
                                 </ul>
                             </div>
@@ -62,17 +56,22 @@
                                                 <input type="checkbox"> HP
                                             </label>
                                         </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"> DELL
+                                            </label>
+                                        </div>
                                     </div>
                                     <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
                                 </form>
                             </div>
                         </div>
                         <!-- *** MENUS AND FILTERS END ***-->
-                        <div class="banner"><a href="#"><img src="img/banner.jpg" alt="sales 2014" class="img-fluid"></a></div>
+                        <div class="banner"><img th:src="@{/img/shop-banner.png}" alt="sales 2021" class="img-fluid"></div>
                     </div>
                     <div class="col-lg-9">
                         <div class="box">
-                            <h1>Ladies</h1>
+                            <h1>Laptop</h1>
                         </div>
                         <div class="box info-bar">
                             <div class="row">
@@ -96,10 +95,10 @@
                                 <div class="product">
                                     <div class="flip-container">
                                         <div class="flipper">
-                                            <div class="front"><a href=""><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" class="img-fluid"></a></div>
-                                            <div class="back"><a href=""><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" class="img-fluid"></a></div>
+                                            <div class="front"><a href=""><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" width="100%" class="img-fluid"></a></div>
+                                            <div class="back"><a href=""><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" width="100%" class="img-fluid"></a></div>
                                         </div>
-                                    </div><a href="" class="invisible"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" class="img-fluid"></a>
+                                    </div><a href="" class="invisible"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" width="100%" alt="" class="img-fluid"></a>
                                     <div class="text">
                                         <h3><a href="" th:text="${product.name}"></a></h3>
                                         <p class="price">

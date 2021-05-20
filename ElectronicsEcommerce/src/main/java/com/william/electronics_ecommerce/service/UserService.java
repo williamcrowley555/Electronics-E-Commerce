@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> getAllUser();
+    List<User> getAllUsers();
     List<User> getAllEnableUser();
     User getUserById(Long id);
     User getUserByEmail(String email);
