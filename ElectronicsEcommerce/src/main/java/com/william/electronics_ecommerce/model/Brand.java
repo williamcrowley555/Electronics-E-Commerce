@@ -52,11 +52,11 @@ public class Brand {
         this.name = name;
     }
 
-    public Set<Catalog> getCategories() {
+    public Set<Catalog> getCatalogList() {
         return catalogList;
     }
 
-    public void setCategories(Set<Catalog> catalogList) {
+    public void setCatalogList(Set<Catalog> catalogList) {
         this.catalogList = catalogList;
     }
 

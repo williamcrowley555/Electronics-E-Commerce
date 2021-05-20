@@ -4,6 +4,9 @@ import com.william.electronics_ecommerce.model.Product;
 import com.william.electronics_ecommerce.repository.ProductRepository;
 import com.william.electronics_ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,5 +43,24 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Product> getPaginated(int pageNo, int pageSize, String catalog, String brand) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+
+        if (catalog != null && brand != null) {
+            return productRepository.findByBrandNameAndBrand_CatalogList_Name(brand, catalog, pageable);
+        }
+        else if (catalog != null || brand != null) {
+            if (catalog != null) {
+                return productRepository.findByBrand_CatalogList_Name(catalog, pageable);
+            }
+            else {
+                return productRepository.findByBrandName(brand, pageable);
+            }
+        }
+
+        return productRepository.findAll(pageable);
     }
 }

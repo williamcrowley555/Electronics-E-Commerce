@@ -4,8 +4,10 @@ import com.william.electronics_ecommerce.model.Brand;
 import com.william.electronics_ecommerce.model.Catalog;
 import com.william.electronics_ecommerce.model.Product;
 import com.william.electronics_ecommerce.service.BrandService;
+import com.william.electronics_ecommerce.service.CatalogService;
 import com.william.electronics_ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -26,22 +28,41 @@ public class ProductController {
     private ProductService productService;
 
     @Autowired
+    private CatalogService catalogService;
+
+    @Autowired
     private BrandService brandService;
 
     @GetMapping("")
     public String listProducts(Model model) {
-        List<Product> productList = productService.getAllProducts();
-
-        model.addAttribute("productList", productList);
-        return "product";
+        return findPaginated(model, 1, "laptop", null);
     }
 
-    @GetMapping("/list")
-    public String viewProducts(Model model) {
-        List<Product> productList = productService.getAllProducts();
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(Model model,
+                                @PathVariable(value = "pageNo") Integer pageNo,
+                                @RequestParam(value = "catalog", required = false, defaultValue = "") String catalog,
+                                @RequestParam(value = "brand", required = false, defaultValue = "") String brand) {
+        Integer pageSize = 9;
+
+        Page<Product> page = productService.getPaginated(pageNo, pageSize, catalog, brand);
+        List<Product> productList = page.getContent();
+
+        List<Catalog> catalogList = catalogService.getAllCatalog();
+        List<Brand> brandList = brandService.getAllBrands();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("currentCatalog", catalog);
+        model.addAttribute("currentBrand", brand);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
 
         model.addAttribute("productList", productList);
-        return "product_list";
+        model.addAttribute("catalogList", catalogList);
+        model.addAttribute("brandList", brandList);
+
+
+        return "product";
     }
 
     @GetMapping("/add")
