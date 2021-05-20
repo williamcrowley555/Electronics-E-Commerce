@@ -40,4 +40,12 @@ public class Catalog {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Catalog{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
