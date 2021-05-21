@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface IBrand_CatalogBLL {
     List<Brand_CatalogDTO> findAll();
-    List<BrandDTO> findByIdCatalog(Long idCatalog); 
+    List<BrandDTO> findByIdCatalog(Long idCatalog);
     CatalogDTO findById(Long idBrand, Long idCatalog);
     Long save(Brand_CatalogDTO catalog_brand);
     void update(Brand_CatalogDTO catalog_brand);

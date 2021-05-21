@@ -6,19 +6,10 @@
 package com.tourdulich.bll.impl;
 
 import com.tourdulich.bll.IBrand_CatalogBLL;
-import com.tourdulich.bll.IDsDiaDiemTourBLL;
 import com.tourdulich.dal.IBrandDAL;
 import com.tourdulich.dal.IBrand_CatalogDAL;
-import com.tourdulich.dal.impl.DiaDiemDAL;
-import com.tourdulich.dal.impl.DsDiaDiemTourDAL;
-import com.tourdulich.dto.DiaDiemDTO;
-import com.tourdulich.dto.DsDiaDiemTourDTO;
 import java.util.ArrayList;
 import java.util.List;
-import com.tourdulich.dal.IDiaDiemDAL;
-import com.tourdulich.dal.IDsDiaDiemTourDAL;
-import com.tourdulich.dal.impl.BrandDAL;
-import com.tourdulich.dal.impl.Brand_CatalogDAL;
 import com.tourdulich.dto.BrandDTO;
 import com.tourdulich.dto.Brand_CatalogDTO;
 import com.tourdulich.dto.CatalogDTO;
@@ -29,8 +20,10 @@ import com.tourdulich.dto.CatalogDTO;
  */
 public class Brand_CatalogBLL implements IBrand_CatalogBLL {
     private IBrand_CatalogDAL brand_CatalogDAL;
+    private IBrandDAL brandDAL;
     public Brand_CatalogBLL() {
         this.brand_CatalogDAL = brand_CatalogDAL;
+        this.brandDAL = brandDAL;
     }
     
     @Override
@@ -60,8 +53,17 @@ public class Brand_CatalogBLL implements IBrand_CatalogBLL {
 
     @Override
     public List<BrandDTO> findByIdCatalog(Long idCatalog) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Long> brandIds = brand_CatalogDAL.findByIdCatalog(idCatalog);
+        List<BrandDTO> brandList = new ArrayList<>();
+        for(Long brandId : brandIds)
+        {
+            brandList.add(brandDAL.findById(brandId));
+        }
+        return brandList;
     }
+
+    
+    
 
      
 }
