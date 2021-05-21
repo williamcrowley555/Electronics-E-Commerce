@@ -31,15 +31,15 @@ public class UserDAL extends AbstractDAL<UserDTO> implements IUserDAL{
 
     @Override
     public Long save(UserDTO user) {
-        String sql = "INSERT INTO user(description, image, name, price, status, brand_id, quantity) VALUES(?, ?, ?, ?, ?, ?, ?)";
-      //  return insert(sql, user.getDescription(), user.getImage(), user.getName(), user.getPrice(), user.isStatus(), user.getBrandId(), user.getQuantity());
-        return null;
+        String sql = "INSERT INTO user(address, dob, email, enabled, first_name, gender, last_name, password, phone) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        return insert(sql, user.getAddress(), user.getDobFormat(), user.getEmail(), user.isEnabled(), user.getFirstName(), user.getGender(), user.getLastName(), user.getPassword(), user.getPhone());
     }
 
     @Override
     public void update(UserDTO user) {
-        String sql = "UPDATE user SET description = ?, image = ?, price = ?, status = ?, brand_id = ? quantity = ? WHERE id = ?";
-       // update(sql, user.getDescription(), user.getImage(), user.getPrice(), user.isStatus(), user.getBrandId(), user.getId(), user.getQuantity());
+        String sql = "UPDATE user SET address = ?, dob = ?, email = ?, enabled = ?, first_name = ?, gender = ?, last_name = ?, password = ?, phone = ? WHERE id = ?";
+        update(sql, user.getAddress(), user.getDobFormat(), user.getEmail(), user.isEnabled(), user.getFirstName(), user.getGender(), user.getLastName(), user.getPassword(), user.getPhone(), user.getId());
+
     }
 
     @Override

@@ -5,10 +5,10 @@
  */
 package com.tourdulich.gui.popup;
 
-import com.tourdulich.bll.IDichVuBLL;
-import com.tourdulich.bll.impl.DichVuBLL;
+import com.tourdulich.bll.IRoleBLL;
+import com.tourdulich.bll.impl.RoleBLL;
 import com.tourdulich.bll.impl.VaiTroBLL;
-import com.tourdulich.dto.DichVuDTO;
+import com.tourdulich.dto.RoleDTO;
 import com.tourdulich.dto.VaiTroDTO;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,47 +36,47 @@ import javax.swing.JOptionPane;
  */
 public class PopUpRoleGUI extends javax.swing.JFrame {
     private String action;
-    private IDichVuBLL dichVuBLL;
-    private DichVuDTO dichVu;
+    private IRoleBLL roleBLL;
+    private RoleDTO role;
    
     public PopUpRoleGUI(String action) {
         initComponents();
         
         this.action = action;
-        dichVuBLL = new DichVuBLL();
+        roleBLL = new RoleBLL();
         
         CustomWindow();
       
         this.setVisible(true);
     }
 
-    public PopUpRoleGUI(String action, DichVuDTO dichVu) {
+    public PopUpRoleGUI(String action, RoleDTO role) {
         initComponents();
         this.action = action;
-        this.dichVu = dichVu;
-        dichVuBLL = new DichVuBLL();
+        this.role = role;
+        roleBLL = new RoleBLL();
         CustomWindow();
       
-        setLabelText(dichVu);
+        setLabelText(role);
         this.setVisible(true);
     }
     
-    public void setLabelText(DichVuDTO dichVu)
+    public void setLabelText(RoleDTO role)
     {
-        txtRoleName.setText(dichVu.getTenDichVu());
-     
+        txtRoleName.setText(role.getName());
+        txtNormalizedName.setText(role.getNormalizedName());
     }
     
    
     
-    private DichVuDTO getFormInfo() {
-        DichVuDTO dichVu = new DichVuDTO();
-        if(this.dichVu != null) {
-            dichVu.setId(this.dichVu.getId());
+    private RoleDTO getFormInfo() {
+        RoleDTO role = new RoleDTO();
+        if(this.role != null) {
+            role.setId(this.role.getId());
         }
-      dichVu.setTenDichVu(txtRoleName.getText().trim());
-      
-        return dichVu;
+      role.setName(txtRoleName.getText().trim());
+      role.setNormalizedName(txtNormalizedName.getText().trim());
+        return role;
     }
  
     public PopUpRoleGUI() {
@@ -86,24 +86,34 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
     
     public boolean validateForm() 
     {
-        boolean tenDichVu, moTa; 
+        boolean tenRole, moTa; 
         ImageIcon iconCheck = new ImageIcon(getClass().getResource("/com/tourdulich/img/check.png"));
         ImageIcon iconError = new ImageIcon(getClass().getResource("/com/tourdulich/img/error.png"));
          
         if (InputValidatorUtil.isValidName(txtRoleName.getText(), true).isEmpty())  
         {
-            tenDichVu = true;
-            lblTenDichVu.setIcon(iconCheck);
-            lblTenDichVu.setToolTipText(null);
+            tenRole = true;
+            lblValidateTenRole.setIcon(iconCheck);
+            lblValidateTenRole.setToolTipText(null);
         } else {
-            tenDichVu = false;
-            lblTenDichVu.setIcon(iconError);
-            lblTenDichVu.setToolTipText(InputValidatorUtil.isValidName(txtRoleName.getText(), true));
+            tenRole = false;
+            lblValidateTenRole.setIcon(iconError);
+            lblValidateTenRole.setToolTipText(InputValidatorUtil.isValidName(txtRoleName.getText(), true));
+        } 
+
+        
+        if (InputValidatorUtil.isValidName(txtRoleName.getText(), true).isEmpty())  
+        {
+            tenRole = true;
+            lblValidateTenChuanHoa.setIcon(iconCheck);
+            lblValidateTenChuanHoa.setToolTipText(null);
+        } else {
+            tenRole = false;
+            lblValidateTenChuanHoa.setIcon(iconError);
+            lblValidateTenChuanHoa.setToolTipText(InputValidatorUtil.isValidName(txtRoleName.getText(), true));
         } 
         
-        
-        
-        if (tenDichVu)
+        if (tenRole)
         return true;
         else return false;
     }
@@ -131,17 +141,21 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblValidateHo = new javax.swing.JLabel();
         panelHeader = new javax.swing.JPanel();
         lblMinimize = new javax.swing.JLabel();
         lblExit = new javax.swing.JLabel();
         pnlBody = new javax.swing.JPanel();
-        lblTenDichVu = new javax.swing.JLabel();
+        lblTenRole = new javax.swing.JLabel();
         txtRoleName = new javax.swing.JTextField();
         btnLuu = new javax.swing.JButton();
         btnHuy = new javax.swing.JButton();
-        lblValidateTenDichVu = new javax.swing.JLabel();
+        lblValidateTenRole = new javax.swing.JLabel();
         txtNormalizedName = new javax.swing.JTextField();
-        lblTenDichVu1 = new javax.swing.JLabel();
+        lblTenChuanHoa = new javax.swing.JLabel();
+        lblValidateTenChuanHoa = new javax.swing.JLabel();
+
+        lblValidateHo.setPreferredSize(new java.awt.Dimension(24, 24));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -193,8 +207,8 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
 
         pnlBody.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblTenDichVu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblTenDichVu.setText("Tên vai trò:");
+        lblTenRole.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblTenRole.setText("Tên vai trò:");
 
         txtRoleName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtRoleName.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
@@ -232,18 +246,23 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
         txtNormalizedName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtNormalizedName.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
 
-        lblTenDichVu1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblTenDichVu1.setText("Tên chuẩn hóa:");
+        lblTenChuanHoa.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblTenChuanHoa.setText("Tên chuẩn hóa:");
+
+        lblValidateTenChuanHoa.setPreferredSize(new java.awt.Dimension(24, 24));
 
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
         pnlBodyLayout.setHorizontalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBodyLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                        .addComponent(lblTenDichVu1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(lblTenChuanHoa, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblValidateTenChuanHoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,28 +271,30 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtRoleName, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtNormalizedName)
                             .addGroup(pnlBodyLayout.createSequentialGroup()
-                                .addComponent(lblTenDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(24, 24, 24)
-                                .addComponent(lblValidateTenDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 57, Short.MAX_VALUE))
-                            .addComponent(txtNormalizedName))
+                                .addComponent(lblTenRole, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(lblValidateTenRole, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 57, Short.MAX_VALUE)))
                         .addGap(20, 20, 20))))
         );
         pnlBodyLayout.setVerticalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBodyLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblValidateTenDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlBodyLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(lblTenDichVu)))
-                .addGap(18, 18, 18)
+                        .addComponent(lblValidateTenRole, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
+                        .addComponent(lblTenRole)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(txtRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(lblTenDichVu1)
+                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTenChuanHoa)
+                    .addComponent(lblValidateTenChuanHoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(txtNormalizedName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
@@ -319,11 +340,11 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         if (validateForm())
         {    
-            DichVuDTO dichVu = getFormInfo();
+            RoleDTO role = getFormInfo();
 
             if(this.action.equals("POST")) {             
-                    Long newDichVuId = dichVuBLL.save(dichVu);
-                    if(newDichVuId != null) {
+                    Long newRoleId = roleBLL.save(role);
+                    if(newRoleId != null) {
                         JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
                     } else {
@@ -331,7 +352,7 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
                     }              
             } else if(this.action.equals("PUT")) {              
                     try {
-                        dichVuBLL.update(dichVu);
+                        roleBLL.update(role);
                         JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
                     } catch(Exception e) {
@@ -450,9 +471,11 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnLuu;
     private javax.swing.JLabel lblExit;
     private javax.swing.JLabel lblMinimize;
-    private javax.swing.JLabel lblTenDichVu;
-    private javax.swing.JLabel lblTenDichVu1;
-    private javax.swing.JLabel lblValidateTenDichVu;
+    private javax.swing.JLabel lblTenChuanHoa;
+    private javax.swing.JLabel lblTenRole;
+    private javax.swing.JLabel lblValidateHo;
+    private javax.swing.JLabel lblValidateTenChuanHoa;
+    private javax.swing.JLabel lblValidateTenRole;
     private javax.swing.JPanel panelHeader;
     private javax.swing.JPanel pnlBody;
     private javax.swing.JTextField txtNormalizedName;

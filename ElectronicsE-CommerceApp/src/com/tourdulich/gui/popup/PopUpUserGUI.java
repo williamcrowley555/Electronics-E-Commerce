@@ -6,11 +6,11 @@
 package com.tourdulich.gui.popup;
 
 import com.toedter.calendar.JTextFieldDateEditor;
-import com.tourdulich.bll.INhanVienBLL;
+import com.tourdulich.bll.IUserBLL;
 import com.tourdulich.bll.IVaiTroBLL;
-import com.tourdulich.bll.impl.NhanVienBLL;
+import com.tourdulich.bll.impl.UserBLL;
 import com.tourdulich.bll.impl.VaiTroBLL;
-import com.tourdulich.dto.NhanVienDTO;
+import com.tourdulich.dto.UserDTO;
 import com.tourdulich.dto.VaiTroDTO;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -45,15 +45,14 @@ import javax.swing.JTextField;
 public class PopUpUserGUI extends javax.swing.JFrame {
    
     private String action;
-    private NhanVienDTO nhanVien = null;
-    private INhanVienBLL nhanVienBLL;
+    private UserDTO user = null;
+    private IUserBLL userBLL;
     private IVaiTroBLL vaiTroBLL;
     public PopUpUserGUI(String action) {
         initComponents();
         
         this.action = action;    
-        nhanVienBLL = new NhanVienBLL();
-        vaiTroBLL = new VaiTroBLL();
+        userBLL = new UserBLL();
         
         CustomWindow();
         myTextArea();
@@ -63,17 +62,16 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         this.setVisible(true);    
     }
     
-    public PopUpUserGUI(String action, NhanVienDTO nhanVien) {
+    public PopUpUserGUI(String action, UserDTO user) {
         initComponents();
         this.action = action;  
-        this.nhanVien = nhanVien;
-        nhanVienBLL = new NhanVienBLL();
-        vaiTroBLL = new VaiTroBLL(); 
+        this.user = user;
+        userBLL = new UserBLL();
       
         CustomWindow();
         myTextArea();
         
-        setLabelText(nhanVien);
+        setLabelText(user);
         
        
         this.setVisible(true);    
@@ -88,25 +86,27 @@ public class PopUpUserGUI extends javax.swing.JFrame {
             
         }
     }
-    public void setLabelText(NhanVienDTO nhanVien)
+    public void setLabelText(UserDTO user)
     {
-        txtHo.setText(nhanVien.getHo());
-        txtTen.setText(nhanVien.getTen());
-        if(nhanVien.getGioiTinh()) {
+        txtHo.setText(user.getLastName());
+        txtTen.setText(user.getFirstName());
+        if(user.getGender()== 1) {
             radioNam.setSelected(true);
         } else {
             radioNu.setSelected(true);
         }
-        DCNgaySinh.setDate(nhanVien.getNgaySinh());
-        txtDiaChi.setText(nhanVien.getDiaChi());
-        txtSDT.setText(nhanVien.getSdt());
+        DCNgaySinh.setDate(user.getDob());
+        txtDiaChi.setText(user.getAddress());
+        txtSDT.setText(user.getPhone());
+        txtSDT1.setText(user.getEmail());
+        txtSDT2.setText(user.getPassword());
        
        
     }
     public boolean validateForm() 
     {   
         
-        boolean Ho, Ten, Sdt = false, DiaChi, NgaySinh; 
+        boolean Ho, Ten, Sdt = false, DiaChi, NgaySinh, Email, Password; 
         ImageIcon iconCheck = new ImageIcon(getClass().getResource("/com/tourdulich/img/check.png"));
         ImageIcon iconError = new ImageIcon(getClass().getResource("/com/tourdulich/img/error.png"));
         if (InputValidatorUtil.isValidName(txtHo.getText(), false).isEmpty())
@@ -140,23 +140,23 @@ public class PopUpUserGUI extends javax.swing.JFrame {
             lblValidateSDT.setIcon(iconCheck);
             lblValidateSDT.setToolTipText(null);
             
-            if (this.action.equals("POST")) {
-                if (nhanVienBLL.findBySdt(txtSDT.getText().trim()) != null) {
-                    Sdt = false;
-                    lblValidateSDT.setIcon(iconError);
-                    lblValidateSDT.setToolTipText("Số điện thoại này đã được sử dụng");
-                }
-            } else if (this.action.equals("PUT")) {
-                NhanVienDTO newNhanVien = nhanVienBLL.findBySdt(txtSDT.getText().trim());
-                if (newNhanVien != null) {
-                    if (newNhanVien.getId() != this.nhanVien.getId()) {  
-                        Sdt = false;
-                        lblValidateSDT.setIcon(iconError);
-                        lblValidateSDT.setToolTipText("Số điện thoại này đã được sử dụng");
-                    }
-                }
-                       
-            }    
+//            if (this.action.equals("POST")) {
+//                if (userBLL.findBySdt(txtSDT.getText().trim()) != null) {
+//                    Sdt = false;
+//                    lblValidateSDT.setIcon(iconError);
+//                    lblValidateSDT.setToolTipText("Số điện thoại này đã được sử dụng");
+//                }
+//            } else if (this.action.equals("PUT")) {
+//                UserDTO newUser = userBLL.findBySdt(txtSDT.getText().trim());
+//                if (newUser != null) {
+//                    if (newUser.getId() != this.user.getId()) {  
+//                        Sdt = false;
+//                        lblValidateSDT.setIcon(iconError);
+//                        lblValidateSDT.setToolTipText("Số điện thoại này đã được sử dụng");
+//                    }
+//                }
+//                       
+//            }    
         } 
         
         if (InputValidatorUtil.isValidBirthDate(DCNgaySinh.getDate(), 18).isEmpty())  
@@ -181,27 +181,48 @@ public class PopUpUserGUI extends javax.swing.JFrame {
            lblValidateDiaChi.setToolTipText(InputValidatorUtil.isValidAddress(txtDiaChi.getText()));
         }
         
-        if (Ho && Ten && Sdt && NgaySinh && DiaChi)
+        if (InputValidatorUtil.isValidEmail(txtSDT1.getText()).isEmpty())  
+        {
+           Email = true;
+           lblValidateDiaChi.setIcon(iconCheck);
+           lblValidateDiaChi.setToolTipText(null);
+        } else {
+           Email = false;
+           lblValidateDiaChi.setIcon(iconError);
+           lblValidateDiaChi.setToolTipText(InputValidatorUtil.isValidAddress(txtDiaChi.getText()));
+        }
+        
+        if (InputValidatorUtil.isValidAddress(txtSDT2.getText()).isEmpty())  
+        {
+           Password = true;
+           lblValidateDiaChi.setIcon(iconCheck);
+           lblValidateDiaChi.setToolTipText(null);
+        } else {
+           Password = false;
+           lblValidateDiaChi.setIcon(iconError);
+           lblValidateDiaChi.setToolTipText(InputValidatorUtil.isValidAddress(txtDiaChi.getText()));
+        }
+        
+        if (Ho && Ten && Sdt && NgaySinh && DiaChi && Email && Password)
         return true;
         else return false;
        
     }
-    private NhanVienDTO getFormInfo() throws IOException {
-        NhanVienDTO nhanVien = new NhanVienDTO();
-        if(this.nhanVien != null) {
-            nhanVien.setId(this.nhanVien.getId());
+    private UserDTO getFormInfo() throws IOException {
+        UserDTO user = new UserDTO();
+        if(this.user != null) {
+            user.setId(this.user.getId());
         }
-        nhanVien.setHo(txtHo.getText().trim());
-        nhanVien.setTen(txtTen.getText().trim());
-        nhanVien.setGioiTinh(radioNam.isSelected() ? true : false);
-        nhanVien.setNgaySinh(DCNgaySinh.getDate());
-        nhanVien.setDiaChi(txtDiaChi.getText().trim());
-        nhanVien.setSdt(txtSDT.getText().trim());
-         
-        
-       
-       
-        return nhanVien;
+        user.setLastName(txtHo.getText().trim());
+        user.setFirstName(txtTen.getText().trim());
+        user.setGender(radioNam.isSelected() ? 1 : 0);
+        user.setDob(DCNgaySinh.getDate());
+        user.setAddress(txtDiaChi.getText().trim());
+        user.setPhone(txtSDT.getText().trim());
+        user.setEmail(txtSDT1.getText().trim());
+        user.setPassword(txtSDT2.getText().trim());
+   
+        return user;
     }
     
     public void setComboBox(JComboBox<String> comboBox, String[] listItems) {
@@ -643,16 +664,16 @@ public class PopUpUserGUI extends javax.swing.JFrame {
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         if (validateForm())
         {
-            NhanVienDTO newNhanVien = null;
+            UserDTO newUser = null;
             try {
-                newNhanVien = getFormInfo();
+                newUser = getFormInfo();
             } catch (IOException ex) {
                 Logger.getLogger(PopUpUserGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             if(this.action.equals("POST")) {           
-                    Long newNhanVienId = nhanVienBLL.save(newNhanVien);
-                    if(newNhanVienId != null) {
+                    Long newUserId = userBLL.save(newUser);
+                    if(newUserId != null) {
 
                         JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
@@ -662,7 +683,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
                     }
             } else if(this.action.equals("PUT")) {
                 try {    
-                    nhanVienBLL.update(newNhanVien);
+                    userBLL.update(newUser);
                     JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                 } catch(Exception e) {
