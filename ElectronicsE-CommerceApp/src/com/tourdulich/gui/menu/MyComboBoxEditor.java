@@ -20,7 +20,7 @@ public class MyComboBoxEditor extends BasicComboBoxEditor {
     private JPanel panel = new JPanel();
     private Object selectedItem;
     Color matteGrey = new Color(223,230,233);
-    Color flatBlue = new Color(14,142,233); 
+    Color flatBlack = new Color(77,77,77); 
     public MyComboBoxEditor() {
          
         label.setOpaque(false);
@@ -30,7 +30,7 @@ public class MyComboBoxEditor extends BasicComboBoxEditor {
          
         panel.setLayout(new FlowLayout(FlowLayout.LEFT, 4, 2));
         panel.add(label);
-        panel.setBackground(flatBlue);
+        panel.setBackground(flatBlack);
          
     }
      

@@ -15,6 +15,7 @@ public class ProductDTO {
     private Long price;
     private String description;
     private byte[] image;
+    private String base64Image;
     private boolean status = true;
     private int quantity;
     private long brandId;
@@ -37,6 +38,18 @@ public class ProductDTO {
         this.quantity = quantity;
         this.brandId = brandId;
     }
+
+    public ProductDTO(Long id, String name, Long price, String description, String base64Image, int quantity, long brandId) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.base64Image = base64Image;
+        this.quantity = quantity;
+        this.brandId = brandId;
+    }
+    
+    
 
     public ProductDTO(String name) {
         this.name = name;
@@ -109,6 +122,14 @@ public class ProductDTO {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getBase64Image() {
+        return base64Image;
+    }
+
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
     }
 
     

@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import com.tourdulich.gui.menu.MyScrollBarUI;
 import com.tourdulich.gui.popup.PopUpChiPhiGUI;
-import com.tourdulich.gui.popup.PopUpDiaDiemGUI;
+import com.tourdulich.gui.popup.PopUpProductGUI;
 import com.tourdulich.gui.popup.PopUpKhachHangGUI;
 import com.tourdulich.util.ChiPhiTableLoaderUtil;
 import com.tourdulich.util.DiaDiemTableLoaderUtil;
