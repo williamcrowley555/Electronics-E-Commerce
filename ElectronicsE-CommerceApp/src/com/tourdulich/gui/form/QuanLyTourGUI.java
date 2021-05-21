@@ -56,7 +56,7 @@ public class QuanLyTourGUI extends javax.swing.JPanel {
         tourBLL = new TourBLL();
         loaiDuLichBLL = new LoaiDuLichBLL();
         
-        loadTableData();
+        //loadTableData();
         
 //        Vector header = createHeader(columnNames);
 //        DefaultTableModel model = (DefaultTableModel) tblTour.getModel();

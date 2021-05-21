@@ -5,6 +5,7 @@
  */
 package com.tourdulich.gui.form;
 
+import com.tourdulich.bll.IBrandBLL;
 import com.tourdulich.bll.ILoaiDuLichBLL;
 import com.tourdulich.bll.impl.LoaiDuLichBLL;
 import java.awt.Color;
@@ -33,17 +34,18 @@ public class QuanLyLoaiDuLichGUI extends javax.swing.JPanel {
     
          String[] columnNames = {
                             "Id",
-                            "Tên Loại Du Lịch",
+                            "Tên nhãn hiệu",
                             };
          
-    private ILoaiDuLichBLL loaiDuLichBLL;
+    //private ILoaiDuLichBLL loaiDuLichBLL;
+    private IBrandBLL brandBLL;
     private PopUpLoaiDuLichGUI popUp;
    // private popUpLoaiDuLich popUp = null;
     TableRowSorter<TableModel> rowSorter = null;
     
     public QuanLyLoaiDuLichGUI() {
         initComponents();
-        loaiDuLichBLL = new LoaiDuLichBLL();
+        //loaiDuLichBLL = new LoaiDuLichBLL();
         
         loadTableData();
 //        Vector header = createHeader(columnNames);
@@ -57,7 +59,7 @@ public class QuanLyLoaiDuLichGUI extends javax.swing.JPanel {
 //   
 //        model.addRow(row);
 //        tblLoaiDuLich.setModel(model);
-        headerColor(14,142,233,tblLoaiDuLich);
+        headerColor(77,77,77,tblLoaiDuLich);
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
     
@@ -125,7 +127,7 @@ public class QuanLyLoaiDuLichGUI extends javax.swing.JPanel {
         pnlHead.setBackground(new java.awt.Color(255, 255, 255));
         pnlHead.setPreferredSize(new java.awt.Dimension(808, 150));
 
-        btnThem.setBackground(new java.awt.Color(14, 142, 233));
+        btnThem.setBackground(new java.awt.Color(77, 77, 77));
         btnThem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
         btnThem.setText("Thêm");
@@ -144,7 +146,7 @@ public class QuanLyLoaiDuLichGUI extends javax.swing.JPanel {
         });
 
         txtTimKiem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtTimKiem.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(14, 142, 233)));
+        txtTimKiem.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(77, 77, 77)));
         txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTimKiemActionPerformed(evt);
@@ -152,8 +154,8 @@ public class QuanLyLoaiDuLichGUI extends javax.swing.JPanel {
         });
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle.setText("Quản Lý Loại Du Lịch");
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTitle.setText("Quản Lý Nhãn Hiệu");
 
         lblTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/search_icon.png"))); // NOI18N
 
@@ -161,21 +163,23 @@ public class QuanLyLoaiDuLichGUI extends javax.swing.JPanel {
         pnlHead.setLayout(pnlHeadLayout);
         pnlHeadLayout.setHorizontalGroup(
             pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHeadLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeadLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 435, Short.MAX_VALUE)
-                .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlHeadLayout.createSequentialGroup()
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 435, Short.MAX_VALUE)
+                        .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(34, 34, 34))
-            .addComponent(lblTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlHeadLayout.setVerticalGroup(
             pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeadLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -200,6 +204,9 @@ public class QuanLyLoaiDuLichGUI extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblLoaiDuLich.setFillsViewportHeight(true);
+        tblLoaiDuLich.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tblLoaiDuLich.setRowHeight(35);
         tblLoaiDuLich.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tblLoaiDuLichMouseReleased(evt);

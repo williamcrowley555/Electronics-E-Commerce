@@ -73,6 +73,12 @@ public class AbstractDAL<T> implements GenericDAL<T>{
             return results;
         } catch (SQLException e) {
             return null;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (connection != null) {
@@ -90,6 +96,7 @@ public class AbstractDAL<T> implements GenericDAL<T>{
                 return null;
             }
         }
+        return null;
     }
 
     @Override
@@ -114,6 +121,12 @@ public class AbstractDAL<T> implements GenericDAL<T>{
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (connection != null) {
@@ -149,6 +162,12 @@ public class AbstractDAL<T> implements GenericDAL<T>{
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (connection != null) {

@@ -10,7 +10,7 @@ import com.tourdulich.bll.impl.NhanVienBLL;
 import com.tourdulich.dto.NhanVienDTO;
 import com.tourdulich.gui.form.QuanLyChiPhiGUI;
 import com.tourdulich.gui.others.ComponentResizer;
-import com.tourdulich.gui.form.QuanLyDiaDiemGUI;
+import com.tourdulich.gui.form.ProductGUI;
 import com.tourdulich.gui.form.QuanLyDichVuGUI;
 import com.tourdulich.gui.form.QuanLyDoanGUI;
 import com.tourdulich.gui.form.QuanLyGiaTourGUI;
@@ -62,7 +62,7 @@ public class MainGUI extends javax.swing.JFrame {
     ImageIcon iconChiPhi = new ImageIcon(getClass().getResource("/com/tourdulich/img/chi_phi_icon.png"));
     ImageIcon iconDichVu = new ImageIcon(getClass().getResource("/com/tourdulich/img/dich_vu_icon.png"));
     ImageIcon iconLoaiDichVu = new ImageIcon(getClass().getResource("/com/tourdulich/img/loai_dich_vu_icon.png"));
-    ImageIcon iconDiaDiem = new ImageIcon(getClass().getResource("/com/tourdulich/img/dia_diem_icon.png"));
+    ImageIcon iconProduct = new ImageIcon(getClass().getResource("/com/tourdulich/img/product_icon.png"));
     ImageIcon iconKhachHang = new ImageIcon(getClass().getResource("/com/tourdulich/img/khach_hang_icon.png"));
     ImageIcon iconKhachSan = new ImageIcon(getClass().getResource("/com/tourdulich/img/hotel_icon.png"));
     ImageIcon iconNhaHang = new ImageIcon(getClass().getResource("/com/tourdulich/img/nha_hang_icon.png"));
@@ -73,87 +73,16 @@ public class MainGUI extends javax.swing.JFrame {
     
    
         
-        //--submenu loai du lich--
-                MenuItem menuLoaiDuLich = new MenuItem(iconLoaiDuLich, "Quản Lý loại hình du lịch", new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent ae) {     
-                        panelBody.removeAll();
-                        panelBody.add(new QuanLyLoaiDuLichGUI());
-                        panelBody.repaint();
-                        panelBody.revalidate();
-                        Selected(menuTour);
-                    }
-                });
         
-        //--submenu gia tour--
-                MenuItem menuGiaTour = new MenuItem(iconGiaTour, "Quản Lý Giá Tour", new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent ae) {     
-                        panelBody.removeAll();
-                        panelBody.add(new QuanLyGiaTourGUI());
-                        panelBody.repaint();
-                        panelBody.revalidate();
-                        Selected(menuTour);
-                    }
-                });
         
-        MenuItem menuTour = new MenuItem(iconTour, "Quản Lý Tour", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {     
-                panelBody.removeAll();
-                panelBody.add(new QuanLyTourGUI());
-                panelBody.repaint();
-                panelBody.revalidate();
-              
-                Selected(menuTour);
-            }
-        }, menuLoaiDuLich, menuGiaTour);
-     
-        
-        //--submenu doan--
-                MenuItem menuChiPhi = new MenuItem(iconChiPhi, "Quản Lý Chi Phí", new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent ae) {     
-                        panelBody.removeAll();
-                        panelBody.add(new QuanLyChiPhiGUI());
-                        panelBody.repaint();
-                        panelBody.revalidate();
-                        Selected(menuDoan);
-                    }
-                });
-                
-        MenuItem menuDoan = new MenuItem(iconDoan, "Quản Lý Đoàn", new ActionListener() {
+        MenuItem menuProduct = new MenuItem(iconProduct, "Quản Lý Sản Phẩm", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 panelBody.removeAll();
-                panelBody.add(new QuanLyDoanGUI());
+                panelBody.add(new ProductGUI());
                 panelBody.repaint();
                 panelBody.revalidate();
-                Selected(menuDoan);
-            }
-        }, menuChiPhi);
-             
-        
-        MenuItem menuDichVu = new MenuItem(iconDichVu, "Quản Lý Dịch Vụ", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                panelBody.removeAll();
-                panelBody.add(new QuanLyDichVuGUI());
-                panelBody.repaint();
-                panelBody.revalidate();
-              
-                Selected(menuDichVu);
-            }
-        });
-        
-        MenuItem menuDiaDiem = new MenuItem(iconDiaDiem, "Quản Lý Địa Điểm", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                panelBody.removeAll();
-                panelBody.add(new QuanLyDiaDiemGUI());
-                panelBody.repaint();
-                panelBody.revalidate();
-                Selected(menuDiaDiem);
+                Selected(menuProduct);
             }
         });
         
@@ -231,12 +160,12 @@ public class MainGUI extends javax.swing.JFrame {
         initComponents();
        
         invisibleMenuScrollBar(8);
-        panelBody.add(new QuanLyTourGUI());
+        panelBody.add(new ProductGUI());
         panelBody.repaint();
         panelBody.revalidate();
         CustomWindow();
-        addMenu(menuTour, menuDoan, menuDichVu,menuDiaDiem,menuKhachHang,menuNhanVien,menuThongKe);
-        Selected(menuTour);
+        addMenu(menuProduct,menuKhachHang,menuNhanVien,menuThongKe);
+        Selected(menuProduct);
         
 //        TESTING
         INhanVienBLL nhanVienBLL = new NhanVienBLL();
@@ -314,10 +243,8 @@ public class MainGUI extends javax.swing.JFrame {
     public void resetSelect()
     {
        Color flatBlack = new Color(77,77,77);
-       menuTour.setColor(flatBlack);
-       menuDoan.setColor(flatBlack);
-       menuDichVu.setColor(flatBlack);
-       menuDiaDiem.setColor(flatBlack);
+     
+       menuProduct.setColor(flatBlack);
        menuKhachHang.setColor(flatBlack);
        menuNhanVien.setColor(flatBlack);
        menuThongKe.setColor(flatBlack);
