@@ -20,7 +20,7 @@ import com.tourdulich.gui.form.QuanLyKhachHangGUI;
 import com.tourdulich.gui.form.QuanLyLoaiDuLichGUI;
 import com.tourdulich.gui.form.UserGUI;
 import com.tourdulich.gui.form.QuanLyTourGUI;
-import com.tourdulich.gui.form.QuanLyVaiTroGUI;
+import com.tourdulich.gui.form.RoleGUI;
 import com.tourdulich.gui.form.ThongKeTheoDoanGUI;
 import com.tourdulich.gui.form.ThongKeTheoTourGUI;
 import java.awt.Color;
@@ -130,14 +130,14 @@ public class MainGUI extends javax.swing.JFrame {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
                         panelBody.removeAll();
-                        panelBody.add(new QuanLyVaiTroGUI());
+                        panelBody.add(new RoleGUI());
                         panelBody.repaint();
                         panelBody.revalidate();
-                        Selected(menuNhanVien);
+                        Selected(menuUser);
                     }
                 });
         
-        MenuItem menuNhanVien = new MenuItem(iconStaff, "Quản Lý Nhân Viên", new ActionListener() {
+        MenuItem menuUser = new MenuItem(iconStaff, "Quản Lý Người Dùng", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 panelBody.removeAll();
@@ -146,7 +146,7 @@ public class MainGUI extends javax.swing.JFrame {
                 panelBody.revalidate();
                 
                 
-                Selected(menuNhanVien);
+                Selected(menuUser);
             }
         }, menuVaiTro);
         
@@ -191,7 +191,7 @@ public class MainGUI extends javax.swing.JFrame {
         panelBody.repaint();
         panelBody.revalidate();
         CustomWindow();
-        addMenu(menuProduct,menuKhachHang,menuNhanVien,menuThongKe);
+        addMenu(menuProduct,menuKhachHang,menuUser,menuThongKe);
         Selected(menuProduct);
         
 //        TESTING
@@ -273,7 +273,7 @@ public class MainGUI extends javax.swing.JFrame {
      
        menuProduct.setColor(flatBlack);
        menuKhachHang.setColor(flatBlack);
-       menuNhanVien.setColor(flatBlack);
+       menuUser.setColor(flatBlack);
        menuThongKe.setColor(flatBlack);
     }
    
