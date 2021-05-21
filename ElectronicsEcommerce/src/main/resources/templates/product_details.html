@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments/header :: html_head(headTitle = 'Home')"></head>
+
+<body>
+<th:block th:replace="fragments/header :: navbar"></th:block>
+
+<div id="all">
+    <div id="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- breadcrumb-->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                            <li aria-current="page" class="breadcrumb-item active">Sản phẩm </li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-3 order-2 order-lg-1">
+                    <!--
+                    *** MENUS AND FILTERS ***
+                    _________________________________________________________
+                    -->
+                    <div class="card sidebar-menu mb-4">
+                        <div class="card-header">
+                            <h3 class="h4 card-title">LOẠI SẢN PHẨM</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="nav nav-pills flex-column category-menu">
+                                <th:block th:each="cata : ${catalogList}">
+                                    <li>
+                                        <a th:href="@{|/product/page/1?catalog=${cata.name}|}" th:classappend="${product.catalog.name == cata.name ? 'active' : ''}" class="nav-link">[[${cata.name}]]</a>
+                                        <ul class="list-unstyled">
+                                            <th:block th:each="brand : ${brandList}">
+                                                <li th:if="${#lists.contains(brand.catalogList, cata)}">
+                                                    <a th:href="@{|/product/page/1?catalog=${cata.name}&brand=${brand.name}|}" class="nav-link" style="text-transform: uppercase !important;">[[${brand.name}]]</a>
+                                                </li>
+                                            </th:block>
+                                        </ul>
+                                    </li>
+                                </th:block>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- *** MENUS AND FILTERS END ***-->
+                    <div class="banner"><a href="#"><img th:src="@{/img/shop-banner.png}" alt="sales 2021" class="img-fluid"></a></div>
+                </div>
+                <div class="col-lg-9 order-1 order-lg-2">
+                    <div id="productMain" class="row">
+                        <div class="col-md-6">
+                            <div data-slider-id="1" class="owl-carousel shop-detail-carousel">
+                                <div class="item"> <img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" class="img-fluid"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box">
+                                <h2 class="text-center">[[${#strings.capitalize(product.name)}]]</h2>
+                                <p class="price">Giá: [[${#numbers.formatInteger(product.price, 4 , 'POINT')}]] VNĐ</p>
+                                <p class="goToDescription">
+                                    <a href="#details" class="scroll-to">Xem mô tả tại đây</a>
+                                </p>
+                                <p class="text-center buttons">
+                                    <a href="" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                </p>
+                            </div>
+                            <div data-slider-id="1" class="owl-thumbs">
+                                <button class="owl-thumb-item"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" class="img-fluid"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="details" class="box">
+                        <p></p>
+                        <h4>Mô tả</h4>
+                        <p style="white-space: pre;" >[[${product.description}]]</p>
+                        <hr>
+                        <div class="social">
+                            <h4>Chia sẻ với bạn bè</h4>
+                            <p><a href="#" class="external facebook"><i class="fa fa-facebook"></i></a><a href="#" class="external gplus"><i class="fa fa-google-plus"></i></a><a href="#" class="external twitter"><i class="fa fa-twitter"></i></a><a href="#" class="email"><i class="fa fa-envelope"></i></a></p>
+                        </div>
+                    </div>
+                    <div th:if="${not #lists.isEmpty(similarProducts)}" class="row same-height-row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="box same-height">
+                                <h3>Sản phẩm liên quan</h3>
+                            </div>
+                        </div>
+                        <th:block th:each="p : ${similarProducts}">
+                        <div th:if="${p != product}" class="col-md-3 col-sm-6">
+                            <div class="product">
+                                <div class="flip-container">
+                                    <div class="flipper">
+                                        <div class="front"><a th:href="@{|/product/details/${p.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{p.image}}" alt="" width="100%" class="img-fluid"></a></div>
+                                        <div class="back"><a th:href="@{|/product/details/${p.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{p.image}}" alt="" width="100%" class="img-fluid"></a></div>
+                                    </div>
+                                </div><a href="" class="invisible"><img th:src="*{'data:image/jpeg;base64,'+{p.image}}" width="100%" alt="" class="img-fluid"></a>
+                                <div class="text">
+                                    <h3 th:text="${p.name}"></h3>
+                                    <p class="price">
+                                        <del></del>[[${#numbers.formatInteger(p.price, 4 , 'POINT')}]] VNĐ
+                                    </p>
+                                </div>
+                                <!-- /.text-->
+                            </div>
+                            <!-- /.product-->
+                        </div>
+                        </th:block>
+                    </div>
+                </div>
+                <!-- /.col-md-9-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+<th:block th:replace="fragments/footer :: copy_right"></th:block>
+
+<th:block th:replace="fragments/script :: scripts"></th:block>
+
+</body>
+</html>

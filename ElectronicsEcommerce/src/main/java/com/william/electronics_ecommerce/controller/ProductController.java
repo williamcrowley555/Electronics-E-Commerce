@@ -65,6 +65,21 @@ public class ProductController {
         return "product";
     }
 
+    @GetMapping("/details/{productId}")
+    public String showAddProductForm(Model model, @PathVariable("productId") Long productId) {
+        Product product = productService.getProductById(productId);
+        Page<Product> page = productService.getPaginated(1, 3, product.getCatalog().getName(), null);
+        List<Product> similarProducts = page.getContent();
+        List<Catalog> catalogList = catalogService.getAllCatalog();
+        List<Brand> brandList = brandService.getAllBrands();
+
+        model.addAttribute("product", product);
+        model.addAttribute("similarProducts", similarProducts);
+        model.addAttribute("catalogList", catalogList);
+        model.addAttribute("brandList", brandList);
+        return "product_details";
+    }
+
     @GetMapping("/add")
     public String showAddProductForm(Model model) {
         Product product = new Product();
