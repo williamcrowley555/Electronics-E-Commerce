@@ -26,6 +26,8 @@ public class RoleDTO {
         this.normalizedName = normalizedName;
     }
     
+    public RoleDTO() {}
+    
     public Long getId() {
         return id;
     }

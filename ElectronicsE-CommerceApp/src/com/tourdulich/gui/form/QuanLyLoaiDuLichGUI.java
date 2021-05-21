@@ -64,7 +64,7 @@ public class QuanLyLoaiDuLichGUI extends javax.swing.JPanel {
     }
     
     public void loadTableData() {
-        tblLoaiDuLich.setModel(new LoaiDuLichTableLoaderUtil().setTable(loaiDuLichBLL.findAll(), this.columnNames)) ;
+     //   tblLoaiDuLich.setModel(new LoaiDuLichTableLoaderUtil().setTable(loaiDuLichBLL.findAll(), this.columnNames)) ;
         this.rowSorter = TableSetupUtil.setTableFilter(tblLoaiDuLich, txtTimKiem);
         headerColor(14,142,233,tblLoaiDuLich);
     }
@@ -281,7 +281,7 @@ public class QuanLyLoaiDuLichGUI extends javax.swing.JPanel {
         int rowindex = tblLoaiDuLich.getSelectedRow();
         Long id = Long.parseLong(tblLoaiDuLich.getValueAt(rowindex,0).toString());
         if (this.popUp == null) {
-            popUp = new PopUpLoaiDuLichGUI("PUT", loaiDuLichBLL.findById(id));
+           // popUp = new PopUpLoaiDuLichGUI("PUT", loaiDuLichBLL.findById(id));
         } else {
             this.popUp.toFront();
             this.popUp.center();
