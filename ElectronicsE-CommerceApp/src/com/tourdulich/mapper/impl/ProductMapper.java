@@ -31,29 +31,7 @@ public class ProductMapper implements RowMapper<ProductDTO>{
             product.setId(rs.getLong("id"));
             product.setName(rs.getString("name"));
             product.setDescription(rs.getString("description"));
-            
-            Blob blob = rs.getBlob("image");
-            if(blob != null)  
-            {
-                InputStream inputStream = blob.getBinaryStream();
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                byte[] buffer = new byte[4096];
-                int bytesRead = -1;
-                 
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);                  
-                }
-                 
-                byte[] imageBytes = outputStream.toByteArray();
-                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-                 
-                 
-                inputStream.close();
-                outputStream.close();
-                product.setBase64Image(base64Image);
-              // product.setImage(imageBytes); 
-            } else product.setBase64Image(null);
-            product.setImage(rs.getBytes("image"));
+            product.setBase64Image(rs.getString("image"));
             product.setPrice(rs.getLong("price"));
             product.setQuantity(rs.getInt("quantity"));
             product.setBrandId(rs.getLong("brand_id"));
@@ -61,9 +39,7 @@ public class ProductMapper implements RowMapper<ProductDTO>{
         } catch(SQLException e) {
             System.out.println(e.getMessage());
          
-        } catch (IOException ex) {
-            Logger.getLogger(ProductMapper.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }  
         return null;
     }
     

@@ -25,6 +25,9 @@ import com.tourdulich.util.ProductTableLoaderUtil;
 import com.tourdulich.util.TableSetupUtil;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -308,7 +311,11 @@ public class ProductGUI extends javax.swing.JPanel {
         int rowindex = tblProduct.getSelectedRow();
         Long id = Long.parseLong(tblProduct.getValueAt(rowindex,0).toString());
         if (this.popUp == null) {
-        popUp = new PopUpProductGUI("PUT", productBLL.findById(id));
+            try {
+                popUp = new PopUpProductGUI("PUT", productBLL.findById(id));
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             this.popUp.toFront();
             this.popUp.center();

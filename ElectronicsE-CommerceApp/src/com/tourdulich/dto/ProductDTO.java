@@ -14,7 +14,6 @@ public class ProductDTO {
     private String name;
     private Long price;
     private String description;
-    private byte[] image;
     private String base64Image;
     private boolean status = true;
     private int quantity;
@@ -29,15 +28,6 @@ public class ProductDTO {
         this.brandId = brandId;
     }
 
-    public ProductDTO(String name, Long price, String description, byte[] image, boolean status, int quantity, long brandId) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.image = image;
-        this.status = status;
-        this.quantity = quantity;
-        this.brandId = brandId;
-    }
 
     public ProductDTO(Long id, String name, Long price, String description, String base64Image, int quantity, long brandId) {
         this.id = id;
@@ -90,14 +80,6 @@ public class ProductDTO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
     }
 
     public boolean isStatus() {

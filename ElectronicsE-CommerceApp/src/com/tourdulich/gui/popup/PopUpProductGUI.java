@@ -113,12 +113,15 @@ public class PopUpProductGUI extends javax.swing.JFrame {
         if(product.getBase64Image()!= null) {
           // lblAnh.setIcon(ImageUtil.resizeImg(product.getImage(), lblAnh));
             
-            byte[] decodedString = Base64.getDecoder().decode(new String(product.getBase64Image()).getBytes());
-            
+            byte[] decodedString = Base64.getDecoder().decode(new String(product.getBase64Image()).getBytes("UTF-8"));
             System.out.println(decodedString);
+           // System.out.println(decodedString);
             lblAnh.setIcon(ImageUtil.resizeImg(decodedString, lblAnh));
+            
+           // lblAnh.setIcon(ImageUtil.resizeImg(product.getImage(), lblAnh));
+           
            //System.out.println(product.getBase64Image());
-           lblAnh.setText(product.getBase64Image());
+           //lblAnh.setText(product.getBase64Image());
         }
         comboBoxBrand.setSelectedItem(getBrandItemName(brandBLL.findById(product.getBrandId())));
     }
@@ -169,6 +172,9 @@ public class PopUpProductGUI extends javax.swing.JFrame {
         return true;
        
     }
+    
+    
+    
     private ProductDTO getFormInfo() throws IOException {
         ProductDTO product = new ProductDTO();
         if(this.product != null) {
@@ -180,9 +186,9 @@ public class PopUpProductGUI extends javax.swing.JFrame {
         product.setQuantity(0);
        // diaDiem.setDiaChi(txtDiaChi.getText().trim());
         if (this.selectedImg != null) {
-            product.setImage(ImageUtil.getByteArray(this.selectedImg));
-            //String base64Image = Base64.getEncoder().encodeToString(ImageUtil.getByteArray(this.selectedImg));
-            //product.setBase64Image(base64Image);
+           
+            String base64Image = Base64.getEncoder().encodeToString(ImageUtil.getByteArray(this.selectedImg));
+            product.setBase64Image(base64Image);
         } else {
             if (this.product != null) {
                 if(this.product.getBase64Image()!= null) {
@@ -427,8 +433,7 @@ public class PopUpProductGUI extends javax.swing.JFrame {
 
         lblValidateTen.setPreferredSize(new java.awt.Dimension(24, 24));
 
-        AreaScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        AreaScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        AreaScrollPane1.setToolTipText("");
 
         txtDescription.setColumns(20);
         txtDescription.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -494,9 +499,7 @@ public class PopUpProductGUI extends javax.swing.JFrame {
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
-                                .addComponent(lblValidateDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(52, 52, 52))
+                            .addComponent(lblValidateDiaChi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
                                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblValidateTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -510,10 +513,11 @@ public class PopUpProductGUI extends javax.swing.JFrame {
                                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblTinh1)
                                     .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(64, 64, 64)))
+                                .addGap(30, 30, 30)))
+                        .addGap(18, 18, 18)
                         .addComponent(lblGioiThieu, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(AreaScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(AreaScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
@@ -525,7 +529,7 @@ public class PopUpProductGUI extends javax.swing.JFrame {
                             .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnChonAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
