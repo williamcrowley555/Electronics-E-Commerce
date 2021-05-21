@@ -42,6 +42,7 @@ public class ProductTableLoaderUtil implements ITableLoaderUtil<ProductDTO>{
             //row.add(tinhBLL.findById(diaDiem.getIdTinh()).getTenTinh());
             row.add(product.getPrice());
             row.add(product.getBrandId());
+            row.add(product.getQuantity());
             row.add(product.getDescription());
             model.addRow(row);
         }

@@ -42,9 +42,9 @@ public class ProductGUI extends javax.swing.JPanel {
                             "Id",
                             "Tên sản phẩm",
                             "Giá",
-                            "Thương hiệu",
-                            "Mô tả",
-                            "Trạng thái"
+                            "Nhãn hiệu",
+                            "SL",
+                            "Mô tả"                 
         };
                           
     /**
@@ -79,8 +79,8 @@ public class ProductGUI extends javax.swing.JPanel {
         
         model.addRow(row);
         tblDiaDiem.setModel(model);*/
-        headerColor(77,77,77,tblDiaDiem);
-        resizeColumnWidth(tblDiaDiem);
+        headerColor(77,77,77,tblProduct);
+        resizeColumnWidth(tblProduct);
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
 
@@ -91,15 +91,15 @@ public class ProductGUI extends javax.swing.JPanel {
      */
     public void loadTableData() {
         //tblDiaDiem.setModel(new DiaDiemTableLoaderUtil().setTable(diaDiemBLL.findAll(), this.columnNames)) ;
-        tblDiaDiem.setModel(new ProductTableLoaderUtil().setTable(productBLL.findAll(), this.columnNames)) ;
-        this.rowSorter = TableSetupUtil.setTableFilter(tblDiaDiem, txtTimKiem);
-         headerColor(77,77,77,tblDiaDiem);
+        tblProduct.setModel(new ProductTableLoaderUtil().setTable(productBLL.findAll(), this.columnNames)) ;
+        this.rowSorter = TableSetupUtil.setTableFilter(tblProduct, txtTimKiem);
+         headerColor(77,77,77,tblProduct);
     }
     
     public void resizeColumnWidth(JTable table) {
     final TableColumnModel columnModel = table.getColumnModel();
     for (int column = 0; column < table.getColumnCount(); column++) {
-        int width = 15; // Min width
+        int width = 70; // Min width
         for (int row = 0; row < table.getRowCount(); row++) {
             TableCellRenderer renderer = table.getCellRenderer(row, column);
             Component comp = table.prepareRenderer(renderer, row, column);
@@ -150,7 +150,7 @@ public class ProductGUI extends javax.swing.JPanel {
         lblTimKiem = new javax.swing.JLabel();
         pnlBody = new javax.swing.JPanel();
         scroll = new javax.swing.JScrollPane();
-        tblDiaDiem = new javax.swing.JTable();
+        tblProduct = new javax.swing.JTable();
 
         itemSua.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         itemSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/edit_icon.png"))); // NOI18N
@@ -237,7 +237,7 @@ public class ProductGUI extends javax.swing.JPanel {
 
         scroll.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(77, 77, 77)));
 
-        tblDiaDiem.setModel(new javax.swing.table.DefaultTableModel(
+        tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -248,15 +248,15 @@ public class ProductGUI extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblDiaDiem.setFillsViewportHeight(true);
-        tblDiaDiem.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tblDiaDiem.setRowHeight(35);
-        tblDiaDiem.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblProduct.setFillsViewportHeight(true);
+        tblProduct.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tblProduct.setRowHeight(35);
+        tblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tblDiaDiemMouseReleased(evt);
+                tblProductMouseReleased(evt);
             }
         });
-        scroll.setViewportView(tblDiaDiem);
+        scroll.setViewportView(tblProduct);
 
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
@@ -304,8 +304,8 @@ public class ProductGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemMousePressed
 
     private void itemSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSuaActionPerformed
-        int rowindex = tblDiaDiem.getSelectedRow();
-        Long id = Long.parseLong(tblDiaDiem.getValueAt(rowindex,0).toString());
+        int rowindex = tblProduct.getSelectedRow();
+        Long id = Long.parseLong(tblProduct.getValueAt(rowindex,0).toString());
         if (this.popUp == null) {
         popUp = new PopUpDiaDiemGUI("PUT", diaDiemBLL.findById(id));
         } else {
@@ -321,22 +321,22 @@ public class ProductGUI extends javax.swing.JPanel {
     });
     }//GEN-LAST:event_itemSuaActionPerformed
 
-    private void tblDiaDiemMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDiaDiemMouseReleased
+    private void tblProductMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseReleased
         // TODO add your handling code here:
-        int r = tblDiaDiem.rowAtPoint(evt.getPoint());
-        if (r >= 0 && r < tblDiaDiem.getRowCount()) {
-            tblDiaDiem.setRowSelectionInterval(r, r);
+        int r = tblProduct.rowAtPoint(evt.getPoint());
+        if (r >= 0 && r < tblProduct.getRowCount()) {
+            tblProduct.setRowSelectionInterval(r, r);
         } else {
-           tblDiaDiem.clearSelection();
+           tblProduct.clearSelection();
         }
-        int rowindex = tblDiaDiem.getSelectedRow();
+        int rowindex = tblProduct.getSelectedRow();
         if (rowindex < 0)
             return;
         if (evt.isPopupTrigger() && evt.getComponent() instanceof JTable ) {
             
             rightClickMenu.show(evt.getComponent(), evt.getX(), evt.getY());
         }
-    }//GEN-LAST:event_tblDiaDiemMouseReleased
+    }//GEN-LAST:event_tblProductMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -348,7 +348,7 @@ public class ProductGUI extends javax.swing.JPanel {
     private javax.swing.JPanel pnlHead;
     private javax.swing.JPopupMenu rightClickMenu;
     private javax.swing.JScrollPane scroll;
-    private javax.swing.JTable tblDiaDiem;
+    private javax.swing.JTable tblProduct;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

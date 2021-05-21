@@ -5,26 +5,26 @@
  */
 package com.tourdulich.gui.form;
 
-import com.tourdulich.bll.INhanVienBLL;
+import com.tourdulich.bll.IDichVuBLL;
 import com.tourdulich.bll.IVaiTroBLL;
+import com.tourdulich.bll.impl.DichVuBLL;
 import com.tourdulich.bll.impl.NhanVienBLL;
 import com.tourdulich.bll.impl.VaiTroBLL;
-import com.tourdulich.dto.NhanVienDTO;
-import com.tourdulich.gui.popup.PopUpNhanVienGUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import com.tourdulich.gui.menu.MyScrollBarUI;
+import com.tourdulich.gui.popup.PopUpDichVuGUI;
+import com.tourdulich.gui.popup.PopUpNhanVienGUI;
+import com.tourdulich.util.DichVuTableLoaderUtil;
 import com.tourdulich.util.NhanVienTableLoaderUtil;
 import com.tourdulich.util.TableSetupUtil;
-import java.util.List;
-import javax.swing.DropMode;
+import java.awt.Dimension;
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -32,39 +32,31 @@ import javax.swing.table.TableRowSorter;
  *
  * @author RavenPC
  */
-public class QuanLyNhanVienGUI extends javax.swing.JPanel {
-
+public class BrandGUI extends javax.swing.JPanel {
+    
     String[] listColumns = {
                         "Id",
-                        "Họ",
-                        "Tên",
-                        "Giới Tính",
-                        "Ngày Sinh",
-                        "Địa Chỉ",
-                        "SĐT",
-                        "Vai Trò"
+                        "Tên nhãn hiệu"
     };
-    private INhanVienBLL nhanVienBLL;
-    private IVaiTroBLL vaiTroBLL;
-    private PopUpNhanVienGUI popUp = null;
+    private IDichVuBLL dichVuBLL;
+    private PopUpDichVuGUI popUp = null;
     TableRowSorter<TableModel> rowSorter = null;
-    
-    public QuanLyNhanVienGUI() {
+
+    public BrandGUI() {
         initComponents();
         // Ghi chu
-        nhanVienBLL = new NhanVienBLL();
-        vaiTroBLL = new VaiTroBLL();
+        dichVuBLL = new DichVuBLL();
         
-        loadTableData();
+       // loadTableData();   // Sua ham nay 
         
-        headerColor(14,142,233,tblNhanVien);
+        headerColor(77,77,77,tblBrand);
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
     
     public void loadTableData() {
-        tblNhanVien.setModel(new NhanVienTableLoaderUtil().setTable(nhanVienBLL.findByStatus(true), this.listColumns)) ;
-        this.rowSorter = TableSetupUtil.setTableFilter(tblNhanVien, txtTimKiem);
-        headerColor(14,142,233,tblNhanVien);
+        tblBrand.setModel(new DichVuTableLoaderUtil().setTable(dichVuBLL.findAll(), this.listColumns)) ;
+        this.rowSorter = TableSetupUtil.setTableFilter(tblBrand, txtTimKiem);
+        headerColor(77,77,77,tblBrand);
     }
     
     public Vector createHeader(Object[] columnNames){
@@ -82,7 +74,11 @@ public class QuanLyNhanVienGUI extends javax.swing.JPanel {
         headerRenderer.setBackground(color);
         headerRenderer.setForeground(color.WHITE);
         
-
+        JTableHeader tab_header = table.getTableHeader();					//Get the table header			
+			tab_header.setFont(new Font("Microsoft Yahei", Font.PLAIN, 15));	
+			tab_header.setPreferredSize(new Dimension(tab_header.getWidth(), 30));	//Modify the height of the table header
+			table.setFont(new Font("Microsoft Yahei", Font.PLAIN, 13));
+                        
         for (int i = 0; i < table.getModel().getColumnCount(); i++) {
         table.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }       
@@ -100,7 +96,6 @@ public class QuanLyNhanVienGUI extends javax.swing.JPanel {
 
         rightClickMenu = new javax.swing.JPopupMenu();
         itemSua = new javax.swing.JMenuItem();
-        itemXoa = new javax.swing.JMenuItem();
         pnlHead = new javax.swing.JPanel();
         btnThem = new javax.swing.JButton();
         txtTimKiem = new javax.swing.JTextField();
@@ -108,7 +103,7 @@ public class QuanLyNhanVienGUI extends javax.swing.JPanel {
         lblTimKiem = new javax.swing.JLabel();
         pnlBody = new javax.swing.JPanel();
         scroll = new javax.swing.JScrollPane();
-        tblNhanVien = new javax.swing.JTable();
+        tblBrand = new javax.swing.JTable();
 
         itemSua.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         itemSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/edit_icon.png"))); // NOI18N
@@ -120,23 +115,12 @@ public class QuanLyNhanVienGUI extends javax.swing.JPanel {
         });
         rightClickMenu.add(itemSua);
 
-        itemXoa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        itemXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/delete_icon.png"))); // NOI18N
-        itemXoa.setText("Xóa");
-        itemXoa.setToolTipText("");
-        itemXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemXoaActionPerformed(evt);
-            }
-        });
-        rightClickMenu.add(itemXoa);
-
         setLayout(new java.awt.BorderLayout());
 
         pnlHead.setBackground(new java.awt.Color(255, 255, 255));
         pnlHead.setPreferredSize(new java.awt.Dimension(808, 150));
 
-        btnThem.setBackground(new java.awt.Color(14, 142, 233));
+        btnThem.setBackground(new java.awt.Color(77, 77, 77));
         btnThem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
         btnThem.setText("Thêm");
@@ -154,22 +138,16 @@ public class QuanLyNhanVienGUI extends javax.swing.JPanel {
             }
         });
 
-        txtTimKiem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtTimKiem.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(14, 142, 233)));
+        txtTimKiem.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(77, 77, 77)));
         txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTimKiemActionPerformed(evt);
             }
         });
-        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtTimKiemKeyTyped(evt);
-            }
-        });
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle.setText("Quản Lý Nhân Viên");
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTitle.setText("Quản Lý Nhãn Hiệu");
 
         lblTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/search_icon.png"))); // NOI18N
 
@@ -177,21 +155,23 @@ public class QuanLyNhanVienGUI extends javax.swing.JPanel {
         pnlHead.setLayout(pnlHeadLayout);
         pnlHeadLayout.setHorizontalGroup(
             pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHeadLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeadLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 442, Short.MAX_VALUE)
-                .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
-            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlHeadLayout.createSequentialGroup()
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 438, Short.MAX_VALUE)
+                        .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(31, 31, 31))
         );
         pnlHeadLayout.setVerticalGroup(
             pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeadLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -205,7 +185,9 @@ public class QuanLyNhanVienGUI extends javax.swing.JPanel {
 
         pnlBody.setBackground(new java.awt.Color(255, 255, 255));
 
-        tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
+        scroll.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(77, 77, 77)));
+
+        tblBrand.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -216,26 +198,29 @@ public class QuanLyNhanVienGUI extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblBrand.setFillsViewportHeight(true);
+        tblBrand.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tblBrand.setRowHeight(35);
+        tblBrand.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tblNhanVienMouseReleased(evt);
+                tblBrandMouseReleased(evt);
             }
         });
-        scroll.setViewportView(tblNhanVien);
+        scroll.setViewportView(tblBrand);
 
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
         pnlBodyLayout.setHorizontalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBodyLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
+                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
                 .addGap(30, 30, 30))
         );
         pnlBodyLayout.setVerticalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBodyLayout.createSequentialGroup()
-                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                .addComponent(scroll)
                 .addContainerGap())
         );
 
@@ -252,7 +237,7 @@ public class QuanLyNhanVienGUI extends javax.swing.JPanel {
 
     private void btnThemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMousePressed
         if (this.popUp == null) {
-            this.popUp = new PopUpNhanVienGUI("POST");
+            this.popUp = new PopUpDichVuGUI("POST");
             
         } else {
             this.popUp.toFront();
@@ -268,10 +253,10 @@ public class QuanLyNhanVienGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemMousePressed
 
     private void itemSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSuaActionPerformed
-        int rowindex = tblNhanVien.getSelectedRow();
-        Long id = Long.parseLong(tblNhanVien.getValueAt(rowindex,0).toString());
+        int rowindex = tblBrand.getSelectedRow();
+        Long id = Long.parseLong(tblBrand.getValueAt(rowindex,0).toString());
         if (this.popUp == null) {
-        popUp = new PopUpNhanVienGUI("PUT", nhanVienBLL.findById(id));
+        popUp = new PopUpDichVuGUI("PUT", dichVuBLL.findById(id));
         } else {
             this.popUp.toFront();
             this.popUp.center();
@@ -285,56 +270,36 @@ public class QuanLyNhanVienGUI extends javax.swing.JPanel {
     });
     }//GEN-LAST:event_itemSuaActionPerformed
 
-    private void tblNhanVienMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseReleased
+    private void tblBrandMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBrandMouseReleased
         // TODO add your handling code here:
-        int r = tblNhanVien.rowAtPoint(evt.getPoint());
-        if (r >= 0 && r < tblNhanVien.getRowCount()) {
-            tblNhanVien.setRowSelectionInterval(r, r);
+        int r = tblBrand.rowAtPoint(evt.getPoint());
+        if (r >= 0 && r < tblBrand.getRowCount()) {
+            tblBrand.setRowSelectionInterval(r, r);
         } else {
-           tblNhanVien.clearSelection();
+           tblBrand.clearSelection();
         }
-        int rowindex = tblNhanVien.getSelectedRow();         
+
+        int rowindex = tblBrand.getSelectedRow();
+       
         if (rowindex < 0)
             return;
         if (evt.isPopupTrigger() && evt.getComponent() instanceof JTable ) {
             
             rightClickMenu.show(evt.getComponent(), evt.getX(), evt.getY());
         }
-    }//GEN-LAST:event_tblNhanVienMouseReleased
-
-    private void itemXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemXoaActionPerformed
-        int response = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa dòng này?");
-        if(response == JOptionPane.YES_OPTION) {
-            int rowindex = tblNhanVien.getSelectedRow();
-            Long id = Long.parseLong(tblNhanVien.getValueAt(rowindex,0).toString());
-            try {
-                nhanVienBLL.updateStatus(false, id);
-                JOptionPane.showMessageDialog(this, "Xóa thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                loadTableData();
-            } catch(Exception e) {
-                JOptionPane.showMessageDialog(this, "Xóa thất bại!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                e.printStackTrace();
-            }
-        }
-        
-    }//GEN-LAST:event_itemXoaActionPerformed
-
-    private void txtTimKiemKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyTyped
-        
-    }//GEN-LAST:event_txtTimKiemKeyTyped
+    }//GEN-LAST:event_tblBrandMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnThem;
     private javax.swing.JMenuItem itemSua;
-    private javax.swing.JMenuItem itemXoa;
     private javax.swing.JLabel lblTimKiem;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel pnlBody;
     private javax.swing.JPanel pnlHead;
     private javax.swing.JPopupMenu rightClickMenu;
     private javax.swing.JScrollPane scroll;
-    private javax.swing.JTable tblNhanVien;
+    private javax.swing.JTable tblBrand;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

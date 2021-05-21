@@ -33,14 +33,14 @@ public class ProductDAL extends AbstractDAL<ProductDTO> implements IProductDAL {
 
     @Override
     public Long save(ProductDTO product) {
-        String sql = "INSERT INTO product(description, image, name, price, status, brand_id) VALUES(?, ?, ?, ?, ?, ?)";
-        return insert(sql, product.getDescription(), product.getImage(), product.getName(), product.getPrice(), product.isStatus(), product.getBrandId());
+        String sql = "INSERT INTO product(description, image, name, price, status, brand_id, quantity) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        return insert(sql, product.getDescription(), product.getImage(), product.getName(), product.getPrice(), product.isStatus(), product.getBrandId(), product.getQuantity());
     }
 
     @Override
     public void update(ProductDTO product) {
-        String sql = "UPDATE product SET description = ?, image = ?, price = ?, status = ?, brand_id = ? WHERE id = ?";
-        update(sql, product.getDescription(), product.getImage(), product.getPrice(), product.isStatus(), product.getBrandId(), product.getId());
+        String sql = "UPDATE product SET description = ?, image = ?, price = ?, status = ?, brand_id = ? quantity = ? WHERE id = ?";
+        update(sql, product.getDescription(), product.getImage(), product.getPrice(), product.isStatus(), product.getBrandId(), product.getId(), product.getQuantity());
     }
 
     @Override

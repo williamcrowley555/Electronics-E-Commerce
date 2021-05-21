@@ -8,6 +8,8 @@ package com.tourdulich.gui.main;
 import com.tourdulich.bll.INhanVienBLL;
 import com.tourdulich.bll.impl.NhanVienBLL;
 import com.tourdulich.dto.NhanVienDTO;
+import com.tourdulich.gui.form.BrandGUI;
+import com.tourdulich.gui.form.CatalogGUI;
 import com.tourdulich.gui.form.QuanLyChiPhiGUI;
 import com.tourdulich.gui.others.ComponentResizer;
 import com.tourdulich.gui.form.ProductGUI;
@@ -16,7 +18,7 @@ import com.tourdulich.gui.form.QuanLyDoanGUI;
 import com.tourdulich.gui.form.QuanLyGiaTourGUI;
 import com.tourdulich.gui.form.QuanLyKhachHangGUI;
 import com.tourdulich.gui.form.QuanLyLoaiDuLichGUI;
-import com.tourdulich.gui.form.QuanLyNhanVienGUI;
+import com.tourdulich.gui.form.UserGUI;
 import com.tourdulich.gui.form.QuanLyTourGUI;
 import com.tourdulich.gui.form.QuanLyVaiTroGUI;
 import com.tourdulich.gui.form.ThongKeTheoDoanGUI;
@@ -62,19 +64,44 @@ public class MainGUI extends javax.swing.JFrame {
     ImageIcon iconChiPhi = new ImageIcon(getClass().getResource("/com/tourdulich/img/chi_phi_icon.png"));
     ImageIcon iconDichVu = new ImageIcon(getClass().getResource("/com/tourdulich/img/dich_vu_icon.png"));
     ImageIcon iconLoaiDichVu = new ImageIcon(getClass().getResource("/com/tourdulich/img/loai_dich_vu_icon.png"));
+    ImageIcon iconCatalog = new ImageIcon(getClass().getResource("/com/tourdulich/img/catalog_icon.png"));
+    ImageIcon iconBrand = new ImageIcon(getClass().getResource("/com/tourdulich/img/brand_icon.png"));
     ImageIcon iconProduct = new ImageIcon(getClass().getResource("/com/tourdulich/img/product_icon.png"));
     ImageIcon iconKhachHang = new ImageIcon(getClass().getResource("/com/tourdulich/img/khach_hang_icon.png"));
     ImageIcon iconKhachSan = new ImageIcon(getClass().getResource("/com/tourdulich/img/hotel_icon.png"));
     ImageIcon iconNhaHang = new ImageIcon(getClass().getResource("/com/tourdulich/img/nha_hang_icon.png"));
     ImageIcon iconPhuongTien = new ImageIcon(getClass().getResource("/com/tourdulich/img/phuong_tien_icon.png"));
-    ImageIcon iconNhanVien = new ImageIcon(getClass().getResource("/com/tourdulich/img/nhan_vien_icon.png"));
-    ImageIcon iconVaiTro = new ImageIcon(getClass().getResource("/com/tourdulich/img/vai_tro_icon.png"));
+    ImageIcon iconStaff = new ImageIcon(getClass().getResource("/com/tourdulich/img/staff_icon.png"));
+    ImageIcon iconRole = new ImageIcon(getClass().getResource("/com/tourdulich/img/role_icon.png"));
     ImageIcon iconThongKe = new ImageIcon(getClass().getResource("/com/tourdulich/img/thong_ke_icon.png"));
+    
     
    
         
+        //----Sub menu quanly nhan hieu -----
+                MenuItem menuCatalog = new MenuItem(iconCatalog, "Quản Lý Loại Sản Phẩm", new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        panelBody.removeAll();
+                        panelBody.add(new CatalogGUI());
+                        panelBody.repaint();
+                        panelBody.revalidate();
+                        Selected(menuProduct);
+                    }
+                });  
         
-        
+        //----Sub menu quanly nhan hieu -----
+                MenuItem menuBrand = new MenuItem(iconBrand, "Quản Lý Nhãn Hiệu", new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        panelBody.removeAll();
+                        panelBody.add(new BrandGUI());
+                        panelBody.repaint();
+                        panelBody.revalidate();
+                        Selected(menuProduct);
+                    }
+                });             
+     
         MenuItem menuProduct = new MenuItem(iconProduct, "Quản Lý Sản Phẩm", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -84,7 +111,7 @@ public class MainGUI extends javax.swing.JFrame {
                 panelBody.revalidate();
                 Selected(menuProduct);
             }
-        });
+        }, menuBrand, menuCatalog);
         
         MenuItem menuKhachHang = new MenuItem(iconKhachHang, "Quản Lý Khách Hàng", new ActionListener() {
             @Override
@@ -99,7 +126,7 @@ public class MainGUI extends javax.swing.JFrame {
         
         
         //----Sub menu vai tro -----
-                MenuItem menuVaiTro = new MenuItem(iconVaiTro, "Quản Lý Vai Trò", new ActionListener() {
+                MenuItem menuVaiTro = new MenuItem(iconRole, "Quản Lý Vai Trò", new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
                         panelBody.removeAll();
@@ -110,11 +137,11 @@ public class MainGUI extends javax.swing.JFrame {
                     }
                 });
         
-        MenuItem menuNhanVien = new MenuItem(iconNhanVien, "Quản Lý Nhân Viên", new ActionListener() {
+        MenuItem menuNhanVien = new MenuItem(iconStaff, "Quản Lý Nhân Viên", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 panelBody.removeAll();
-                panelBody.add(new QuanLyNhanVienGUI());
+                panelBody.add(new UserGUI());
                 panelBody.repaint();
                 panelBody.revalidate();
                 

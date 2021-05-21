@@ -16,22 +16,25 @@ public class ProductDTO {
     private String description;
     private byte[] image;
     private boolean status = true;
+    private int quantity;
     private long brandId;
     
-    public ProductDTO(String name, Long price, String description, boolean status, long brandId) {
+    public ProductDTO(String name, Long price, String description, boolean status, int quantity, long brandId) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.status = status;
+        this.quantity = quantity;
         this.brandId = brandId;
     }
 
-    public ProductDTO(String name, Long price, String description, byte[] image, boolean status, long brandId) {
+    public ProductDTO(String name, Long price, String description, byte[] image, boolean status, int quantity, long brandId) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.image = image;
         this.status = status;
+        this.quantity = quantity;
         this.brandId = brandId;
     }
 
@@ -100,5 +103,14 @@ public class ProductDTO {
         this.brandId = brandId;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    
     
 }
