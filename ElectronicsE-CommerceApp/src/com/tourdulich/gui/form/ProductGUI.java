@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import com.tourdulich.gui.menu.MyScrollBarUI;
+import com.tourdulich.gui.popup.PopUpImportGUI;
 import com.tourdulich.gui.popup.PopUpProductGUI;
 import com.tourdulich.gui.popup.PopUpKhachHangGUI;
 import com.tourdulich.util.DiaDiemTableLoaderUtil;
@@ -57,6 +58,7 @@ public class ProductGUI extends javax.swing.JPanel {
     private IProductBLL productBLL;
     
     private PopUpProductGUI popUp = null;
+    private PopUpImportGUI popUpImport = null;
     TableRowSorter<TableModel> rowSorter = null;
     
     public ProductGUI() {
@@ -144,6 +146,7 @@ public class ProductGUI extends javax.swing.JPanel {
 
         rightClickMenu = new javax.swing.JPopupMenu();
         itemSua = new javax.swing.JMenuItem();
+        itemNhap = new javax.swing.JMenuItem();
         pnlHead = new javax.swing.JPanel();
         btnThem = new javax.swing.JButton();
         txtTimKiem = new javax.swing.JTextField();
@@ -162,6 +165,16 @@ public class ProductGUI extends javax.swing.JPanel {
             }
         });
         rightClickMenu.add(itemSua);
+
+        itemNhap.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        itemNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/edit_icon.png"))); // NOI18N
+        itemNhap.setText("Nhập hàng");
+        itemNhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemNhapActionPerformed(evt);
+            }
+        });
+        rightClickMenu.add(itemNhap);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -344,9 +357,29 @@ public class ProductGUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tblProductMouseReleased
 
+    private void itemNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNhapActionPerformed
+        // TODO add your handling code here:
+        int rowindex = tblProduct.getSelectedRow();
+        Long id = Long.parseLong(tblProduct.getValueAt(rowindex,0).toString());
+        if (this.popUpImport == null) {
+            popUpImport = new PopUpImportGUI("PUT", productBLL.findById(id));
+        } else {
+            this.popUpImport.toFront();
+            this.popUpImport.center();
+        }
+        popUpImport.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+            popUpImport = null;
+            loadTableData();
+        }
+    });
+    }//GEN-LAST:event_itemNhapActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnThem;
+    private javax.swing.JMenuItem itemNhap;
     private javax.swing.JMenuItem itemSua;
     private javax.swing.JLabel lblTimKiem;
     private javax.swing.JLabel lblTitle;
