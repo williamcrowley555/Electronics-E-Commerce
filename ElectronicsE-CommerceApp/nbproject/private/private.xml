@@ -14,6 +14,22 @@
             <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/UserDAL.java</file>
             <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/util/InputValidatorUtil.java</file>
             <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/UserDTO.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/bll/impl/Brand_CatalogBLL.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/bll/impl/BrandBLL.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/mapper/impl/IdBrandMapper.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/IBrand_CatalogDAL.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/Brand_CatalogDAL.java</file>
+        </group>
+        <group>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/bll/impl/Brand_CatalogBLL.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpUserGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/IProductDAL.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpGiaTourGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/RoleGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpImportGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/ProductGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpProductGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/ProductDAL.java</file>
         </group>
     </open-files>
 </project-private>

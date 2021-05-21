@@ -5,7 +5,6 @@
  */
 package com.tourdulich.mapper.impl;
 
-import com.tourdulich.dto.DiaDiemDTO;
 import com.tourdulich.mapper.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;

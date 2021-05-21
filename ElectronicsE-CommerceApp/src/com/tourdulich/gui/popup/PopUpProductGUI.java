@@ -197,7 +197,8 @@ public class PopUpProductGUI extends javax.swing.JFrame {
         product.setName(txtName.getText().trim());
         product.setDescription(txtDescription.getText().trim());
         product.setPrice(Long.parseLong(txtPrice.getText().trim()));
-        product.setQuantity(0);
+        product.setQuantity(product.getQuantity());
+        
        // diaDiem.setDiaChi(txtDiaChi.getText().trim());
         if (this.selectedImg != null) {
            
@@ -635,9 +636,7 @@ public class PopUpProductGUI extends javax.swing.JFrame {
         {
             ProductDTO newProduct = null;
             try {
-                newProduct = getFormInfo();
-                System.out.println(newProduct.getBrandId());
-                System.out.println(newProduct.getCatalogId());
+                newProduct = getFormInfo();              
             } catch (IOException ex) {
                 Logger.getLogger(PopUpProductGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -654,6 +653,7 @@ public class PopUpProductGUI extends javax.swing.JFrame {
                     }
             } else if(this.action.equals("PUT")) {
                 try {    
+                    newProduct.setQuantity(this.product.getQuantity());
                     productBLL.update(newProduct);
                     
                     System.out.println(newProduct);
