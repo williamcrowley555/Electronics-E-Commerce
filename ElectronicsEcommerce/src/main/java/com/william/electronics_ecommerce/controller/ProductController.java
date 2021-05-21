@@ -41,8 +41,8 @@ public class ProductController {
     @GetMapping("/page/{pageNo}")
     public String findPaginated(Model model,
                                 @PathVariable(value = "pageNo") Integer pageNo,
-                                @RequestParam(value = "catalog", required = false, defaultValue = "") String catalog,
-                                @RequestParam(value = "brand", required = false, defaultValue = "") String brand) {
+                                @RequestParam(value = "catalog", required = false) String catalog,
+                                @RequestParam(value = "brand", required = false) String brand) {
         Integer pageSize = 9;
 
         Page<Product> page = productService.getPaginated(pageNo, pageSize, catalog, brand);
