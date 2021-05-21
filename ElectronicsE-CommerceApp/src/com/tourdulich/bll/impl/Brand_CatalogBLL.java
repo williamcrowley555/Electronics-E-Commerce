@@ -28,55 +28,38 @@ import com.tourdulich.dto.CatalogDTO;
  * @author HP
  */
 public class Brand_CatalogBLL implements IBrand_CatalogBLL {
-
-    private IDsDiaDiemTourDAL dsDiaDiemTourDAO;
-    private IDiaDiemDAL diaDiemDAO;
-    
-    private IBrand_CatalogDAL brand_catalogDAL;
-    private IBrandDAL brandDAL;
-    
+    private IBrand_CatalogDAL brand_CatalogDAL;
     public Brand_CatalogBLL() {
-         
-        
-        this.brand_catalogDAL = new Brand_CatalogDAL();
-        this.brandDAL = new BrandDAL();
+        this.brand_CatalogDAL = brand_CatalogDAL;
     }
     
     @Override
     public List<Brand_CatalogDTO> findAll() {
-        return brand_catalogDAL.findAll();
-    }
-
-     
-
-    @Override
-    public List<BrandDTO> findByIdCatalog(Long idCatalog) {   
-        List<Long> brandIds = brand_catalogDAL.findByIdCatalog(idCatalog);
-        List<BrandDTO> brandList = new ArrayList<>();
-        for (Long brandId : brandIds)
-        {   
-            brandList.add(brandDAL.findById(brandId));      
-        }
-        return brandList;
+        return brand_CatalogDAL.findAll();
     }
 
     @Override
     public CatalogDTO findById(Long idBrand, Long idCatalog) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return brand_CatalogDAL.findById(idBrand, idCatalog);
     }
 
     @Override
     public Long save(Brand_CatalogDTO catalog_brand) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return brand_CatalogDAL.save(catalog_brand);
     }
 
     @Override
     public void update(Brand_CatalogDTO catalog_brand) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        brand_CatalogDAL.update(catalog_brand);
     }
 
     @Override
     public void delete(Long idCatalog, Long idBrand) {
+        brand_CatalogDAL.delete(idCatalog, idBrand);
+    }
+
+    @Override
+    public List<BrandDTO> findByIdCatalog(Long idCatalog) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
