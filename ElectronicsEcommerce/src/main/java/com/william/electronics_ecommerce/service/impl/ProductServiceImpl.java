@@ -50,11 +50,11 @@ public class ProductServiceImpl implements ProductService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
 
         if (catalog != null && brand != null) {
-            return productRepository.findByBrandNameAndBrand_CatalogList_Name(brand, catalog, pageable);
+            return productRepository.findByBrandNameAndCatalogName(brand, catalog, pageable);
         }
         else if (catalog != null || brand != null) {
             if (catalog != null) {
-                return productRepository.findByBrand_CatalogList_Name(catalog, pageable);
+                return productRepository.findByCatalogName(catalog, pageable);
             }
             else {
                 return productRepository.findByBrandName(brand, pageable);
