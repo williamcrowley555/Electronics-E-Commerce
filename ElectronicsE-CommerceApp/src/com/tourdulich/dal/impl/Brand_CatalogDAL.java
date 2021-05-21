@@ -6,11 +6,7 @@
 package com.tourdulich.dal.impl;
 
 import com.tourdulich.dal.IBrand_CatalogDAL;
-import com.tourdulich.dto.DsDiaDiemTourDTO;
-import com.tourdulich.mapper.impl.DsDiaDiemTourMapper;
-import com.tourdulich.mapper.impl.IdDiaDiemTourMapper;
 import java.util.List;
-import com.tourdulich.dal.IDsDiaDiemTourDAL;
 import com.tourdulich.dto.Brand_CatalogDTO;
 import com.tourdulich.dto.CatalogDTO;
 import com.tourdulich.mapper.impl.Brand_CatalogMapper;
@@ -24,7 +20,7 @@ public class Brand_CatalogDAL extends AbstractDAL<Brand_CatalogDTO> implements I
 
     @Override
     public List<Brand_CatalogDTO> findAll() {
-        String sql = "SELECT * FROM ds_dia_diem_tour ORDER BY stt ASC";
+        String sql = "SELECT * FROM brand_catalog";
         return query(sql, new Brand_CatalogMapper());
     }
 
@@ -33,8 +29,6 @@ public class Brand_CatalogDAL extends AbstractDAL<Brand_CatalogDTO> implements I
         String sql = "SELECT * FROM brand_catalog WHERE catalog_id = ?";
         return query(sql, new  IdBrandMapper(), idCatalog);
     }
-
-   
 
     @Override
     public Long save(Brand_CatalogDTO catalog_brand) {
