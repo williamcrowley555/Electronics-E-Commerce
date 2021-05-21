@@ -26,10 +26,12 @@ import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.plaf.basic.ComboPopup;
 import com.tourdulich.gui.menu.MyComboBoxEditor;
 import com.tourdulich.gui.menu.MyComboBoxRenderer;
+import com.tourdulich.gui.others.MD5;
 import com.tourdulich.util.ImageUtil;
 import com.tourdulich.util.InputValidatorUtil;
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -208,8 +210,9 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         else return false;
        
     }
-    private UserDTO getFormInfo() throws IOException {
+    private UserDTO getFormInfo() throws IOException, NoSuchAlgorithmException {
         UserDTO user = new UserDTO();
+        MD5 encrypt = new MD5();
         if(this.user != null) {
             user.setId(this.user.getId());
         }
@@ -220,7 +223,8 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         user.setAddress(txtDiaChi.getText().trim());
         user.setPhone(txtSDT.getText().trim());
         user.setEmail(txtSDT1.getText().trim());
-        user.setPassword(txtSDT2.getText().trim());
+        String ernText = MD5.encrypt(txtSDT2.getText().trim());
+        user.setPassword(ernText);
    
         return user;
     }
@@ -668,6 +672,8 @@ public class PopUpUserGUI extends javax.swing.JFrame {
             try {
                 newUser = getFormInfo();
             } catch (IOException ex) {
+                Logger.getLogger(PopUpUserGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(PopUpUserGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
 
