@@ -81,23 +81,8 @@
                     </div>
                     <div id="navigation" class="collapse navbar-collapse">
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item"><a th:href="@{/}" class="nav-link active">Trang chủ</a></li>
-                            <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Sản phẩm<b class="caret"></b></a>
-                                <ul class="dropdown-menu megamenu">
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-md-6 col-lg-3">
-                                                <h5>Laptop</h5>
-                                                <ul class="list-unstyled mb-3">
-                                                    <li class="nav-item"><a th:href="@{/product}" class="nav-link">Asus</a></li>
-                                                    <li class="nav-item"><a th:href="@{/product}" class="nav-link">HP</a></li>
-                                                    <li class="nav-item"><a th:href="@{/product}" class="nav-link">Del</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
+                            <li class="nav-item"><a th:href="@{/}" th:classappend="${#strings.contains(#httpServletRequest.requestURI,'/product') ? '' : 'active'}" class="nav-link">Trang chủ</a></li>
+                            <li class="nav-item"><a th:href="@{/product}" th:classappend="${#strings.contains(#httpServletRequest.requestURI,'/product') ? 'active' : ''}" class="nav-link">Cửa hàng</a></li>
                         </ul>
                         <div class="navbar-buttons d-flex justify-content-end">
                             <!-- /.nav-collapse-->

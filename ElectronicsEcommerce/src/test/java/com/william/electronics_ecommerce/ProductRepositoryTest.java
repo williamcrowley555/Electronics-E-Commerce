@@ -33,6 +33,15 @@ public class ProductRepositoryTest {
     @Test
     public void testGetProductsByCatalogName() {
         Pageable pageable = PageRequest.of(0, 9);
+        Page<Product> page = productRepository.findByCatalogName("phụ kiện", pageable);
+        List<Product> products = page.getContent();
+        products.forEach(System.out::println);
+
+    }
+
+    @Test
+    public void testGetProductsByCatalogNameInCatalogList() {
+        Pageable pageable = PageRequest.of(0, 9);
         Page<Product> page = productRepository.findByBrand_CatalogList_Name("phụ kiện", pageable);
         List<Product> products = page.getContent();
         products.forEach(System.out::println);
@@ -43,7 +52,7 @@ public class ProductRepositoryTest {
     public void testGetProductsByBrandNameAndCatalogName() {
         Pageable pageable = PageRequest.of(0, 9);
         String brand = "asus";
-        String catalog = "laptop";
+        String catalog = "phụ kiện";
         Page<Product> page = productRepository.findByBrandNameAndBrand_CatalogList_Name(brand, catalog, pageable);
         List<Product> products = page.getContent();
         products.forEach(System.out::println);
