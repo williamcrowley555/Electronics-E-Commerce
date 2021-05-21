@@ -5,9 +5,12 @@
  */
 package com.tourdulich.gui.popup;
 
+import com.tourdulich.bll.IBrandBLL;
 import com.tourdulich.bll.IDichVuBLL;
+import com.tourdulich.bll.impl.BrandBLL;
 import com.tourdulich.bll.impl.DichVuBLL;
 import com.tourdulich.bll.impl.VaiTroBLL;
+import com.tourdulich.dto.BrandDTO;
 import com.tourdulich.dto.DichVuDTO;
 import com.tourdulich.dto.VaiTroDTO;
 import java.awt.Color;
@@ -36,47 +39,45 @@ import javax.swing.JOptionPane;
  */
 public class PopUpBrandGUI extends javax.swing.JFrame {
     private String action;
-    private IDichVuBLL dichVuBLL;
-    private DichVuDTO dichVu;
+    private IBrandBLL brandBLL;
+    private BrandDTO brand;
    
     public PopUpBrandGUI(String action) {
         initComponents();
         
         this.action = action;
-        dichVuBLL = new DichVuBLL();
-        
+        brandBLL = new BrandBLL();
         CustomWindow();
-      
         this.setVisible(true);
     }
 
-    public PopUpBrandGUI(String action, DichVuDTO dichVu) {
+    public PopUpBrandGUI(String action, BrandDTO brand) {
         initComponents();
         this.action = action;
-        this.dichVu = dichVu;
-        dichVuBLL = new DichVuBLL();
+        this.brand = brand;
+        brandBLL = new BrandBLL();
         CustomWindow();
       
-        setLabelText(dichVu);
+        setLabelText(brand);
         this.setVisible(true);
     }
     
-    public void setLabelText(DichVuDTO dichVu)
+    public void setLabelText(BrandDTO brand)
     {
-        txtBrandName.setText(dichVu.getTenDichVu());
+        txtBrandName.setText(brand.getName());
      
     }
     
    
     
-    private DichVuDTO getFormInfo() {
-        DichVuDTO dichVu = new DichVuDTO();
-        if(this.dichVu != null) {
-            dichVu.setId(this.dichVu.getId());
+    private BrandDTO getFormInfo() {
+        BrandDTO brand = new BrandDTO();
+        if(this.brand != null) {
+            brand.setId(this.brand.getId());
         }
-      dichVu.setTenDichVu(txtBrandName.getText().trim());
+      brand.setName(txtBrandName.getText().trim());
       
-        return dichVu;
+        return brand;
     }
  
     public PopUpBrandGUI() {
@@ -86,24 +87,24 @@ public class PopUpBrandGUI extends javax.swing.JFrame {
     
     public boolean validateForm() 
     {
-        boolean tenDichVu, moTa; 
+        boolean tenBrand, moTa; 
         ImageIcon iconCheck = new ImageIcon(getClass().getResource("/com/tourdulich/img/check.png"));
         ImageIcon iconError = new ImageIcon(getClass().getResource("/com/tourdulich/img/error.png"));
          
         if (InputValidatorUtil.isValidName(txtBrandName.getText(), true).isEmpty())  
         {
-            tenDichVu = true;
+            tenBrand = true;
             lblTenDichVu.setIcon(iconCheck);
             lblTenDichVu.setToolTipText(null);
         } else {
-            tenDichVu = false;
+            tenBrand = false;
             lblTenDichVu.setIcon(iconError);
             lblTenDichVu.setToolTipText(InputValidatorUtil.isValidName(txtBrandName.getText(), true));
         } 
         
         
         
-        if (tenDichVu)
+        if (tenBrand)
         return true;
         else return false;
     }
@@ -196,6 +197,11 @@ public class PopUpBrandGUI extends javax.swing.JFrame {
 
         txtBrandName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtBrandName.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
+        txtBrandName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBrandNameActionPerformed(evt);
+            }
+        });
 
         btnLuu.setBackground(new java.awt.Color(77, 77, 77));
         btnLuu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -301,11 +307,11 @@ public class PopUpBrandGUI extends javax.swing.JFrame {
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         if (validateForm())
         {    
-            DichVuDTO dichVu = getFormInfo();
+            BrandDTO brand = getFormInfo();
 
             if(this.action.equals("POST")) {             
-                    Long newDichVuId = dichVuBLL.save(dichVu);
-                    if(newDichVuId != null) {
+                    Long newBrandId = brandBLL.save(brand);
+                    if(newBrandId != null) {
                         JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
                     } else {
@@ -313,7 +319,7 @@ public class PopUpBrandGUI extends javax.swing.JFrame {
                     }              
             } else if(this.action.equals("PUT")) {              
                     try {
-                        dichVuBLL.update(dichVu);
+                        brandBLL.update(brand);
                         JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
                     } catch(Exception e) {
@@ -328,6 +334,10 @@ public class PopUpBrandGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnHuyActionPerformed
+
+    private void txtBrandNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBrandNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBrandNameActionPerformed
 
     /**
      * @param args the command line arguments

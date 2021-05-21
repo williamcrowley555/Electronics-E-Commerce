@@ -56,8 +56,7 @@ public class ProductGUI extends javax.swing.JPanel {
      * Creates new form Panel1
      */
     private IProductBLL productBLL;
-    private IDiaDiemBLL diaDiemBLL;
-    private ITinhBLL tinhBLL;
+    
     private PopUpProductGUI popUp = null;
     private PopUpImportGUI popUpImport = null;
     TableRowSorter<TableModel> rowSorter = null;
@@ -65,8 +64,6 @@ public class ProductGUI extends javax.swing.JPanel {
     public ProductGUI() {
         initComponents();
         productBLL = new ProductBLL();
-        diaDiemBLL = new DiaDiemBLL();
-        tinhBLL = new TinhBLL();
         
         loadTableData();
         
