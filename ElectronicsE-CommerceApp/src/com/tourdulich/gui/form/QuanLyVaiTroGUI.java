@@ -19,6 +19,7 @@ import javax.swing.table.JTableHeader;
 import com.tourdulich.gui.menu.MyScrollBarUI;
 import com.tourdulich.util.TableSetupUtil;
 import com.tourdulich.util.VaiTroTableLoaderUtil;
+import java.awt.Dimension;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -42,9 +43,9 @@ public class QuanLyVaiTroGUI extends javax.swing.JPanel {
         
         vaiTroBLL = new VaiTroBLL();
         
-        loadTableData();
+        //loadTableData();
         
-        headerColor(14,142,233,tblVaiTro);
+        headerColor(77,77,77,tblVaiTro);
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
     
@@ -68,6 +69,11 @@ public class QuanLyVaiTroGUI extends javax.swing.JPanel {
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setBackground(color);
         headerRenderer.setForeground(color.WHITE);
+        
+        JTableHeader tab_header = table.getTableHeader();					//Get the table header			
+			tab_header.setFont(new Font("Microsoft Yahei", Font.PLAIN, 15));	
+			tab_header.setPreferredSize(new Dimension(tab_header.getWidth(), 30));	//Modify the height of the table header
+			table.setFont(new Font("Microsoft Yahei", Font.PLAIN, 13));
         
         for (int i = 0; i < table.getModel().getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
@@ -114,7 +120,7 @@ public class QuanLyVaiTroGUI extends javax.swing.JPanel {
         pnlHead.setBackground(new java.awt.Color(255, 255, 255));
         pnlHead.setPreferredSize(new java.awt.Dimension(808, 150));
 
-        btnThem.setBackground(new java.awt.Color(14, 142, 233));
+        btnThem.setBackground(new java.awt.Color(77, 77, 77));
         btnThem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
         btnThem.setText("Thêm");
@@ -133,7 +139,7 @@ public class QuanLyVaiTroGUI extends javax.swing.JPanel {
         });
 
         txtTimKiem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtTimKiem.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(14, 142, 233)));
+        txtTimKiem.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(77, 77, 77)));
         txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTimKiemActionPerformed(evt);
@@ -141,7 +147,7 @@ public class QuanLyVaiTroGUI extends javax.swing.JPanel {
         });
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTitle.setText("Quản Lý Vai Trò");
 
         lblTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/search_icon.png"))); // NOI18N
@@ -150,21 +156,23 @@ public class QuanLyVaiTroGUI extends javax.swing.JPanel {
         pnlHead.setLayout(pnlHeadLayout);
         pnlHeadLayout.setHorizontalGroup(
             pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHeadLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeadLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 442, Short.MAX_VALUE)
-                .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlHeadLayout.createSequentialGroup()
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 442, Short.MAX_VALUE)
+                        .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(35, 35, 35))
-            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlHeadLayout.setVerticalGroup(
             pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeadLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -189,6 +197,9 @@ public class QuanLyVaiTroGUI extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblVaiTro.setFillsViewportHeight(true);
+        tblVaiTro.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tblVaiTro.setRowHeight(35);
         tblVaiTro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tblVaiTroMouseReleased(evt);
