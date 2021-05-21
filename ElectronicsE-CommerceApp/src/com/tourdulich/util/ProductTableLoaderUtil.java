@@ -5,9 +5,13 @@
  */
 package com.tourdulich.util;
 
+import com.tourdulich.bll.IBrandBLL;
+import com.tourdulich.bll.ICatalogBLL;
 import com.tourdulich.bll.IDiaDiemBLL;
 import com.tourdulich.bll.IProductBLL;
 import com.tourdulich.bll.ITinhBLL;
+import com.tourdulich.bll.impl.BrandBLL;
+import com.tourdulich.bll.impl.CatalogBLL;
 import com.tourdulich.bll.impl.DiaDiemBLL;
 import com.tourdulich.bll.impl.ProductBLL;
 import com.tourdulich.bll.impl.TinhBLL;
@@ -23,6 +27,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ProductTableLoaderUtil implements ITableLoaderUtil<ProductDTO>{
     private IProductBLL productBLL = new ProductBLL();
+    private IBrandBLL brandBLL = new BrandBLL();
+    private ICatalogBLL catalogBLL = new CatalogBLL();
     //private ITinhBLL tinhBLL = new TinhBLL();
     
     @Override
@@ -41,7 +47,8 @@ public class ProductTableLoaderUtil implements ITableLoaderUtil<ProductDTO>{
             row.add(product.getName());
             //row.add(tinhBLL.findById(diaDiem.getIdTinh()).getTenTinh());
             row.add(product.getPrice());
-            row.add(product.getBrandId());
+            row.add(brandBLL.findById(product.getBrandId()).getName());
+            row.add(catalogBLL.findById(product.getCatalogId()).getName());
             row.add(product.getQuantity());
             row.add(product.getDescription());
             model.addRow(row);

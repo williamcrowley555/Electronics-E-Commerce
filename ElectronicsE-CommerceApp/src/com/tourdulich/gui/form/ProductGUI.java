@@ -46,6 +46,7 @@ public class ProductGUI extends javax.swing.JPanel {
                             "Tên sản phẩm",
                             "Giá",
                             "Nhãn hiệu",
+                            "Loại",
                             "SL",
                             "Mô tả"                 
         };
@@ -108,8 +109,8 @@ public class ProductGUI extends javax.swing.JPanel {
             Component comp = table.prepareRenderer(renderer, row, column);
             width = Math.max(comp.getPreferredSize().width +1 , width);
         }
-        if(width > 300)
-            width=300;
+        if(width > 200)
+            width=200;
         columnModel.getColumn(column).setPreferredWidth(width);
         }
     }

@@ -8,6 +8,10 @@
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/util/ProductTableLoaderUtil.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/ProductGUI.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/ProductDTO.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpCapVaiTroGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/ProductGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpProductGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/ProductDAL.java</file>
         </group>
     </open-files>
 </project-private>
