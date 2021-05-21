@@ -29,12 +29,18 @@ public class Product {
     @NotBlank(message = "Mô tả không được để trống")
     private String description;
 
+    @Column(name = "quantity", nullable = false)
+    @NotNull(message = "Số lượng không được để trống")
+    @Min(value = 0, message = "Số lượng không hợp lệ")
+    @Max(value = 1000000000, message = "Số lượng quá lớn")
+    private int quantity = 0;
+
     @Lob
     @Column(name = "image", columnDefinition = "MEDIUMBLOB")
     private String image;
 
     @Column(name = "status", nullable = false, columnDefinition="tinyint(1) default 1")
-    private boolean status = true;
+    private Boolean status = true;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
@@ -44,18 +50,20 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, Long price, String description, boolean status, Brand brand) {
+    public Product(String name, Long price, String description, int quantity, boolean status, Brand brand) {
         this.name = name;
         this.price = price;
         this.description = description;
+        this.quantity = quantity;
         this.status = status;
         this.brand = brand;
     }
 
-    public Product(String name, Long price, String description, String image, boolean status, Brand brand) {
+    public Product(String name, Long price, String description, int quantity, String image, boolean status, Brand brand) {
         this.name = name;
         this.price = price;
         this.description = description;
+        this.quantity = quantity;
         this.image = image;
         this.status = status;
         this.brand = brand;
@@ -105,11 +113,19 @@ public class Product {
         this.image = image;
     }
 
-    public boolean isStatus() {
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
@@ -119,5 +135,19 @@ public class Product {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", quantity=" + quantity +
+                ", image='" + image + '\'' +
+                ", status=" + status +
+                ", brand=" + brand +
+                '}';
     }
 }
