@@ -18,18 +18,21 @@ public class ProductDTO {
     private boolean status = true;
     private int quantity;
     private long brandId;
+    private long catalogId;
     
-    public ProductDTO(String name, Long price, String description, boolean status, int quantity, long brandId) {
+    
+    public ProductDTO(String name, Long price, String description, boolean status, int quantity, long brandId, long catalogId) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.status = status;
         this.quantity = quantity;
         this.brandId = brandId;
+        this.catalogId = catalogId;
     }
 
 
-    public ProductDTO(Long id, String name, Long price, String description, String base64Image, int quantity, long brandId) {
+    public ProductDTO(Long id, String name, Long price, String description, String base64Image, int quantity, long brandId, long catalogId) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -37,6 +40,7 @@ public class ProductDTO {
         this.base64Image = base64Image;
         this.quantity = quantity;
         this.brandId = brandId;
+        this.catalogId = catalogId;
     }
     
     
@@ -112,6 +116,14 @@ public class ProductDTO {
 
     public void setBase64Image(String base64Image) {
         this.base64Image = base64Image;
+    }
+
+    public long getCatalogId() {
+        return catalogId;
+    }
+
+    public void setCatalogId(long catalogId) {
+        this.catalogId = catalogId;
     }
 
     
