@@ -5,12 +5,12 @@
  */
 package com.tourdulich.gui.form;
 
-import com.tourdulich.bll.INhanVienBLL;
+import com.tourdulich.bll.IUserBLL;
 import com.tourdulich.bll.IVaiTroBLL;
-import com.tourdulich.bll.impl.NhanVienBLL;
+import com.tourdulich.bll.impl.UserBLL;
 import com.tourdulich.bll.impl.VaiTroBLL;
-import com.tourdulich.dto.NhanVienDTO;
-import com.tourdulich.gui.popup.PopUpNhanVienGUI;
+import com.tourdulich.dto.UserDTO;
+//import com.tourdulich.gui.popup.PopUpUserGUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Vector;
@@ -19,8 +19,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.tourdulich.gui.menu.MyScrollBarUI;
-import com.tourdulich.util.NhanVienTableLoaderUtil;
+import com.tourdulich.util.UserTableLoaderUtil;
 import com.tourdulich.util.TableSetupUtil;
+import com.tourdulich.util.UserTableLoaderUtil;
 import java.awt.Dimension;
 import java.util.List;
 import javax.swing.DropMode;
@@ -42,27 +43,27 @@ public class UserGUI extends javax.swing.JPanel {
                         "Giới Tính",
                         "Ngày Sinh",
                         "Địa Chỉ",
-                        "SĐT"                   
+                        "Email",
+                        "SĐT",    
+                        "Trạng thái"
     };
-    private INhanVienBLL nhanVienBLL;
-    private IVaiTroBLL vaiTroBLL;
-    private PopUpNhanVienGUI popUp = null;
+    private IUserBLL userBLL;
+   // private PopUpUserGUI popUp = null;
     TableRowSorter<TableModel> rowSorter = null;
     
     public UserGUI() {
         initComponents();
         // Ghi chu
-        nhanVienBLL = new NhanVienBLL();
-        vaiTroBLL = new VaiTroBLL();
+        userBLL = new UserBLL();
         
-        //loadTableData();
+        loadTableData();
         
         headerColor(77,77,77,tblUser);
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
     
     public void loadTableData() {
-        tblUser.setModel(new NhanVienTableLoaderUtil().setTable(nhanVienBLL.findByStatus(true), this.listColumns)) ;
+        tblUser.setModel(new UserTableLoaderUtil().setTable(userBLL.findAll(), this.listColumns)) ;
         this.rowSorter = TableSetupUtil.setTableFilter(tblUser, txtTimKiem);
         headerColor(14,142,233,tblUser);
     }
@@ -260,38 +261,38 @@ public class UserGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTimKiemActionPerformed
 
     private void btnThemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMousePressed
-        if (this.popUp == null) {
-            this.popUp = new PopUpNhanVienGUI("POST");
-            
-        } else {
-            this.popUp.toFront();
-            this.popUp.center();
-        }
-        popUp.addWindowListener(new java.awt.event.WindowAdapter() {
-        @Override
-        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-            popUp = null;
-            loadTableData();
-        }
-    });
+//        if (this.popUp == null) {
+//            this.popUp = new PopUpUserGUI("POST");
+//            
+//        } else {
+//            this.popUp.toFront();
+//            this.popUp.center();
+//        }
+//        popUp.addWindowListener(new java.awt.event.WindowAdapter() {
+//        @Override
+//        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+//            popUp = null;
+//            loadTableData();
+//        }
+//    });
     }//GEN-LAST:event_btnThemMousePressed
 
     private void itemSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSuaActionPerformed
-        int rowindex = tblUser.getSelectedRow();
-        Long id = Long.parseLong(tblUser.getValueAt(rowindex,0).toString());
-        if (this.popUp == null) {
-        popUp = new PopUpNhanVienGUI("PUT", nhanVienBLL.findById(id));
-        } else {
-            this.popUp.toFront();
-            this.popUp.center();
-        }
-        popUp.addWindowListener(new java.awt.event.WindowAdapter() {
-        @Override
-        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-            popUp = null;
-            loadTableData();
-        }
-    });
+//        int rowindex = tblUser.getSelectedRow();
+//        Long id = Long.parseLong(tblUser.getValueAt(rowindex,0).toString());
+//        if (this.popUp == null) {
+//        popUp = new PopUpUserGUI("PUT", userBLL.findById(id));
+//        } else {
+//            this.popUp.toFront();
+//            this.popUp.center();
+//        }
+//        popUp.addWindowListener(new java.awt.event.WindowAdapter() {
+//        @Override
+//        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+//            popUp = null;
+//            loadTableData();
+//        }
+//    });
     }//GEN-LAST:event_itemSuaActionPerformed
 
     private void tblUserMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUserMouseReleased
@@ -312,19 +313,19 @@ public class UserGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_tblUserMouseReleased
 
     private void itemXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemXoaActionPerformed
-        int response = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa dòng này?");
-        if(response == JOptionPane.YES_OPTION) {
-            int rowindex = tblUser.getSelectedRow();
-            Long id = Long.parseLong(tblUser.getValueAt(rowindex,0).toString());
-            try {
-                nhanVienBLL.updateStatus(false, id);
-                JOptionPane.showMessageDialog(this, "Xóa thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                loadTableData();
-            } catch(Exception e) {
-                JOptionPane.showMessageDialog(this, "Xóa thất bại!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                e.printStackTrace();
-            }
-        }
+//        int response = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa dòng này?");
+//        if(response == JOptionPane.YES_OPTION) {
+//            int rowindex = tblUser.getSelectedRow();
+//            Long id = Long.parseLong(tblUser.getValueAt(rowindex,0).toString());
+//            try {
+//                userBLL.updateStatus(false, id);
+//                JOptionPane.showMessageDialog(this, "Xóa thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//                loadTableData();
+//            } catch(Exception e) {
+//                JOptionPane.showMessageDialog(this, "Xóa thất bại!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+//                e.printStackTrace();
+//            }
+//        }
         
     }//GEN-LAST:event_itemXoaActionPerformed
 

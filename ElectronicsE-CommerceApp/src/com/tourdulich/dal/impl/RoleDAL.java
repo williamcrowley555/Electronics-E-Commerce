@@ -30,15 +30,14 @@ public class RoleDAL extends AbstractDAL<RoleDTO> implements IRoleDAL {
     
     @Override
     public Long save(RoleDTO role) {
-        String sql = "INSERT INTO role(description, image, name, price, status, brand_id, quantity) VALUES(?, ?, ?, ?, ?, ?, ?)";
-       // return insert(sql, role.getDescription(), role.getImage(), role.getName(), role.getPrice(), role.isStatus(), role.getBrandId(), role.getQuantity());
-        return null;
+        String sql = "INSERT INTO role(name, normalized_name) VALUES(?, ?)";
+        return insert(sql, role.getName(), role.getNormalizedName());
     }
 
     @Override
     public void update(RoleDTO role) {
-        String sql = "UPDATE role SET description = ?, image = ?, price = ?, status = ?, brand_id = ? quantity = ? WHERE id = ?";
-      //  update(sql, role.getDescription(), role.getImage(), role.getPrice(), role.isStatus(), role.getBrandId(), role.getId(), role.getQuantity());
+        String sql = "UPDATE role SET name = ?, normalized_name = ? WHERE id = ?";
+        update(sql, role.getName(), role.getNormalizedName(), role.getId());
     }
 
     @Override

@@ -30,7 +30,8 @@ public class UserDTO {
     public UserDTO(Long id) {
         this.id = id;
     }
-
+    public UserDTO() { }
+ 
     public UserDTO(Long id, String firstName, String lastName, LocalDate dob, String address, String phone, String email, String password, RoleDTO role) {
         this.id = id;
         this.firstName = firstName;

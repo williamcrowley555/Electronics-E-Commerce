@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/ChiPhiDoanDAL.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/QuanLyLoaiDuLichGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/IBrandDAL.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/util/UserTableLoaderUtil.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/NhanVienDTO.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/util/NhanVienTableLoaderUtil.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/bll/impl/UserBLL.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/ProductDAL.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/UserGUI.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/UserDAL.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/bll/impl/ProductBLL.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/UserDTO.java</file>
         </group>
     </open-files>
 </project-private>

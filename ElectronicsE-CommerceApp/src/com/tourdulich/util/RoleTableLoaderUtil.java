@@ -35,7 +35,9 @@ public class RoleTableLoaderUtil  implements ITableLoaderUtil<RoleDTO>{
             row.add(role.getId());
             row.add(role.getName());
             row.add(role.getNormalizedName());
+            model.addRow(row);
         }
+        
             
         return model;
     }      

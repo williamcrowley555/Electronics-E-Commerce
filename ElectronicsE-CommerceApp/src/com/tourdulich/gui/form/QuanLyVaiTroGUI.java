@@ -38,7 +38,8 @@ public class QuanLyVaiTroGUI extends javax.swing.JPanel {
     String[] listColumns = {
                             "Id",
                             "Tên Vai Trò",
-                            "Ma Vai Tro"};
+                            "Tên chuẩn hóa"
+    };
     private IRoleBLL roleBLL;
     TableRowSorter<TableModel> rowSorter = null;
     PopUpVaiTroGUI popUp = null;
