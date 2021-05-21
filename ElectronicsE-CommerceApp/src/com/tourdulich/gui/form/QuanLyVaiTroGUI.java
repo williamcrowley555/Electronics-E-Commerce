@@ -5,7 +5,9 @@
  */
 package com.tourdulich.gui.form;
 
+import com.tourdulich.bll.IRoleBLL;
 import com.tourdulich.bll.IVaiTroBLL;
+import com.tourdulich.bll.impl.RoleBLL;
 import com.tourdulich.bll.impl.VaiTroBLL;
 import com.tourdulich.dto.VaiTroDTO;
 import com.tourdulich.gui.popup.PopUpVaiTroGUI;
@@ -17,6 +19,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.tourdulich.gui.menu.MyScrollBarUI;
+import com.tourdulich.util.RoleTableLoaderUtil;
 import com.tourdulich.util.TableSetupUtil;
 import com.tourdulich.util.VaiTroTableLoaderUtil;
 import java.awt.Dimension;
@@ -34,23 +37,24 @@ import javax.swing.table.TableRowSorter;
 public class QuanLyVaiTroGUI extends javax.swing.JPanel {
     String[] listColumns = {
                             "Id",
-                            "Tên Vai Trò"};
-    private IVaiTroBLL vaiTroBLL;
+                            "Tên Vai Trò",
+                            "Ma Vai Tro"};
+    private IRoleBLL roleBLL;
     TableRowSorter<TableModel> rowSorter = null;
     PopUpVaiTroGUI popUp = null;
     public QuanLyVaiTroGUI() {
         initComponents();
         
-        vaiTroBLL = new VaiTroBLL();
+        roleBLL = new RoleBLL();
         
-        //loadTableData();
+        loadTableData();
         
         headerColor(77,77,77,tblVaiTro);
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
     
     public void loadTableData() {
-        tblVaiTro.setModel(new VaiTroTableLoaderUtil().setTable(vaiTroBLL.findAll(), this.listColumns));
+        tblVaiTro.setModel(new RoleTableLoaderUtil().setTable(roleBLL.findAll(), this.listColumns));
         this.rowSorter = TableSetupUtil.setTableFilter(tblVaiTro, txtTimKiem);
         headerColor(14,142,233,tblVaiTro);
     }
@@ -253,22 +257,22 @@ public class QuanLyVaiTroGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemMousePressed
 
     private void itemSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSuaActionPerformed
-        int rowindex = tblVaiTro.getSelectedRow();
-        Long id = Long.parseLong(tblVaiTro.getValueAt(rowindex,0).toString());
-        if (this.popUp == null)
-        {
-            this.popUp = new PopUpVaiTroGUI("PUT", vaiTroBLL.findById(id));
-        } else {
-            this.popUp.toFront();
-            this.popUp.center();
-        }
-        this.popUp.addWindowListener(new java.awt.event.WindowAdapter() {
-        @Override
-        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-            popUp = null;
-            loadTableData();
-        }
-    });
+//        int rowindex = tblVaiTro.getSelectedRow();
+//        Long id = Long.parseLong(tblVaiTro.getValueAt(rowindex,0).toString());
+//        if (this.popUp == null)
+//        {
+//            this.popUp = new PopUpVaiTroGUI("PUT", roleBLL.findById(id));
+//        } else {
+//            this.popUp.toFront();
+//            this.popUp.center();
+//        }
+//        this.popUp.addWindowListener(new java.awt.event.WindowAdapter() {
+//        @Override
+//        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+//            popUp = null;
+//            loadTableData();
+//        }
+//    });
     }//GEN-LAST:event_itemSuaActionPerformed
 
     private void tblVaiTroMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVaiTroMouseReleased
