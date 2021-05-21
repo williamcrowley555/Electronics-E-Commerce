@@ -22,7 +22,9 @@ public class BrandDAL extends AbstractDAL<BrandDTO> implements IBrandDAL {
     @Override
     public List<BrandDTO> findAll() {
         String sql = "SELECT * FROM brand";
+         
         return query(sql, new BrandMapper());
+       
     }
 
     @Override

@@ -16,11 +16,11 @@ import javax.swing.ListCellRenderer;
  
 public class MyComboBoxRenderer extends JLabel implements ListCellRenderer {
     Color matteGrey = new Color(223,230,233);
-    Color flatBlue = new Color(14,142,233);
+    Color flatBlack = new Color(77,77,77);
     public MyComboBoxRenderer() {
         setOpaque(true);
         setFont(new Font("SansSerif", Font.BOLD | Font.PLAIN, 12));
-        setBackground(flatBlue);
+        setBackground(flatBlack);
         setForeground(Color.WHITE);
         
     }

@@ -18,13 +18,16 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import com.tourdulich.gui.menu.MyScrollBarUI;
-import com.tourdulich.gui.popup.PopUpDiaDiemGUI;
+import com.tourdulich.gui.popup.PopUpProductGUI;
 import com.tourdulich.gui.popup.PopUpKhachHangGUI;
 import com.tourdulich.util.DiaDiemTableLoaderUtil;
 import com.tourdulich.util.ProductTableLoaderUtil;
 import com.tourdulich.util.TableSetupUtil;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -53,7 +56,7 @@ public class ProductGUI extends javax.swing.JPanel {
     private IProductBLL productBLL;
     private IDiaDiemBLL diaDiemBLL;
     private ITinhBLL tinhBLL;
-    private PopUpDiaDiemGUI popUp = null;
+    private PopUpProductGUI popUp = null;
     TableRowSorter<TableModel> rowSorter = null;
     
     public ProductGUI() {
@@ -80,7 +83,6 @@ public class ProductGUI extends javax.swing.JPanel {
         model.addRow(row);
         tblDiaDiem.setModel(model);*/
         headerColor(77,77,77,tblProduct);
-        resizeColumnWidth(tblProduct);
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
 
@@ -94,6 +96,7 @@ public class ProductGUI extends javax.swing.JPanel {
         tblProduct.setModel(new ProductTableLoaderUtil().setTable(productBLL.findAll(), this.columnNames)) ;
         this.rowSorter = TableSetupUtil.setTableFilter(tblProduct, txtTimKiem);
          headerColor(77,77,77,tblProduct);
+         resizeColumnWidth(tblProduct);
     }
     
     public void resizeColumnWidth(JTable table) {
@@ -288,7 +291,7 @@ public class ProductGUI extends javax.swing.JPanel {
     private void btnThemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMousePressed
         // TODO add your handling code here:
           if (this.popUp == null) {
-            this.popUp = new PopUpDiaDiemGUI("POST");
+            this.popUp = new PopUpProductGUI("POST");
             
         } else {
             this.popUp.toFront();
@@ -299,6 +302,7 @@ public class ProductGUI extends javax.swing.JPanel {
         public void windowClosed(java.awt.event.WindowEvent windowEvent) {
             popUp = null;
            loadTableData();
+            
         }
     });
     }//GEN-LAST:event_btnThemMousePressed
@@ -307,7 +311,11 @@ public class ProductGUI extends javax.swing.JPanel {
         int rowindex = tblProduct.getSelectedRow();
         Long id = Long.parseLong(tblProduct.getValueAt(rowindex,0).toString());
         if (this.popUp == null) {
-        popUp = new PopUpDiaDiemGUI("PUT", diaDiemBLL.findById(id));
+            try {
+                popUp = new PopUpProductGUI("PUT", productBLL.findById(id));
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             this.popUp.toFront();
             this.popUp.center();
