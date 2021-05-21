@@ -8,6 +8,8 @@ package com.tourdulich.bll.impl;
 import com.tourdulich.bll.IBrand_CatalogBLL;
 import com.tourdulich.dal.IBrandDAL;
 import com.tourdulich.dal.IBrand_CatalogDAL;
+import com.tourdulich.dal.impl.BrandDAL;
+import com.tourdulich.dal.impl.Brand_CatalogDAL;
 import java.util.ArrayList;
 import java.util.List;
 import com.tourdulich.dto.BrandDTO;
@@ -24,6 +26,8 @@ public class Brand_CatalogBLL implements IBrand_CatalogBLL {
     public Brand_CatalogBLL() {
         this.brand_CatalogDAL = brand_CatalogDAL;
         this.brandDAL = brandDAL;
+        brandDAL = new BrandDAL();
+        brand_CatalogDAL = new Brand_CatalogDAL();
     }
     
     @Override
