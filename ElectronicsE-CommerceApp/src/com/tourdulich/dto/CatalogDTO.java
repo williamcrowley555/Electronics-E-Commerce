@@ -12,7 +12,15 @@ package com.tourdulich.dto;
 public class CatalogDTO {
     private Long id;
     private String name;
+   
+    public CatalogDTO() {
+    }
 
+    public CatalogDTO(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    
     public Long getId() {
         return id;
     }

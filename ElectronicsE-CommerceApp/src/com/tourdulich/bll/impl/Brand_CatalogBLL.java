@@ -24,8 +24,10 @@ public class Brand_CatalogBLL implements IBrand_CatalogBLL {
     private IBrand_CatalogDAL brand_CatalogDAL;
     private IBrandDAL brandDAL;
     public Brand_CatalogBLL() {
+
         this.brand_CatalogDAL = new Brand_CatalogDAL();
         this.brandDAL = new BrandDAL();
+
     }
     
     @Override
@@ -34,7 +36,7 @@ public class Brand_CatalogBLL implements IBrand_CatalogBLL {
     }
 
     @Override
-    public CatalogDTO findById(Long idBrand, Long idCatalog) {
+    public Brand_CatalogDTO findById(Long idBrand, Long idCatalog) {
         return brand_CatalogDAL.findById(idBrand, idCatalog);
     }
 
