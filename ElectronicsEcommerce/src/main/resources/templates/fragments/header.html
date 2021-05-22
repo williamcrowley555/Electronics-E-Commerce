@@ -82,7 +82,7 @@
                     <div id="navigation" class="collapse navbar-collapse">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item"><a th:href="@{/}" th:classappend="${#strings.contains(#httpServletRequest.requestURI,'/product') ? '' : 'active'}" class="nav-link">Trang chủ</a></li>
-                            <li class="nav-item"><a th:href="@{/product}" th:classappend="${#strings.contains(#httpServletRequest.requestURI,'/product') ? 'active' : ''}" class="nav-link">Cửa hàng</a></li>
+                            <li class="nav-item"><a th:href="@{/product}" th:classappend="${#strings.contains(#httpServletRequest.requestURI,'/product') ? 'active' : ''}" class="nav-link">Sản phẩm</a></li>
                         </ul>
                         <div class="navbar-buttons d-flex justify-content-end">
                             <!-- /.nav-collapse-->

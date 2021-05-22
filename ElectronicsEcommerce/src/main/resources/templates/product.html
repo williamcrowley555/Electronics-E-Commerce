@@ -82,10 +82,13 @@
                                         <p class="price">
                                             <del></del>[[${#numbers.formatInteger(product.price, 4 , 'POINT')}]] VNĐ
                                         </p>
-                                        <p class="buttons">
+                                        <div class="buttons">
                                             <a th:href="@{|/product/details/${product.id}|}" class="btn btn-outline-secondary">Chi tiết</a>
-                                            <a href="" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
-                                        </p>
+                                            <form th:action="@{/cart/add-product}" method="POST">
+                                                <input type="hidden" th:value="${product.id}" name="id" />
+                                                <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</button>
+                                            </form>
+                                        </div>
                                     </div>
                                     <!-- /.text-->
                                 </div>

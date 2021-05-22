@@ -33,7 +33,7 @@ public class ProductRepositoryTest {
     @Test
     public void testGetProductsByCatalogName() {
         Pageable pageable = PageRequest.of(0, 9);
-        Page<Product> page = productRepository.findByCatalogName("phụ kiện", pageable);
+        Page<Product> page = productRepository.findByCatalogName("laptop", pageable);
         List<Product> products = page.getContent();
         products.forEach(System.out::println);
 
