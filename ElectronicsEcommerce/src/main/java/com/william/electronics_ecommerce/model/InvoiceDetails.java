@@ -81,4 +81,15 @@ public class InvoiceDetails implements Serializable {
     public void setSubTotal(long subTotal) {
         this.subTotal = subTotal;
     }
+
+    @Override
+    public String toString() {
+        return "InvoiceDetails{" +
+                "id=" + id +
+                ", invoice=" + invoice +
+                ", product=" + product +
+                ", quantity=" + quantity +
+                ", subTotal=" + subTotal +
+                '}';
+    }
 }

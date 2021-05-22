@@ -112,7 +112,10 @@ CREATE TABLE `invoice` (
   `ship_date` date DEFAULT NULL,
   `status` int(11) NOT NULL,
   `total` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`)
+  `user_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKjunvl5maki3unqdvljk31kns3` (`user_id`),
+  CONSTRAINT `FKjunvl5maki3unqdvljk31kns3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -285,4 +288,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-22 22:06:29
+-- Dump completed on 2021-05-22 22:11:09

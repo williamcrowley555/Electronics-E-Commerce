@@ -3,6 +3,7 @@ package com.william.electronics_ecommerce.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
@@ -67,10 +68,15 @@ public class Invoice {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate cancellingDate;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @Valid
+    private User user;
+
     public Invoice() {
     }
 
-    public Invoice(String recipientFirstName, String recipientLastName, String address, String phone, long total, Integer status, LocalDate orderDate, LocalDate paymentDate, LocalDate confirmationDate, LocalDate shipDate, LocalDate cancellingDate) {
+    public Invoice(String recipientFirstName, String recipientLastName, String address, String phone, long total, Integer status, LocalDate orderDate, LocalDate paymentDate, LocalDate confirmationDate, LocalDate shipDate, LocalDate cancellingDate, User user) {
         this.recipientFirstName = recipientFirstName;
         this.recipientLastName = recipientLastName;
         this.address = address;
@@ -82,6 +88,7 @@ public class Invoice {
         this.confirmationDate = confirmationDate;
         this.shipDate = shipDate;
         this.cancellingDate = cancellingDate;
+        this.user = user;
     }
 
     public Long getId() {
@@ -180,9 +187,17 @@ public class Invoice {
         this.cancellingDate = cancellingDate;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
-        return "Order{" +
+        return "Invoice{" +
                 "id=" + id +
                 ", recipientFirstName='" + recipientFirstName + '\'' +
                 ", recipientLastName='" + recipientLastName + '\'' +
@@ -195,6 +210,7 @@ public class Invoice {
                 ", confirmationDate=" + confirmationDate +
                 ", shipDate=" + shipDate +
                 ", cancellingDate=" + cancellingDate +
+                ", user=" + user +
                 '}';
     }
 }
