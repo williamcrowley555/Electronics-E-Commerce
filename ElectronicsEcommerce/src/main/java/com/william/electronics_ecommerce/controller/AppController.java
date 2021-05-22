@@ -1,9 +1,11 @@
 package com.william.electronics_ecommerce.controller;
 
 import com.william.electronics_ecommerce.helper.Message;
+import com.william.electronics_ecommerce.model.Product;
 import com.william.electronics_ecommerce.model.Role;
 import com.william.electronics_ecommerce.model.User;
 import com.william.electronics_ecommerce.security.CustomUserDetails;
+import com.william.electronics_ecommerce.service.ProductService;
 import com.william.electronics_ecommerce.service.RoleService;
 import com.william.electronics_ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class AppController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private ProductService productService;
+
     @GetMapping("")
     public String viewHomePage(Model model) {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -44,6 +49,9 @@ public class AppController {
 //        Role adminRole = roleService.getRoleByNormalizedName("ROLE_ADMIN");
 //
 //        model.addAttribute("currentUser", currentUser);
+
+        List<Product> productList = productService.getAllProducts();
+        model.addAttribute("productList", productList);
 
         return "index";
     }
