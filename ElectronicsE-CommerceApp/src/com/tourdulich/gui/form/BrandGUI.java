@@ -5,8 +5,10 @@
  */
 package com.tourdulich.gui.form;
 
+import com.tourdulich.bll.IBrandBLL;
 import com.tourdulich.bll.IDichVuBLL;
 import com.tourdulich.bll.IVaiTroBLL;
+import com.tourdulich.bll.impl.BrandBLL;
 import com.tourdulich.bll.impl.DichVuBLL;
 import com.tourdulich.bll.impl.NhanVienBLL;
 import com.tourdulich.bll.impl.VaiTroBLL;
@@ -17,8 +19,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import com.tourdulich.gui.menu.MyScrollBarUI;
+import com.tourdulich.gui.popup.PopUpBrandGUI;
 import com.tourdulich.gui.popup.PopUpDichVuGUI;
 import com.tourdulich.gui.popup.PopUpNhanVienGUI;
+import com.tourdulich.util.BrandTableLoaderUtil;
 import com.tourdulich.util.DichVuTableLoaderUtil;
 import com.tourdulich.util.NhanVienTableLoaderUtil;
 import com.tourdulich.util.TableSetupUtil;
@@ -38,23 +42,21 @@ public class BrandGUI extends javax.swing.JPanel {
                         "Id",
                         "Tên nhãn hiệu"
     };
-    private IDichVuBLL dichVuBLL;
-    private PopUpDichVuGUI popUp = null;
+    private IBrandBLL brandBLL;
+    private PopUpBrandGUI popUp = null;
     TableRowSorter<TableModel> rowSorter = null;
 
     public BrandGUI() {
         initComponents();
         // Ghi chu
-        dichVuBLL = new DichVuBLL();
-        
-       // loadTableData();   // Sua ham nay 
-        
+        brandBLL = new BrandBLL();
+        loadTableData();   // Sua ham nay 
         headerColor(77,77,77,tblBrand);
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
     
     public void loadTableData() {
-        tblBrand.setModel(new DichVuTableLoaderUtil().setTable(dichVuBLL.findAll(), this.listColumns)) ;
+        tblBrand.setModel(new BrandTableLoaderUtil().setTable(brandBLL.findAll(), this.listColumns)) ;
         this.rowSorter = TableSetupUtil.setTableFilter(tblBrand, txtTimKiem);
         headerColor(77,77,77,tblBrand);
     }
@@ -237,7 +239,7 @@ public class BrandGUI extends javax.swing.JPanel {
 
     private void btnThemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMousePressed
         if (this.popUp == null) {
-            this.popUp = new PopUpDichVuGUI("POST");
+            this.popUp = new PopUpBrandGUI("POST");
             
         } else {
             this.popUp.toFront();
@@ -256,7 +258,7 @@ public class BrandGUI extends javax.swing.JPanel {
         int rowindex = tblBrand.getSelectedRow();
         Long id = Long.parseLong(tblBrand.getValueAt(rowindex,0).toString());
         if (this.popUp == null) {
-        popUp = new PopUpDichVuGUI("PUT", dichVuBLL.findById(id));
+        //popUp = new PopUpBrandGUI("PUT", brandBLL.findById(id));
         } else {
             this.popUp.toFront();
             this.popUp.center();

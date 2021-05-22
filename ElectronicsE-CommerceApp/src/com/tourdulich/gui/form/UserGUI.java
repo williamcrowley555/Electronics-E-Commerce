@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.tourdulich.gui.menu.MyScrollBarUI;
+import com.tourdulich.gui.popup.PopUpUserGUI;
 import com.tourdulich.util.UserTableLoaderUtil;
 import com.tourdulich.util.TableSetupUtil;
 import com.tourdulich.util.UserTableLoaderUtil;
@@ -48,7 +49,7 @@ public class UserGUI extends javax.swing.JPanel {
                         "Trạng thái"
     };
     private IUserBLL userBLL;
-   // private PopUpUserGUI popUp = null;
+    private PopUpUserGUI popUp = null;
     TableRowSorter<TableModel> rowSorter = null;
     
     public UserGUI() {
@@ -58,14 +59,14 @@ public class UserGUI extends javax.swing.JPanel {
         
         loadTableData();
         
-        headerColor(77,77,77,tblUser);
+        
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
     
     public void loadTableData() {
         tblUser.setModel(new UserTableLoaderUtil().setTable(userBLL.findAll(), this.listColumns)) ;
         this.rowSorter = TableSetupUtil.setTableFilter(tblUser, txtTimKiem);
-        headerColor(14,142,233,tblUser);
+        headerColor(77,77,77,tblUser);
     }
     
     public Vector createHeader(Object[] columnNames){
@@ -174,7 +175,7 @@ public class UserGUI extends javax.swing.JPanel {
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTitle.setText("Quản Lý Nhân Viên");
+        lblTitle.setText("Quản Lý Người Dùng");
 
         lblTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/search_icon.png"))); // NOI18N
 
@@ -261,38 +262,38 @@ public class UserGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTimKiemActionPerformed
 
     private void btnThemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMousePressed
-//        if (this.popUp == null) {
-//            this.popUp = new PopUpUserGUI("POST");
-//            
-//        } else {
-//            this.popUp.toFront();
-//            this.popUp.center();
-//        }
-//        popUp.addWindowListener(new java.awt.event.WindowAdapter() {
-//        @Override
-//        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-//            popUp = null;
-//            loadTableData();
-//        }
-//    });
+        if (this.popUp == null) {
+            this.popUp = new PopUpUserGUI("POST");
+            
+        } else {
+            this.popUp.toFront();
+            this.popUp.center();
+        }
+        popUp.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+            popUp = null;
+            loadTableData();
+        }
+    });
     }//GEN-LAST:event_btnThemMousePressed
 
     private void itemSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSuaActionPerformed
-//        int rowindex = tblUser.getSelectedRow();
-//        Long id = Long.parseLong(tblUser.getValueAt(rowindex,0).toString());
-//        if (this.popUp == null) {
-//        popUp = new PopUpUserGUI("PUT", userBLL.findById(id));
-//        } else {
-//            this.popUp.toFront();
-//            this.popUp.center();
-//        }
-//        popUp.addWindowListener(new java.awt.event.WindowAdapter() {
-//        @Override
-//        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-//            popUp = null;
-//            loadTableData();
-//        }
-//    });
+        int rowindex = tblUser.getSelectedRow();
+        Long id = Long.parseLong(tblUser.getValueAt(rowindex,0).toString());
+        if (this.popUp == null) {
+        popUp = new PopUpUserGUI("PUT", userBLL.findById(id));
+        } else {
+            this.popUp.toFront();
+            this.popUp.center();
+        }
+        popUp.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+            popUp = null;
+            loadTableData();
+        }
+    });
     }//GEN-LAST:event_itemSuaActionPerformed
 
     private void tblUserMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUserMouseReleased

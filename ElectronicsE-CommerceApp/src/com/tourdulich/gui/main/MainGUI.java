@@ -20,7 +20,7 @@ import com.tourdulich.gui.form.QuanLyKhachHangGUI;
 import com.tourdulich.gui.form.QuanLyLoaiDuLichGUI;
 import com.tourdulich.gui.form.UserGUI;
 import com.tourdulich.gui.form.QuanLyTourGUI;
-import com.tourdulich.gui.form.QuanLyVaiTroGUI;
+import com.tourdulich.gui.form.RoleGUI;
 import com.tourdulich.gui.form.ThongKeTheoDoanGUI;
 import com.tourdulich.gui.form.ThongKeTheoTourGUI;
 import java.awt.Color;
@@ -130,14 +130,14 @@ public class MainGUI extends javax.swing.JFrame {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
                         panelBody.removeAll();
-                        panelBody.add(new QuanLyVaiTroGUI());
+                        panelBody.add(new RoleGUI());
                         panelBody.repaint();
                         panelBody.revalidate();
-                        Selected(menuNhanVien);
+                        Selected(menuUser);
                     }
                 });
         
-        MenuItem menuNhanVien = new MenuItem(iconStaff, "Quản Lý Nhân Viên", new ActionListener() {
+        MenuItem menuUser = new MenuItem(iconStaff, "Quản Lý Người Dùng", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 panelBody.removeAll();
@@ -146,7 +146,7 @@ public class MainGUI extends javax.swing.JFrame {
                 panelBody.revalidate();
                 
                 
-                Selected(menuNhanVien);
+                Selected(menuUser);
             }
         }, menuVaiTro);
         
@@ -191,7 +191,7 @@ public class MainGUI extends javax.swing.JFrame {
         panelBody.repaint();
         panelBody.revalidate();
         CustomWindow();
-        addMenu(menuProduct,menuKhachHang,menuNhanVien,menuThongKe);
+        addMenu(menuProduct,menuKhachHang,menuUser,menuThongKe);
         Selected(menuProduct);
         
 //        TESTING
@@ -273,7 +273,7 @@ public class MainGUI extends javax.swing.JFrame {
      
        menuProduct.setColor(flatBlack);
        menuKhachHang.setColor(flatBlack);
-       menuNhanVien.setColor(flatBlack);
+       menuUser.setColor(flatBlack);
        menuThongKe.setColor(flatBlack);
     }
    
@@ -311,7 +311,6 @@ public class MainGUI extends javax.swing.JFrame {
         menuScroll = new javax.swing.JScrollPane();
         menus = new javax.swing.JPanel();
         pnlAccount = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         panelBody = new javax.swing.JPanel();
@@ -402,12 +401,8 @@ public class MainGUI extends javax.swing.JFrame {
         pnlAccount.setBackground(new java.awt.Color(77, 77, 77));
         pnlAccount.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(204, 204, 204)));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Xin chào Admin");
-
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/avatar_icon.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/logo.png"))); // NOI18N
 
         javax.swing.GroupLayout pnlAccountLayout = new javax.swing.GroupLayout(pnlAccount);
         pnlAccount.setLayout(pnlAccountLayout);
@@ -418,18 +413,12 @@ public class MainGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(pnlAccountLayout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlAccountLayout.setVerticalGroup(
             pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAccountLayout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addGap(24, 24, 24)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -528,7 +517,6 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblExit;

@@ -6,12 +6,8 @@
 package com.tourdulich.bll.impl;
 
 import com.tourdulich.bll.IBrandBLL;
-import com.tourdulich.bll.ILoaiDuLichBLL;
 import com.tourdulich.dal.IBrandDAL;
-import com.tourdulich.dal.impl.LoaiDuLichDAL;
-import com.tourdulich.dto.LoaiDuLichDTO;
 import java.util.List;
-import com.tourdulich.dal.ILoaiDuLichDAL;
 import com.tourdulich.dal.impl.BrandDAL;
 import com.tourdulich.dto.BrandDTO;
 

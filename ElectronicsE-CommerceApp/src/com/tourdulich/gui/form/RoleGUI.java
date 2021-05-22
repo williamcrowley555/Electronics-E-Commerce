@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.tourdulich.gui.menu.MyScrollBarUI;
+import com.tourdulich.gui.popup.PopUpRoleGUI;
 import com.tourdulich.util.RoleTableLoaderUtil;
 import com.tourdulich.util.TableSetupUtil;
 import com.tourdulich.util.VaiTroTableLoaderUtil;
@@ -34,7 +35,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author RavenPC
  */
-public class QuanLyVaiTroGUI extends javax.swing.JPanel {
+public class RoleGUI extends javax.swing.JPanel {
     String[] listColumns = {
                             "Id",
                             "Tên Vai Trò",
@@ -42,22 +43,23 @@ public class QuanLyVaiTroGUI extends javax.swing.JPanel {
     };
     private IRoleBLL roleBLL;
     TableRowSorter<TableModel> rowSorter = null;
-    PopUpVaiTroGUI popUp = null;
-    public QuanLyVaiTroGUI() {
+    PopUpRoleGUI popUp = null;
+    public RoleGUI() {
         initComponents();
         
         roleBLL = new RoleBLL();
         
         loadTableData();
         
-        headerColor(77,77,77,tblVaiTro);
+        
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
     
     public void loadTableData() {
+       
         tblVaiTro.setModel(new RoleTableLoaderUtil().setTable(roleBLL.findAll(), this.listColumns));
         this.rowSorter = TableSetupUtil.setTableFilter(tblVaiTro, txtTimKiem);
-        headerColor(14,142,233,tblVaiTro);
+        headerColor(77,77,77,tblVaiTro);
     }
     
     public Vector createHeader(Object[] columnNames){
@@ -243,7 +245,7 @@ public class QuanLyVaiTroGUI extends javax.swing.JPanel {
         // TODO add your handling code here:
         if (this.popUp == null)
         {
-            this.popUp = new PopUpVaiTroGUI("POST");
+            this.popUp = new PopUpRoleGUI("POST");
         } else {
             this.popUp.toFront();
             this.popUp.center();
@@ -258,22 +260,22 @@ public class QuanLyVaiTroGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemMousePressed
 
     private void itemSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSuaActionPerformed
-//        int rowindex = tblVaiTro.getSelectedRow();
-//        Long id = Long.parseLong(tblVaiTro.getValueAt(rowindex,0).toString());
-//        if (this.popUp == null)
-//        {
-//            this.popUp = new PopUpVaiTroGUI("PUT", roleBLL.findById(id));
-//        } else {
-//            this.popUp.toFront();
-//            this.popUp.center();
-//        }
-//        this.popUp.addWindowListener(new java.awt.event.WindowAdapter() {
-//        @Override
-//        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-//            popUp = null;
-//            loadTableData();
-//        }
-//    });
+        int rowindex = tblVaiTro.getSelectedRow();
+        Long id = Long.parseLong(tblVaiTro.getValueAt(rowindex,0).toString());
+        if (this.popUp == null)
+        {
+            this.popUp = new PopUpRoleGUI("PUT", roleBLL.findById(id));
+        } else {
+            this.popUp.toFront();
+            this.popUp.center();
+        }
+        this.popUp.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+            popUp = null;
+            loadTableData();
+        }
+    });
     }//GEN-LAST:event_itemSuaActionPerformed
 
     private void tblVaiTroMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVaiTroMouseReleased
