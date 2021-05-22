@@ -14,7 +14,7 @@
                         <!-- breadcrumb-->
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
                                 <li aria-current="page" class="breadcrumb-item active">Sản phẩm / [[${#strings.capitalize(currentCatalog)}]]</li>
                             </ol>
                         </nav>
@@ -73,10 +73,10 @@
                                 <div class="product">
                                     <div class="flip-container">
                                         <div class="flipper">
-                                            <div class="front"><a th:href="@{|/product/details/${product.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" width="100%" class="img-fluid"></a></div>
-                                            <div class="back"><a th:href="@{|/product/details/${product.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" width="100%" class="img-fluid"></a></div>
+                                            <div class="front"><a th:href="@{|/product/details/${product.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" width="100%" class="img-fluid" style="height: 260px; object-fit: contain;"></a></div>
+                                            <div class="back"><a th:href="@{|/product/details/${product.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" width="100%" class="img-fluid" style="height: 260px; object-fit: contain;"></a></div>
                                         </div>
-                                    </div><a href="" class="invisible"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" width="100%" alt="" class="img-fluid"></a>
+                                    </div><a href="" class="invisible"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" width="100%" alt="" class="img-fluid" style="height: 260px; object-fit: contain;"></a>
                                     <div class="text">
                                         <h3 th:text="${product.name}"></h3>
                                         <p class="price">
@@ -84,7 +84,7 @@
                                         </p>
                                         <div class="buttons">
                                             <a th:href="@{|/product/details/${product.id}|}" class="btn btn-outline-secondary">Chi tiết</a>
-                                            <form th:action="@{/cart/add-product}" method="POST">
+                                            <form th:action="@{/cart/add-product}" method="GET">
                                                 <input type="hidden" th:value="${product.id}" name="id" />
                                                 <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</button>
                                             </form>
