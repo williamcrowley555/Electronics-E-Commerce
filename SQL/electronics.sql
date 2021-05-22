@@ -93,6 +93,67 @@ INSERT INTO `catalog` VALUES (1,'laptop'),(2,'phụ kiện');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `invoice`
+--
+
+DROP TABLE IF EXISTS `invoice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `invoice` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `address` varchar(255) NOT NULL,
+  `cancelling_date` date DEFAULT NULL,
+  `confirmation_date` date DEFAULT NULL,
+  `order_date` date NOT NULL,
+  `payment_date` date DEFAULT NULL,
+  `phone` varchar(255) NOT NULL,
+  `recipient_first_name` varchar(255) NOT NULL,
+  `recipient_last_name` varchar(255) NOT NULL,
+  `ship_date` date DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `total` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `invoice`
+--
+
+LOCK TABLES `invoice` WRITE;
+/*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
+/*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `invoice_details`
+--
+
+DROP TABLE IF EXISTS `invoice_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `invoice_details` (
+  `invoice_id` bigint(20) NOT NULL,
+  `product_id` bigint(20) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `sub_total` bigint(20) NOT NULL,
+  PRIMARY KEY (`invoice_id`,`product_id`),
+  KEY `FKswgjrgy5eebhfkmm7bliiyw71` (`product_id`),
+  CONSTRAINT `FKpc7xa72mljy7weoct7uubgjy7` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`id`),
+  CONSTRAINT `FKswgjrgy5eebhfkmm7bliiyw71` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `invoice_details`
+--
+
+LOCK TABLES `invoice_details` WRITE;
+/*!40000 ALTER TABLE `invoice_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `invoice_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `product`
 --
 
@@ -224,4 +285,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-22 17:20:30
+-- Dump completed on 2021-05-22 22:06:29
