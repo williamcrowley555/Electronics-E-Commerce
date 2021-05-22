@@ -34,7 +34,7 @@ public class Brand_CatalogBLL implements IBrand_CatalogBLL {
     }
 
     @Override
-    public CatalogDTO findById(Long idBrand, Long idCatalog) {
+    public Brand_CatalogDTO findById(Long idBrand, Long idCatalog) {
         return brand_CatalogDAL.findById(idBrand, idCatalog);
     }
 

@@ -32,7 +32,8 @@ public class Brand_CatalogDAL extends AbstractDAL<Brand_CatalogDTO> implements I
 
     @Override
     public Long save(Brand_CatalogDTO catalog_brand) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String sql = "INSERT INTO brand_catalog(brand_id, catalog_id) VALUES(?, ?)";
+       return insert(sql, catalog_brand.getBrand_id(), catalog_brand.getCatalog_id());
     }
 
     @Override
@@ -42,11 +43,14 @@ public class Brand_CatalogDAL extends AbstractDAL<Brand_CatalogDTO> implements I
 
     @Override
     public void delete(Long idCatalog, Long idBrand) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "DELETE FROM brand_catalog WHERE catalog_id = ? AND brand_id = ?";
+        update(sql, idCatalog, idBrand);
     }
 
     @Override
-    public CatalogDTO findById(Long idBrand, Long idCatalog) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Brand_CatalogDTO findById(Long idBrand, Long idCatalog) {
+        String sql = "SELECT * FROM brand_catalog WHERE brand_id = ? AND catalog_id = ?";
+        List<Brand_CatalogDTO> brand_Catalog = query(sql, new Brand_CatalogMapper(), idBrand, idCatalog);
+        return brand_Catalog.isEmpty() ? null : brand_Catalog.get(0);
     }
 }
