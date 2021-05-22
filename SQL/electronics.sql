@@ -113,6 +113,7 @@ CREATE TABLE `invoice` (
   `status` int(11) NOT NULL,
   `total` bigint(20) NOT NULL,
   `user_id` bigint(20) DEFAULT NULL,
+  `note` text,
   PRIMARY KEY (`id`),
   KEY `FKjunvl5maki3unqdvljk31kns3` (`user_id`),
   CONSTRAINT `FKjunvl5maki3unqdvljk31kns3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
@@ -288,4 +289,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-22 22:11:09
+-- Dump completed on 2021-05-23  0:12:34

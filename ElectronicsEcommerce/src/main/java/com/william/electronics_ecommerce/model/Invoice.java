@@ -35,6 +35,9 @@ public class Invoice {
     @Pattern(regexp = "0{1}\\d{9,10}", message = "Số điện thoại không hợp lệ")
     private String phone;
 
+    @Column(name = "note", columnDefinition = "TEXT")
+    private String note;
+
     @Column(name = "total", nullable = false)
     @NotNull(message = "Tổng tiền không được để trống")
     private long total;
@@ -76,11 +79,12 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(String recipientFirstName, String recipientLastName, String address, String phone, long total, Integer status, LocalDate orderDate, LocalDate paymentDate, LocalDate confirmationDate, LocalDate shipDate, LocalDate cancellingDate, User user) {
+    public Invoice(String recipientFirstName, String recipientLastName, String address, String phone, String note, long total, Integer status, LocalDate orderDate, LocalDate paymentDate, LocalDate confirmationDate, LocalDate shipDate, LocalDate cancellingDate, User user) {
         this.recipientFirstName = recipientFirstName;
         this.recipientLastName = recipientLastName;
         this.address = address;
         this.phone = phone;
+        this.note = note;
         this.total = total;
         this.status = status;
         this.orderDate = orderDate;
@@ -147,6 +151,14 @@ public class Invoice {
         this.status = status;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     public LocalDate getOrderDate() {
         return orderDate;
     }
@@ -203,6 +215,7 @@ public class Invoice {
                 ", recipientLastName='" + recipientLastName + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
+                ", note='" + note + '\'' +
                 ", total=" + total +
                 ", status=" + status +
                 ", orderDate=" + orderDate +
