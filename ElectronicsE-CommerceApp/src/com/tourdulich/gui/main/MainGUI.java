@@ -113,7 +113,7 @@ public class MainGUI extends javax.swing.JFrame {
             }
         }, menuBrand, menuCatalog);
         
-        MenuItem menuKhachHang = new MenuItem(iconKhachHang, "Quản Lý Khách Hàng", new ActionListener() {
+        MenuItem menuKhachHang = new MenuItem(iconKhachHang, "Nhập Hàng", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 panelBody.removeAll();
