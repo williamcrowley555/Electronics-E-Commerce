@@ -137,24 +137,14 @@ public class UserDTO {
     }
 
     public String getDobFormat() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return dob.format(formatter);
     }
 
-   
-
-
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", roles=" + role +
-                '}';
+        return "UserDTO{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dob=" + dob + ", gender=" + gender + ", address=" + address + ", phone=" + phone + ", email=" + email + ", password=" + password + ", enabled=" + enabled + ", role=" + role + '}';
     }
 
+   
 }
