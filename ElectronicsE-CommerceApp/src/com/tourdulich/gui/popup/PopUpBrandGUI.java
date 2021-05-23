@@ -6,11 +6,15 @@
 package com.tourdulich.gui.popup;
 
 import com.tourdulich.bll.IBrandBLL;
+import com.tourdulich.bll.IBrand_CatalogBLL;
 import com.tourdulich.bll.IDichVuBLL;
 import com.tourdulich.bll.impl.BrandBLL;
+import com.tourdulich.bll.impl.Brand_CatalogBLL;
 import com.tourdulich.bll.impl.DichVuBLL;
 import com.tourdulich.bll.impl.VaiTroBLL;
 import com.tourdulich.dto.BrandDTO;
+import com.tourdulich.dto.Brand_CatalogDTO;
+import com.tourdulich.dto.CatalogDTO;
 import com.tourdulich.dto.DichVuDTO;
 import com.tourdulich.dto.VaiTroDTO;
 import java.awt.Color;
@@ -28,6 +32,7 @@ import javax.swing.plaf.basic.ComboPopup;
 import com.tourdulich.gui.menu.MyComboBoxEditor;
 import com.tourdulich.gui.menu.MyComboBoxRenderer;
 import com.tourdulich.util.InputValidatorUtil;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -68,8 +73,6 @@ public class PopUpBrandGUI extends javax.swing.JFrame {
      
     }
     
-   
-    
     private BrandDTO getFormInfo() {
         BrandDTO brand = new BrandDTO();
         if(this.brand != null) {
@@ -79,7 +82,7 @@ public class PopUpBrandGUI extends javax.swing.JFrame {
       
         return brand;
     }
- 
+    
     public PopUpBrandGUI() {
         initComponents();
         CustomWindow();
