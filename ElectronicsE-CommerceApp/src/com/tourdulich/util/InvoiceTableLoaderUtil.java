@@ -50,9 +50,21 @@ public class InvoiceTableLoaderUtil implements ITableLoaderUtil<InvoiceDTO>{
             row.add(invoice.getRecipientFirstName());
             row.add(invoice.getAddress());
             row.add(invoice.getPhone());
-            row.add(invoice.getNote());
+           
             row.add(invoice.getTotal());
-            row.add(invoice.getStatus());
+            row.add(invoice.getOrderDate());
+            row.add(invoice.getConfirmationDate());
+            row.add(invoice.getPaymentDate());
+            row.add(invoice.getShipDate());
+            row.add(invoice.getCancellingDate());
+            
+            int state = invoice.getStatus();
+            
+            if (state == 0) row.add("Chưa xác nhận");
+            else if (state == 1) row.add("Đã xác nhận");
+            else if (state == 2) row.add("Đã giao");
+            else if (state == 3) row.add("Đã thanh toán");
+            else if (state == 4) row.add("Đã hủy");
             
             model.addRow(row);
         }

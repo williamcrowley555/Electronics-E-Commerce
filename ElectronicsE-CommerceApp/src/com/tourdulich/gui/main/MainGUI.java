@@ -68,7 +68,7 @@ public class MainGUI extends javax.swing.JFrame {
     ImageIcon iconCatalog = new ImageIcon(getClass().getResource("/com/tourdulich/img/catalog_icon.png"));
     ImageIcon iconBrand = new ImageIcon(getClass().getResource("/com/tourdulich/img/brand_icon.png"));
     ImageIcon iconProduct = new ImageIcon(getClass().getResource("/com/tourdulich/img/product_icon.png"));
-    ImageIcon iconKhachHang = new ImageIcon(getClass().getResource("/com/tourdulich/img/khach_hang_icon.png"));
+    ImageIcon iconInvoice = new ImageIcon(getClass().getResource("/com/tourdulich/img/invoice_icon.png"));
     ImageIcon iconKhachSan = new ImageIcon(getClass().getResource("/com/tourdulich/img/hotel_icon.png"));
     ImageIcon iconNhaHang = new ImageIcon(getClass().getResource("/com/tourdulich/img/nha_hang_icon.png"));
     ImageIcon iconPhuongTien = new ImageIcon(getClass().getResource("/com/tourdulich/img/phuong_tien_icon.png"));
@@ -114,7 +114,7 @@ public class MainGUI extends javax.swing.JFrame {
             }
         }, menuBrand, menuCatalog);
         
-        MenuItem menuKhachHang = new MenuItem(iconKhachHang, "Quản Lý Đơn Hàng", new ActionListener() {
+        MenuItem menuKhachHang = new MenuItem(iconInvoice, "Quản Lý Đơn Hàng", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 panelBody.removeAll();
@@ -152,37 +152,8 @@ public class MainGUI extends javax.swing.JFrame {
         }, menuVaiTro);
         
        
-        //----Sub menu TK -----
-                MenuItem menuTkTheoTour= new MenuItem(iconTour, "Theo Tour",new ActionListener() {
-                  @Override
-                    public void actionPerformed(ActionEvent ae) {
-                    panelBody.removeAll();
-                    panelBody.add(new ThongKeTheoTourGUI());
-                    panelBody.repaint();
-                    panelBody.revalidate();
-                    Selected(menuThongKe);
-                    }
-                });
-                
-                MenuItem menuTkTheoDoan= new MenuItem(iconDoan, "Theo Đoàn",new ActionListener() {
-                  @Override
-                    public void actionPerformed(ActionEvent ae) {
-                    panelBody.removeAll();
-                    panelBody.add(new ThongKeTheoDoanGUI());
-                    panelBody.repaint();
-                    panelBody.revalidate();
-                    Selected(menuThongKe);
-                    }
-                });
-                
-       MenuItem menuThongKe = new MenuItem(iconThongKe, "Thống Kê",new ActionListener() {
-       @Override
-            public void actionPerformed(ActionEvent ae) {
-              
-                
-                Selected(menuThongKe);
-            }
-        }, menuTkTheoTour,menuTkTheoDoan);
+        
+      
          
     public MainGUI() {
         initComponents();
@@ -192,7 +163,7 @@ public class MainGUI extends javax.swing.JFrame {
         panelBody.repaint();
         panelBody.revalidate();
         CustomWindow();
-        addMenu(menuProduct,menuKhachHang,menuUser,menuThongKe);
+        addMenu(menuProduct,menuKhachHang,menuUser);
         Selected(menuProduct);
         
 //        TESTING
@@ -275,7 +246,7 @@ public class MainGUI extends javax.swing.JFrame {
        menuProduct.setColor(flatBlack);
        menuKhachHang.setColor(flatBlack);
        menuUser.setColor(flatBlack);
-       menuThongKe.setColor(flatBlack);
+       
     }
    
     public void Selected(MenuItem item)

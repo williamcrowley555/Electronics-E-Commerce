@@ -12,6 +12,7 @@ import com.tourdulich.bll.ICatalogBLL;
 import com.tourdulich.bll.IDiaDiemBLL;
 import com.tourdulich.bll.IDiaDiemBLL;
 import com.tourdulich.bll.IInvoiceBLL;
+import com.tourdulich.bll.IInvoiceDetailBLL;
 import com.tourdulich.bll.IProductBLL;
 import com.tourdulich.bll.ITinhBLL;
 import com.tourdulich.bll.ITinhBLL;
@@ -21,6 +22,7 @@ import com.tourdulich.bll.impl.CatalogBLL;
 import com.tourdulich.bll.impl.DiaDiemBLL;
 import com.tourdulich.bll.impl.DiaDiemBLL;
 import com.tourdulich.bll.impl.InvoiceBLL;
+import com.tourdulich.bll.impl.InvoiceDetailBLL;
 import com.tourdulich.bll.impl.ProductBLL;
 import com.tourdulich.bll.impl.TinhBLL;
 import com.tourdulich.bll.impl.TinhBLL;
@@ -29,6 +31,7 @@ import com.tourdulich.dto.CatalogDTO;
 import com.tourdulich.dto.DiaDiemDTO;
 import com.tourdulich.dto.DiaDiemDTO;
 import com.tourdulich.dto.InvoiceDTO;
+import com.tourdulich.dto.InvoiceDetailDTO;
 import com.tourdulich.dto.ProductDTO;
 import com.tourdulich.dto.TinhDTO;
 import com.tourdulich.dto.TinhDTO;
@@ -92,6 +95,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     private IProductBLL productBLL;
     private IBrand_CatalogBLL brand_catalogBLL;
     private IInvoiceBLL invoiceBLL;
+    private IInvoiceDetailBLL invoiceDetailBLL;
     TableRowSorter<TableModel> rowSorter = null;
     List<ProductDTO> productList = new ArrayList<>();
     DefaultTableModel model;
@@ -130,6 +134,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         catalogBLL = new CatalogBLL();
         brand_catalogBLL = new Brand_CatalogBLL();
         invoiceBLL = new InvoiceBLL();
+        invoiceDetailBLL = new InvoiceDetailBLL();
         CustomWindow();
         myTextArea();
         loadTableData();
@@ -148,6 +153,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         catalogBLL = new CatalogBLL();
         brand_catalogBLL = new Brand_CatalogBLL();
         invoiceBLL = new InvoiceBLL();
+        invoiceDetailBLL = new InvoiceDetailBLL();
         CustomWindow();
         myTextArea();
         loadTableData();
@@ -235,40 +241,68 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     }
     public boolean validateForm() 
     {   
-//        
-//        boolean Ten, Gia, Mota; 
-//        ImageIcon iconCheck = new ImageIcon(getClass().getResource("/com/tourdulich/img/check.png"));
-//        ImageIcon iconError = new ImageIcon(getClass().getResource("/com/tourdulich/img/error.png"));
-//         
-//        
-//        if (InputValidatorUtil.isValidAddress(txtName.getText()).isEmpty())  
-//        {
-//            Ten = true;
-//            lblValidateTen.setIcon(iconCheck);
-//            lblValidateTen.setToolTipText(null);
-//        } else {
-//            Ten = false;
-//            lblValidateTen.setIcon(iconError);
-//            lblValidateTen.setToolTipText(InputValidatorUtil.isValidAddress(txtName.getText()));
-//        } 
-//        
-//        
-//        if (InputValidatorUtil.isVailidNumber(txtSoLuong.getText(), 1000, 100000000).isEmpty())  
-//        {
-//           Gia = true;
-//           lblValidateGia.setIcon(iconCheck);
-//           lblValidateGia.setToolTipText(null);
-//        } else {
-//           Gia = false;
-//           lblValidateGia.setIcon(iconError);
-//           lblValidateGia.setToolTipText(InputValidatorUtil.isVailidNumber(txtSoLuong.getText(), 1000, 100000000));
-//        }
-//        
-//        if (Ten && Gia)
-//        return true;
-//        else return false;
+        
+        if (this.userId == null) 
+        {   
+            JOptionPane.showMessageDialog(this, "Chưa chọn khách hàng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        if (this.productList.isEmpty())
+        {   
+            JOptionPane.showMessageDialog(this, "Chưa chọn sản phẩm cho đơn hàng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        boolean Ho, Ten, SDT, DiaChi, Total; 
+        //ImageIcon iconCheck = new ImageIcon(getClass().getResource("/com/tourdulich/img/check.png"));
+       // ImageIcon iconError = new ImageIcon(getClass().getResource("/com/tourdulich/img/error.png"));
+        
+        if (InputValidatorUtil.isVailidNumber(txtTong.getText(), 10000, null).isEmpty())  
+        {
+            Total = true;
+        } else {
+            JOptionPane.showMessageDialog(this, "Tổng tiền không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            Total = false;      
+        } 
+        
+         if (InputValidatorUtil.isValidName(txtLastName.getText(), true).isEmpty())  
+        {
+            Ho = true;
+        } else {
+            Ho = false;      
+        } 
+        
+         if (InputValidatorUtil.isValidName(txtFirstName.getText(), true).isEmpty())  
+        {
+            Ten = true;
+        } else {
+            Ten = false;      
+        } 
+         
+        
+        if (InputValidatorUtil.isVailidPhoneNumber(txtSDT.getText()).isEmpty())  
+        {
+           SDT = true;
+        } else {
+           SDT = false;   
+        }
+        
+        if (InputValidatorUtil.isValidAddress(txtAddress.getText()).isEmpty())  
+        {
+           DiaChi = true;
+        } else {
+           DiaChi = false;   
+        }
+        
+        if (Ten && Ho && SDT && DiaChi && Total)
+        return true;
+        else 
+        {   
+            JOptionPane.showMessageDialog(this, "Thông tin nhập thiếu hoặc sai, vui lòng kiểm tra lại !", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
       
-       return true;
     }
     
     
@@ -284,7 +318,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         invoice.setRecipientFirstName(txtFirstName.getText().trim());
         invoice.setAddress(txtAddress.getText().trim());
         invoice.setNote(txtNote.getText());
-        invoice.setStatus(0);
+        invoice.setStatus(null);
         invoice.setTotal(Long.parseLong(txtTong.getText()));
         invoice.setPhone(txtSDT.getText());
         LocalDate today = LocalDate.now();
@@ -411,6 +445,8 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         txtTimKiem = new javax.swing.JTextField();
         txtTong = new javax.swing.JTextField();
         btnSum = new javax.swing.JButton();
+        lblTenDiaDiem3 = new javax.swing.JLabel();
+        txtSale = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -570,12 +606,15 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblProduct.setFillsViewportHeight(true);
+        tblProduct.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tblProduct.setRowHeight(35);
         jScrollPane1.setViewportView(tblProduct);
 
         btnXoa.setBackground(new java.awt.Color(77, 77, 77));
         btnXoa.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnXoa.setForeground(new java.awt.Color(255, 255, 255));
-        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/gui/popup/save_icon.png"))); // NOI18N
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/minus_icon.png"))); // NOI18N
         btnXoa.setText("Xóa");
         btnXoa.setBorder(null);
         btnXoa.setContentAreaFilled(false);
@@ -598,12 +637,15 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblInvoice_Product.setFillsViewportHeight(true);
+        tblInvoice_Product.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tblInvoice_Product.setRowHeight(35);
         jScrollPane2.setViewportView(tblInvoice_Product);
 
         btnThem.setBackground(new java.awt.Color(77, 77, 77));
         btnThem.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
-        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/gui/popup/save_icon.png"))); // NOI18N
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/plus_icon.png"))); // NOI18N
         btnThem.setText("Thêm");
         btnThem.setBorder(null);
         btnThem.setContentAreaFilled(false);
@@ -618,7 +660,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         btnUserSelect.setBackground(new java.awt.Color(77, 77, 77));
         btnUserSelect.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnUserSelect.setForeground(new java.awt.Color(255, 255, 255));
-        btnUserSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/gui/popup/save_icon.png"))); // NOI18N
+        btnUserSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/staff_icon.png"))); // NOI18N
         btnUserSelect.setText("Chọn khách");
         btnUserSelect.setBorder(null);
         btnUserSelect.setContentAreaFilled(false);
@@ -652,7 +694,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         btnSum.setBackground(new java.awt.Color(77, 77, 77));
         btnSum.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnSum.setForeground(new java.awt.Color(255, 255, 255));
-        btnSum.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/gui/popup/save_icon.png"))); // NOI18N
+        btnSum.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/plus_icon.png"))); // NOI18N
         btnSum.setText("Tổng");
         btnSum.setBorder(null);
         btnSum.setContentAreaFilled(false);
@@ -661,6 +703,23 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         btnSum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSumActionPerformed(evt);
+            }
+        });
+
+        lblTenDiaDiem3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblTenDiaDiem3.setText("Sale(%):");
+
+        txtSale.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtSale.setText("0");
+        txtSale.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
+        txtSale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSaleActionPerformed(evt);
+            }
+        });
+        txtSale.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSaleKeyReleased(evt);
             }
         });
 
@@ -687,7 +746,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                                         .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(lblTenDiaDiem1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                                         .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(pnlBodyLayout.createSequentialGroup()
                                         .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -699,7 +758,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                                 .addComponent(lblTinh2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                                 .addComponent(lblTinh1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -709,23 +768,29 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlBodyLayout.createSequentialGroup()
-                                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
-                                .addComponent(btnSum, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTong, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2))
-                        .addGap(175, 175, 175)
-                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnLuu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblValidateTen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(pnlBodyLayout.createSequentialGroup()
                                     .addComponent(lblValidateMota, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(lblValidateGia, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(pnlBodyLayout.createSequentialGroup()
+                                    .addComponent(lblValidateGia, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(pnlBodyLayout.createSequentialGroup()
+                                .addComponent(btnSum, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblValidateTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtTong, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlBodyLayout.createSequentialGroup()
+                                .addComponent(lblTenDiaDiem3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtSale, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(40, 40, 40))
         );
         pnlBodyLayout.setVerticalGroup(
@@ -764,26 +829,29 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(AreaScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
-                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnSum, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                            .addComponent(txtTong))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
-                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
-                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
-                                .addComponent(lblValidateTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(92, 92, 92)
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTenDiaDiem3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSale, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(pnlBodyLayout.createSequentialGroup()
+                                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblValidateTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnSum, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(78, 78, 78)
                                 .addComponent(lblValidateGia, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
-                                .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)))
+                            .addGroup(pnlBodyLayout.createSequentialGroup()
+                                .addComponent(txtTong, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblValidateMota, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -852,7 +920,14 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
             if(this.action.equals("POST")) {
                 Long newInvoiceId = invoiceBLL.save(newInvoice);
                 if(newInvoiceId != null) {
-
+                    InvoiceDetailDTO invoiceDetail;
+                    for (int i = 0; i < productList.size(); ++i) 
+                    {
+                        invoiceDetail = new InvoiceDetailDTO(newInvoiceId, productList.get(i).getId(), productList.get(i).getQuantity(),
+                        productList.get(i).getQuantity()*productList.get(i).getPrice());
+                        invoiceDetailBLL.save(invoiceDetail);
+                    }
+                    
                     JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
 
@@ -900,6 +975,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                                      });
 
          }
+        btnSum.doClick(); 
 
           if (productList.size() > 0) 
                  tblInvoice_Product.setModel(model);
@@ -915,81 +991,96 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
        productBLL = new ProductBLL();
        int rowindex = tblProduct.getSelectedRow();
+       
        if (rowindex >=0)
        {
         
         Long id = Long.parseLong(tblProduct.getValueAt(rowindex,0).toString());
         ProductDTO selected = productBLL.findById(id);
-        boolean duplicate = false;
-        for (ProductDTO product : productList)
+        if (InputValidatorUtil.isVailidNumber(txtSoLuong.getText(), 1, selected.getQuantity()).isEmpty())
         {
-            if (product.getId().equals(selected.getId()))
-            duplicate = true;
-        }
-
-         if (!duplicate)
-         {   
-              
-             ProductDTO temp = selected;
-             if (temp.getQuantity()!=0)
-             { 
-                temp.setQuantity(Integer.parseInt(txtSoLuong.getText()));
-                productList.add(temp);
-                model = new DefaultTableModel(columnNamesInvoice_Product,0);
-                for (int i = 0; i < productList.size(); i++) {
-                model.addRow(new Object[]   {
-                                            String.valueOf(productList.get(i).getId()),
-                                            String.valueOf(productList.get(i).getName()),
-                                            String.valueOf(productList.get(i).getPrice()),
-                                            String.valueOf(productList.get(i).getQuantity()),
-                                            String.valueOf(productList.get(i).getQuantity()*productList.get(i).getPrice())
-                                           
-                                        });
-                
-                tblInvoice_Product.setModel(model);
-                }  
-             }
-         } else if (duplicate)
-         {
-             for (ProductDTO product : productList)
+            boolean duplicate = false;
+            for (ProductDTO product : productList)
             {
                 if (product.getId().equals(selected.getId()))
-                {   
-                    if (product.getQuantity()+Integer.parseInt(txtSoLuong.getText()) <= selected.getQuantity())
-                    {    
-                    product.setQuantity(product.getQuantity()+Integer.parseInt(txtSoLuong.getText()));
+                duplicate = true;
+            }
+
+             if (!duplicate)
+             {   
+
+                 ProductDTO temp = selected;
+                 if (temp.getQuantity()!=0)
+                 { 
+                    temp.setQuantity(Integer.parseInt(txtSoLuong.getText()));
+                    productList.add(temp);
                     model = new DefaultTableModel(columnNamesInvoice_Product,0);
-                        for (int i = 0; i < productList.size(); i++) {
-                        model.addRow(new Object[]   {
-                                                    String.valueOf(productList.get(i).getId()),
-                                                    String.valueOf(productList.get(i).getName()),
-                                                    String.valueOf(productList.get(i).getPrice()),
-                                                    String.valueOf(productList.get(i).getQuantity()),
-                                                    String.valueOf(productList.get(i).getQuantity()*productList.get(i).getPrice())
-                                                });
-                         
-                        tblInvoice_Product.setModel(model);
-                        
-                        }  
+                    for (int i = 0; i < productList.size(); i++) {
+                    model.addRow(new Object[]   {
+                                                String.valueOf(productList.get(i).getId()),
+                                                String.valueOf(productList.get(i).getName()),
+                                                String.valueOf(productList.get(i).getPrice()),
+                                                String.valueOf(productList.get(i).getQuantity()),
+                                                String.valueOf(productList.get(i).getQuantity()*productList.get(i).getPrice())
+
+                                            });
+
+                    tblInvoice_Product.setModel(model);
+                    
+                    }  
+                    btnSum.doClick();
+                 }
+             } else if (duplicate)
+             {
+                 for (ProductDTO product : productList)
+                {
+                    if (product.getId().equals(selected.getId()))
+                    {   
+                        if (product.getQuantity()+Integer.parseInt(txtSoLuong.getText()) <= selected.getQuantity())
+                        {    
+                        product.setQuantity(product.getQuantity()+Integer.parseInt(txtSoLuong.getText()));
+                        model = new DefaultTableModel(columnNamesInvoice_Product,0);
+                            for (int i = 0; i < productList.size(); i++) {
+                            model.addRow(new Object[]   {
+                                                        String.valueOf(productList.get(i).getId()),
+                                                        String.valueOf(productList.get(i).getName()),
+                                                        String.valueOf(productList.get(i).getPrice()),
+                                                        String.valueOf(productList.get(i).getQuantity()),
+                                                        String.valueOf(productList.get(i).getQuantity()*productList.get(i).getPrice())
+                                                    });
+
+                            tblInvoice_Product.setModel(model);
+
+                            }  
+                        }
                     }
                 }
-            }
-         }
-         headerColor(77,77,77,tblInvoice_Product);      
-         txtTong.setText(total.toString());
-       }    else JOptionPane.showMessageDialog(this, "Hãy chọn 1 sản phẩm để thêm", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                 btnSum.doClick();
+             }
+             headerColor(77,77,77,tblInvoice_Product);      
+             txtTong.setText(total.toString());
+       } else JOptionPane.showMessageDialog(this, InputValidatorUtil.isVailidNumber(txtSoLuong.getText(), 1, selected.getQuantity()), "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+      }    else JOptionPane.showMessageDialog(this, "Hãy chọn 1 sản phẩm để thêm", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnUserSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserSelectActionPerformed
         // TODO add your handling code here:
         if (this.popUp == null) {
             this.popUp = new PopUpTableChonUserGUI(this);
+            this.popUp.toFront();
+            this.popUp.center();
             popUp.setVisible(true);
         } else {
             this.popUp.toFront();
             this.popUp.center();
         }
-        
+        popUp.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+            popUp = null;
+           
+        }
+        });
         
     }//GEN-LAST:event_btnUserSelectActionPerformed
 
@@ -1001,13 +1092,29 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTongActionPerformed
 
+    private void txtSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSaleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSaleActionPerformed
+
+    private void txtSaleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSaleKeyReleased
+         
+    }//GEN-LAST:event_txtSaleKeyReleased
+
     private void btnSumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSumActionPerformed
         // TODO add your handling code here:
-        total = 0L;
-        for (int i = 0; i < productList.size(); i++) {
-            total += productList.get(i).getPrice()*productList.get(i).getQuantity();
-        }
-        txtTong.setText(total.toString());
+        if (InputValidatorUtil.isVailidNumber(txtSale.getText(), 0, 80).isEmpty())
+        {
+            total = 0L;
+            for (int i = 0; i < productList.size(); i++) {
+                total += productList.get(i).getPrice()*productList.get(i).getQuantity();
+            }
+
+
+
+            Long sale = this.total*Long.parseLong(txtSale.getText())/100;
+            Long result = total - sale;
+            txtTong.setText(result.toString());
+        } else JOptionPane.showMessageDialog(this, "% Khuyến mãi không hợp lệ !", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnSumActionPerformed
 
     /**
@@ -1095,6 +1202,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblTenDiaDiem;
     private javax.swing.JLabel lblTenDiaDiem1;
     private javax.swing.JLabel lblTenDiaDiem2;
+    private javax.swing.JLabel lblTenDiaDiem3;
     private javax.swing.JLabel lblTinh1;
     private javax.swing.JLabel lblTinh2;
     private javax.swing.JLabel lblValidateGia;
@@ -1109,6 +1217,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtLastName;
     private javax.swing.JTextArea txtNote;
     private javax.swing.JTextField txtSDT;
+    private javax.swing.JTextField txtSale;
     private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtTimKiem;
     private javax.swing.JTextField txtTong;

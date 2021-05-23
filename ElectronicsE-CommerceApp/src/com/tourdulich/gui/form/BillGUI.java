@@ -7,12 +7,18 @@ package com.tourdulich.gui.form;
 
 import com.tourdulich.bll.IGiaTourBLL;
 import com.tourdulich.bll.IInvoiceBLL;
+import com.tourdulich.bll.IInvoiceDetailBLL;
 import com.tourdulich.bll.ILoaiDuLichBLL;
+import com.tourdulich.bll.IProductBLL;
 import com.tourdulich.bll.ITourBLL;
 import com.tourdulich.bll.impl.GiaTourBLL;
 import com.tourdulich.bll.impl.InvoiceBLL;
+import com.tourdulich.bll.impl.InvoiceDetailBLL;
 import com.tourdulich.bll.impl.LoaiDuLichBLL;
+import com.tourdulich.bll.impl.ProductBLL;
 import com.tourdulich.bll.impl.TourBLL;
+import com.tourdulich.dto.InvoiceDTO;
+import com.tourdulich.dto.ProductDTO;
 import com.tourdulich.dto.TourDTO;
 import com.tourdulich.gui.menu.MyComboBoxEditor;
 import com.tourdulich.gui.menu.MyComboBoxRenderer;
@@ -24,12 +30,18 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import com.tourdulich.gui.menu.MyScrollBarUI;
 import com.tourdulich.gui.popup.PopUpGiaTourGUI;
+import com.tourdulich.gui.popup.popUpDInvoiceDetailGUI;
 import com.tourdulich.gui.popup.popUpInvoiceGUI;
 import com.tourdulich.util.GiaTourTableLoaderUtil;
 import com.tourdulich.util.InvoiceTableLoaderUtil;
 import com.tourdulich.util.LoaiDuLichTableLoaderUtil;
 import com.tourdulich.util.TableSetupUtil;
+import java.awt.Component;
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -39,6 +51,8 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.plaf.basic.ComboPopup;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -58,23 +72,29 @@ public class BillGUI extends javax.swing.JPanel {
                             "Tên",
                             "Địa Chỉ",
                             "SĐT",
-                            "Ghi chú",
                             "Tổng tiền",
+                            "Ngày đặt",
+                            "Ngày xác nhận",
+                            "Ngày Thanh toán",
+                            "Ngày giao hàng",
+                            "Ngày hủy đơn",
                             "Trạng thái"
                             };
          
-    private ILoaiDuLichBLL loaiDuLichBLL;
     private ITourBLL tourBLL;
-    private IGiaTourBLL giaTourBLL;
     private IInvoiceBLL invoiceBLL;
     private popUpInvoiceGUI popUp = null;
+    private popUpDInvoiceDetailGUI popUpDetail = null;
+    private IInvoiceDetailBLL invoiceDetailBLL;
+    private IProductBLL productBLL;
     TableRowSorter<TableModel> rowSorter = null;
     
     public BillGUI() {
         initComponents();
        
         invoiceBLL = new InvoiceBLL();
-       
+        invoiceDetailBLL = new InvoiceDetailBLL();
+        productBLL = new ProductBLL();
         loadTableData();
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
        
@@ -82,10 +102,11 @@ public class BillGUI extends javax.swing.JPanel {
     
     public void loadTableData() {
       
-        tblGiaTour.setModel(new InvoiceTableLoaderUtil().setTable(invoiceBLL.findAll(), this.columnNames)) ; 
+        tblInvoice.setModel(new InvoiceTableLoaderUtil().setTable(invoiceBLL.findAll(), this.columnNames)) ; 
      
-        this.rowSorter = TableSetupUtil.setTableFilter(tblGiaTour, txtTimKiem);
-        headerColor(77,77,77,tblGiaTour);
+        this.rowSorter = TableSetupUtil.setTableFilter(tblInvoice, txtTimKiem);
+        //resizeColumnWidth(tblInvoice);
+        headerColor(77,77,77,tblInvoice);
     }
     
     public String[] getTourItems() {
@@ -109,6 +130,21 @@ public class BillGUI extends javax.swing.JPanel {
             header.add(colName);
         }
         return header;
+    }
+    
+    public void resizeColumnWidth(JTable table) {
+    final TableColumnModel columnModel = table.getColumnModel();
+    for (int column = 0; column < table.getColumnCount(); column++) {
+        int width = 40; // Min width
+        for (int row = 0; row < table.getRowCount(); row++) {
+            TableCellRenderer renderer = table.getCellRenderer(row, column);
+            Component comp = table.prepareRenderer(renderer, row, column);
+            width = Math.max(comp.getPreferredSize().width +1 , width);
+        }
+        if(width > 200)
+            width=200;
+        columnModel.getColumn(column).setPreferredWidth(width);
+        }
     }
     
     public void headerColor(int r, int b, int g, JTable table)
@@ -167,7 +203,11 @@ public class BillGUI extends javax.swing.JPanel {
     private void initComponents() {
 
         rightClickMenu = new javax.swing.JPopupMenu();
-        itemSua = new javax.swing.JMenuItem();
+        itemConfirm = new javax.swing.JMenuItem();
+        itemConfirmShip = new javax.swing.JMenuItem();
+        itemConfirmPayment = new javax.swing.JMenuItem();
+        itemConfirmCancel = new javax.swing.JMenuItem();
+        itemXemChiTietDon = new javax.swing.JMenuItem();
         pnlHead = new javax.swing.JPanel();
         btnThem = new javax.swing.JButton();
         txtTimKiem = new javax.swing.JTextField();
@@ -175,17 +215,57 @@ public class BillGUI extends javax.swing.JPanel {
         lblTimKiem = new javax.swing.JLabel();
         pnlBody = new javax.swing.JPanel();
         scroll = new javax.swing.JScrollPane();
-        tblGiaTour = new javax.swing.JTable();
+        tblInvoice = new javax.swing.JTable();
 
-        itemSua.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        itemSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/edit_icon.png"))); // NOI18N
-        itemSua.setText("Sửa");
-        itemSua.addActionListener(new java.awt.event.ActionListener() {
+        itemConfirm.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        itemConfirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/check.png"))); // NOI18N
+        itemConfirm.setText("Xác nhận đơn");
+        itemConfirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemSuaActionPerformed(evt);
+                itemConfirmActionPerformed(evt);
             }
         });
-        rightClickMenu.add(itemSua);
+        rightClickMenu.add(itemConfirm);
+
+        itemConfirmShip.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        itemConfirmShip.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/confirm_ship_icon.png"))); // NOI18N
+        itemConfirmShip.setText("Xác nhận đã ship");
+        itemConfirmShip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemConfirmShipActionPerformed(evt);
+            }
+        });
+        rightClickMenu.add(itemConfirmShip);
+
+        itemConfirmPayment.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        itemConfirmPayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/paid_icon.png"))); // NOI18N
+        itemConfirmPayment.setText("Xác nhận đã thanh toán");
+        itemConfirmPayment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemConfirmPaymentActionPerformed(evt);
+            }
+        });
+        rightClickMenu.add(itemConfirmPayment);
+
+        itemConfirmCancel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        itemConfirmCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/error.png"))); // NOI18N
+        itemConfirmCancel.setText("Hủy đơn");
+        itemConfirmCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemConfirmCancelActionPerformed(evt);
+            }
+        });
+        rightClickMenu.add(itemConfirmCancel);
+
+        itemXemChiTietDon.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        itemXemChiTietDon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/view_detail_icon.png"))); // NOI18N
+        itemXemChiTietDon.setText("Xem chi tiết đơn");
+        itemXemChiTietDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemXemChiTietDonActionPerformed(evt);
+            }
+        });
+        rightClickMenu.add(itemXemChiTietDon);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -257,7 +337,7 @@ public class BillGUI extends javax.swing.JPanel {
 
         pnlBody.setBackground(new java.awt.Color(255, 255, 255));
 
-        tblGiaTour.setModel(new javax.swing.table.DefaultTableModel(
+        tblInvoice.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -268,15 +348,15 @@ public class BillGUI extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblGiaTour.setFillsViewportHeight(true);
-        tblGiaTour.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tblGiaTour.setRowHeight(35);
-        tblGiaTour.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblInvoice.setFillsViewportHeight(true);
+        tblInvoice.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tblInvoice.setRowHeight(35);
+        tblInvoice.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tblGiaTourMouseReleased(evt);
+                tblInvoiceMouseReleased(evt);
             }
         });
-        scroll.setViewportView(tblGiaTour);
+        scroll.setViewportView(tblInvoice);
 
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
@@ -290,8 +370,7 @@ public class BillGUI extends javax.swing.JPanel {
         pnlBodyLayout.setVerticalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -325,15 +404,15 @@ public class BillGUI extends javax.swing.JPanel {
     });
     }//GEN-LAST:event_btnThemMousePressed
 
-    private void tblGiaTourMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGiaTourMouseReleased
-        int r = tblGiaTour.rowAtPoint(evt.getPoint());
-        if (r >= 0 && r < tblGiaTour.getRowCount()) {
-            tblGiaTour.setRowSelectionInterval(r, r);
+    private void tblInvoiceMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblInvoiceMouseReleased
+        int r = tblInvoice.rowAtPoint(evt.getPoint());
+        if (r >= 0 && r < tblInvoice.getRowCount()) {
+            tblInvoice.setRowSelectionInterval(r, r);
         } else {
-           tblGiaTour.clearSelection();
+           tblInvoice.clearSelection();
         }
 
-        int rowindex = tblGiaTour.getSelectedRow();
+        int rowindex = tblInvoice.getSelectedRow();
         
        
         if (rowindex < 0)
@@ -342,37 +421,139 @@ public class BillGUI extends javax.swing.JPanel {
             
             rightClickMenu.show(evt.getComponent(), evt.getX(), evt.getY());
         }
-    }//GEN-LAST:event_tblGiaTourMouseReleased
+    }//GEN-LAST:event_tblInvoiceMouseReleased
 
-    private void itemSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSuaActionPerformed
-        int rowindex = tblGiaTour.getSelectedRow();
-        Long id = Long.parseLong(tblGiaTour.getValueAt(rowindex,0).toString());
-        if (this.popUp == null) {
-            //popUp = new PopUpGiaTourGUI("PUT", giaTourBLL.findById(id));
-        } else {
-            this.popUp.toFront();
-            this.popUp.center();
-        }
-        popUp.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-                popUp = null;
-                loadTableData();
+    private void itemConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConfirmActionPerformed
+        int rowindex = tblInvoice.getSelectedRow();
+        Long id = Long.parseLong(tblInvoice.getValueAt(rowindex,0).toString());
+        
+        InvoiceDTO invoice = invoiceBLL.findById(id);
+        if (invoice.getStatus()==0)
+        {
+            invoice.setStatus(1);
+            invoice.setConfirmationDate(LocalDate.now());
+            invoiceBLL.update(invoice);
+            JOptionPane.showMessageDialog(this, "Xác nhận thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            loadTableData();
+        } else if (invoice.getStatus()==1 ) JOptionPane.showMessageDialog(this, "Đơn hàng này đã được xác nhận", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        else  JOptionPane.showMessageDialog(this, "Không thể xác nhận đơn này", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+       
+//        if (this.popUp == null) {
+//            //popUp = new PopUpGiaTourGUI("PUT", giaTourBLL.findById(id));
+//        } else {
+//            this.popUp.toFront();
+//            this.popUp.center();
+//        }
+//        popUp.addWindowListener(new java.awt.event.WindowAdapter() {
+//            @Override
+//            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+//                popUp = null;
+//                loadTableData();
+//            }
+//        });
+    }//GEN-LAST:event_itemConfirmActionPerformed
+
+    private void itemConfirmPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConfirmPaymentActionPerformed
+        int rowindex = tblInvoice.getSelectedRow();
+        Long id = Long.parseLong(tblInvoice.getValueAt(rowindex,0).toString());
+        
+        InvoiceDTO invoice = invoiceBLL.findById(id);
+        if (invoice.getStatus()==2)
+        {
+            invoice.setStatus(3);
+            invoice.setPaymentDate(LocalDate.now());
+            invoiceBLL.update(invoice);
+            JOptionPane.showMessageDialog(this, "Xác nhận đã thanh toán thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            loadTableData();
+        } else if (invoice.getStatus()==3) JOptionPane.showMessageDialog(this, "Đơn hàng này đã được được thanh toán rồi", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        else  JOptionPane.showMessageDialog(this, "Không thể xác nhận thanh toán đơn hàng này", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_itemConfirmPaymentActionPerformed
+
+    private void itemConfirmShipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConfirmShipActionPerformed
+        // TODO add your handling code here:
+        int rowindex = tblInvoice.getSelectedRow();
+        Long id = Long.parseLong(tblInvoice.getValueAt(rowindex,0).toString());
+        
+        InvoiceDTO invoice = invoiceBLL.findById(id);
+        if (invoice.getStatus()==1)
+        {
+            invoice.setStatus(2);
+            invoice.setShipDate(LocalDate.now());
+            invoiceBLL.update(invoice);
+            JOptionPane.showMessageDialog(this, "Xác nhận đã giao hàng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            loadTableData();
+        } else if (invoice.getStatus()==2) JOptionPane.showMessageDialog(this, "Đơn hàng này đã được được giao rồi", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        else  JOptionPane.showMessageDialog(this, "Không thể xác nhận giao đơn hàng này", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        
+    }//GEN-LAST:event_itemConfirmShipActionPerformed
+
+    private void itemConfirmCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConfirmCancelActionPerformed
+        // TODO add your handling code here:
+        int rowindex = tblInvoice.getSelectedRow();
+        Long id = Long.parseLong(tblInvoice.getValueAt(rowindex,0).toString());
+        
+        InvoiceDTO invoice = invoiceBLL.findById(id);
+        if (invoice.getStatus()==0 || invoice.getStatus()==1)
+        {
+            invoice.setStatus(4);
+            invoice.setCancellingDate(LocalDate.now());
+            invoiceBLL.update(invoice);
+            
+            List<ProductDTO> products = invoiceDetailBLL.findByIdInvoice(invoice.getId());
+            
+             for (int i = 0; i < products.size(); ++i) {
+                 ProductDTO temp = products.get(i);
+                 int quantityInvoice = invoiceDetailBLL.findById(invoice.getId(), temp.getId()).getQuantity();
+                 temp.setQuantity(temp.getQuantity()+ quantityInvoice);
+                 productBLL.update(temp);
             }
-        });
-    }//GEN-LAST:event_itemSuaActionPerformed
+            
+            
+            
+            JOptionPane.showMessageDialog(this, "Xác nhận hủy đơn hàng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            loadTableData();
+        } else if (invoice.getStatus()==4) JOptionPane.showMessageDialog(this, "Đơn hàng này đã được được hủy rồi", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        else  JOptionPane.showMessageDialog(this, "Không thể xác nhận hủy hàng này", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_itemConfirmCancelActionPerformed
+
+    private void itemXemChiTietDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemXemChiTietDonActionPerformed
+        // TODO add your handling code here:đấ
+        int rowindex = tblInvoice.getSelectedRow();
+        Long id = Long.parseLong(tblInvoice.getValueAt(rowindex,0).toString());
+        if (this.popUpDetail == null) {
+            try {
+                popUpDetail = new popUpDInvoiceDetailGUI("PUT", invoiceBLL.findById(id));
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(BillGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.popUpDetail.toFront();
+            this.popUpDetail.center();
+        }
+        popUpDetail.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+            popUpDetail = null;
+            
+        }
+    });
+    }//GEN-LAST:event_itemXemChiTietDonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnThem;
-    private javax.swing.JMenuItem itemSua;
+    private javax.swing.JMenuItem itemConfirm;
+    private javax.swing.JMenuItem itemConfirmCancel;
+    private javax.swing.JMenuItem itemConfirmPayment;
+    private javax.swing.JMenuItem itemConfirmShip;
+    private javax.swing.JMenuItem itemXemChiTietDon;
     private javax.swing.JLabel lblTimKiem;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel pnlBody;
     private javax.swing.JPanel pnlHead;
     private javax.swing.JPopupMenu rightClickMenu;
     private javax.swing.JScrollPane scroll;
-    private javax.swing.JTable tblGiaTour;
+    private javax.swing.JTable tblInvoice;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

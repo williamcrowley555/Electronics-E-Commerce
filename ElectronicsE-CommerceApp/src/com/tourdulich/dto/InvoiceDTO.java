@@ -161,10 +161,37 @@ public class InvoiceDTO {
     }
     
     public String getOrderDateFormat() {
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return orderDate.format(formatter);
     }
     
+    public String getConfirmDateFormat() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if (confirmationDate != null)
+        return confirmationDate.format(formatter);
+        else return null;
+    }
     
+    public String getPaidDateFormat() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if (paymentDate != null)
+        return paymentDate.format(formatter);
+        else return null;
+    }
+    
+    public String getCancelDateFormat() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if (cancellingDate != null)
+        return cancellingDate.format(formatter);
+        else return null;
+    }
+    
+    public String getShipDateFormat() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if (shipDate != null)
+        return shipDate.format(formatter);
+        else return null;
+    }
     
 }
