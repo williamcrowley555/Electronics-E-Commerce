@@ -99,11 +99,6 @@ public class AppController {
         return "redirect:/register?success";
     }
 
-    @GetMapping("/checkout")
-    public String showCheckoutPage() {
-        return "checkout";
-    }
-
     @GetMapping("/403")
     public String error403() {
         return "403";

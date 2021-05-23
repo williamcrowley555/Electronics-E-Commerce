@@ -11,4 +11,5 @@ public interface CartService {
     Cart getCart(HttpSession session);
     void setCart(HttpSession session, Cart cart);
     void removeCart(HttpSession session);
+    void clearCart(HttpSession session);
 }

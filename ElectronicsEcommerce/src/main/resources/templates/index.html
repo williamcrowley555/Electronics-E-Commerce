@@ -77,12 +77,12 @@
                             <div class="product">
                                 <div class="flip-container">
                                     <div class="flipper">
-                                        <div class="front"><a th:href="@{|/product/details/${product.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" class="img-fluid"></a></div>
-                                        <div class="back"><a th:href="@{|/product/details/${product.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" class="img-fluid"></a></div>
+                                        <div class="front"><a th:href="@{|/product/details/${product.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" class="img-fluid" style="height: 260px; object-fit: contain;"></a></div>
+                                        <div class="back"><a th:href="@{|/product/details/${product.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" class="img-fluid" style="height: 260px; object-fit: contain;"></a></div>
                                     </div>
-                                </div><a th:href="@{|/product/details/${product.id}|}" class="invisible"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" class="img-fluid"></a>
+                                </div><a th:href="@{|/product/details/${product.id}|}" class="invisible"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" class="img-fluid" style="height: 260px; object-fit: contain;"></a>
                                 <div class="text">
-                                    <h3><a href="detail.html">[[${product.name}]]</a></h3>
+                                    <h3><a th:href="@{|/product/details/${product.id}|}">[[${product.name}]]</a></h3>
                                     <p class="price">
                                         <del></del>[[${#numbers.formatInteger(product.price, 4 , 'POINT')}]] VNĐ
                                     </p>

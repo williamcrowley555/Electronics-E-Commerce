@@ -22,11 +22,15 @@ import com.tourdulich.gui.menu.MyScrollBarUI;
 import com.tourdulich.gui.popup.PopUpBrandGUI;
 import com.tourdulich.gui.popup.PopUpDichVuGUI;
 import com.tourdulich.gui.popup.PopUpNhanVienGUI;
+import com.tourdulich.gui.popup.PopUpProductGUI;
 import com.tourdulich.util.BrandTableLoaderUtil;
 import com.tourdulich.util.DichVuTableLoaderUtil;
 import com.tourdulich.util.NhanVienTableLoaderUtil;
 import com.tourdulich.util.TableSetupUtil;
 import java.awt.Dimension;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
@@ -258,7 +262,7 @@ public class BrandGUI extends javax.swing.JPanel {
         int rowindex = tblBrand.getSelectedRow();
         Long id = Long.parseLong(tblBrand.getValueAt(rowindex,0).toString());
         if (this.popUp == null) {
-        //popUp = new PopUpBrandGUI("PUT", brandBLL.findById(id));
+            popUp = new PopUpBrandGUI("PUT", brandBLL.findById(id));
         } else {
             this.popUp.toFront();
             this.popUp.center();
