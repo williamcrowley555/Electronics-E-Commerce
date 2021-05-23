@@ -4,12 +4,6 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/UserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/main/MainGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpImportGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpProductGUI.java</file>
-        </group>
-        <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/UserGUI.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/QuanLyGiaTourGUI.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/main/MainGUI.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpImportGUI.java</file>
@@ -69,6 +63,19 @@
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/util/InvoiceDetailTableLoaderUtil.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/popUpDInvoiceDetailGUI.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/main/MainGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/util/InvoiceTableLoaderUtil.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/mapper/impl/InvoiceMapper.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/BillGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/popUpInvoiceGUI.java</file>
+        </group>
+        <group>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/UserGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/InvoiceDAL.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpTableChonUserGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/util/InvoiceDetailTableLoaderUtil.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/popUpDInvoiceDetailGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/main/MainGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpUserGUI.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/util/InvoiceTableLoaderUtil.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/mapper/impl/InvoiceMapper.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/BillGUI.java</file>

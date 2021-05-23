@@ -36,8 +36,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="panelHeader" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              <Component id="pnlBody" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+              <Component id="pnlBody" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -144,38 +144,41 @@
                               </Group>
                               <Component id="DCNgaySinh" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                                  <Component id="lblVaiTro" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="lblSDT2" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblSDT1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lblSDT1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                  <Component id="txtSDT1" min="-2" pref="130" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="lblVaiTro" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblSDT2" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                  <Component id="radioNam" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="radioNam" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="radioNu" min="-2" pref="49" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="txtSDT2" min="-2" pref="130" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="1" attributes="0">
-                                              <Component id="btnLuu" min="-2" pref="100" max="-2" attributes="0"/>
-                                              <Component id="ComboboxVaiTro" min="-2" max="-2" attributes="0"/>
-                                              <Component id="btnHuy" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="lblValidateNgaySinh" min="-2" pref="24" max="-2" attributes="0"/>
-                                      </Group>
+                                  <Component id="radioNu" min="-2" pref="49" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                  <Component id="btnHuy" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="ComboboxVaiTro" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblValidateNgaySinh" min="-2" pref="24" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="btnLuu" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="txtSDT1" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblValidateEmail" min="-2" pref="24" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="txtSDT2" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblValidatePassword" min="-2" pref="24" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -197,16 +200,15 @@
                       <Component id="lblNgaySinh" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="lblDiaChi" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
@@ -233,28 +235,36 @@
                                   <Component id="lblValidateSDT" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="lblNgaySinh" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtSDT1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblSDT1" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtSDT1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblSDT1" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="lblValidateEmail" min="-2" pref="21" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblSDT2" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
-                              <Component id="txtSDT2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblSDT2" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                                  <Component id="txtSDT2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="lblValidatePassword" min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblGioiTinh" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="radioNam" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="radioNu" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace pref="31" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="lblNgaySinh" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblValidateNgaySinh" min="-2" pref="22" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -265,22 +275,23 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="lblDiaChi" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="27" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Component id="lblValidateDiaChi" min="-2" pref="29" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="AreaScrollPane" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="btnLuu" min="-2" pref="38" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnHuy" min="-2" pref="38" max="-2" attributes="0"/>
-                          <EmptySpace pref="41" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="btnLuu" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="btnHuy" min="-2" pref="38" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="AreaScrollPane" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="42" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -575,6 +586,10 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblValidateEmail">
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblValidatePassword">
         </Component>
       </SubComponents>
     </Container>
