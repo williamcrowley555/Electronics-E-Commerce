@@ -43,6 +43,7 @@
                                     <form th:action="@{/cart/update-product}" method="GET">
                                         <td>
                                             <input type="number" th:value="${item.quantity}" min="1" th:max="${item.product.quantity}" name="qty" class="form-control">
+                                            <p th:if="${param.inadequate}" class="text-danger text-center">Tối đa là [[${item.product.quantity}]]</p>
                                         </td>
                                         <td>[[${#numbers.formatInteger(item.product.price, 4 , 'POINT')}]]</td>
                                         <td>[[${#numbers.formatInteger(item.subTotal, 4 , 'POINT')}]]</td>

@@ -82,6 +82,13 @@ public class InvoiceServiceImpl implements InvoiceService {
     public Invoice cancelInvoice(Invoice invoice) {
         invoice.setStatus(4);
         invoice.setCancellingDate(LocalDate.now());
+
+        for (InvoiceDetails detail : invoice.getDetails()) {
+            Product product =  detail.getProduct();
+            int quantity = detail.getQuantity();
+            product.setQuantity(product.getQuantity() + quantity);
+            productService.saveProduct(product);
+        }
         return invoiceRepository.save(invoice);
     }
 }
