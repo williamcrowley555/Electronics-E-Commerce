@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:replace="fragments/header :: html_head(headTitle = 'Home')"></head>
+<head th:replace="fragments/header :: html_head(headTitle = 'Product Details')"></head>
 
 <body>
 <th:block th:replace="fragments/header :: navbar"></th:block>
@@ -14,8 +14,8 @@
                     <!-- breadcrumb-->
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                            <li aria-current="page" class="breadcrumb-item active">Sản phẩm </li>
+                            <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+                            <li aria-current="page" class="breadcrumb-item active">Sản phẩm / [[${product.name}]] </li>
                         </ol>
                     </nav>
                 </div>
@@ -62,9 +62,15 @@
                                 <p class="goToDescription">
                                     <a href="#details" class="scroll-to">Xem mô tả tại đây</a>
                                 </p>
-                                <p class="text-center buttons">
-                                    <a href="" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                                </p>
+                                <div class="buttons">
+                                    <form th:action="@{/cart/add-product}" method="GET"  class="d-flex flex-column">
+                                        <input type="hidden" th:value="${product.id}" name="id" />
+                                        <label class="form-inline d-block">Số lượng:
+                                            <input type="number" value="1" min="1" th:max="${product.quantity}" name="qty" class="form-control ml-2">
+                                        </label>
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</button>
+                                    </form>
+                                </div>
                             </div>
                             <div data-slider-id="1" class="owl-thumbs">
                                 <button class="owl-thumb-item"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" class="img-fluid"></button>
@@ -92,10 +98,10 @@
                             <div class="product">
                                 <div class="flip-container">
                                     <div class="flipper">
-                                        <div class="front"><a th:href="@{|/product/details/${p.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{p.image}}" alt="" width="100%" class="img-fluid"></a></div>
-                                        <div class="back"><a th:href="@{|/product/details/${p.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{p.image}}" alt="" width="100%" class="img-fluid"></a></div>
+                                        <div class="front"><a th:href="@{|/product/details/${p.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{p.image}}" alt="" width="100%" class="img-fluid" style="height: 260px; object-fit: contain;"></a></div>
+                                        <div class="back"><a th:href="@{|/product/details/${p.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{p.image}}" alt="" width="100%" class="img-fluid" style="height: 260px; object-fit: contain;"></a></div>
                                     </div>
-                                </div><a href="" class="invisible"><img th:src="*{'data:image/jpeg;base64,'+{p.image}}" width="100%" alt="" class="img-fluid"></a>
+                                </div><a href="" class="invisible"><img th:src="*{'data:image/jpeg;base64,'+{p.image}}" width="100%" alt="" class="img-fluid" style="height: 260px; object-fit: contain;"></a>
                                 <div class="text">
                                     <h3 th:text="${p.name}"></h3>
                                     <p class="price">
