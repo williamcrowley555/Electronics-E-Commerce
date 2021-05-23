@@ -6,6 +6,8 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Invoice")
 @Table(name = "invoice")
@@ -39,10 +41,9 @@ public class Invoice {
     private String note;
 
     @Column(name = "total", nullable = false)
-    @NotNull(message = "Tổng tiền không được để trống")
     private long total;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     @Min(value = 1)
     @Max(value = 5)
 //    1: Confirmed
@@ -51,9 +52,8 @@ public class Invoice {
     private Integer status;
 
     @Column(name = "orderDate", nullable = false)
-    @NotNull(message = "Ngày đặt hàng không được để trống")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate orderDate;
+    private LocalDate orderDate = LocalDate.now();
 
     @Column(name = "paymentDate")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -76,6 +76,9 @@ public class Invoice {
     @Valid
     private User user;
 
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
+    private List<InvoiceDetails> details = new ArrayList<>();
+
     public Invoice() {
     }
 
@@ -93,6 +96,23 @@ public class Invoice {
         this.shipDate = shipDate;
         this.cancellingDate = cancellingDate;
         this.user = user;
+    }
+
+    public Invoice(String recipientFirstName, String recipientLastName, String address, String phone, String note, long total, Integer status, LocalDate orderDate, LocalDate paymentDate, LocalDate confirmationDate, LocalDate shipDate, LocalDate cancellingDate, User user, List<InvoiceDetails> details) {
+        this.recipientFirstName = recipientFirstName;
+        this.recipientLastName = recipientLastName;
+        this.address = address;
+        this.phone = phone;
+        this.note = note;
+        this.total = total;
+        this.status = status;
+        this.orderDate = orderDate;
+        this.paymentDate = paymentDate;
+        this.confirmationDate = confirmationDate;
+        this.shipDate = shipDate;
+        this.cancellingDate = cancellingDate;
+        this.user = user;
+        this.details = details;
     }
 
     public Long getId() {
@@ -207,6 +227,22 @@ public class Invoice {
         this.user = user;
     }
 
+    public List<InvoiceDetails> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<InvoiceDetails> details) {
+        this.details = details;
+    }
+
+    public void addDetail(Product product, int quantity, long subTotal) {
+        this.details.add(new InvoiceDetails(this, product, quantity, subTotal));
+    }
+
+    public void setDetail(InvoiceDetails detail) {
+        this.details.remove(detail);
+    }
+
     @Override
     public String toString() {
         return "Invoice{" +
@@ -224,6 +260,7 @@ public class Invoice {
                 ", shipDate=" + shipDate +
                 ", cancellingDate=" + cancellingDate +
                 ", user=" + user +
+                ", details=" + details +
                 '}';
     }
 }

@@ -29,4 +29,12 @@ public class CartServiceImpl implements CartService {
         session.removeAttribute(SESSION_KEY_SHOPPING_CART);
     }
 
+    @Override
+    public void clearCart(HttpSession session) {
+        Cart cart = (Cart) session.getAttribute(SESSION_KEY_SHOPPING_CART);
+        if (cart != null) {
+            cart.clear();
+            setCart(session, cart);
+        }
+    }
 }
