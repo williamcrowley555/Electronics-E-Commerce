@@ -15,9 +15,9 @@ import java.util.List;
 public interface IUser_RoleDAL extends GenericDAL<User_RoleDTO>{
     List<User_RoleDTO> findAll();
     List<Long> findByIdRole(Long idRole);
-    
+    List<Long> findByIdUser(Long idUser);
     User_RoleDTO findById(Long idUser, Long idRole);
-    Long save(User_RoleDTO user_role);
-    void update(User_RoleDTO user_role);
+    Long save(Long idUser, Long idRole);
+    void update(Long idUser, Long idRole,Long idUserOld,Long idRoleOld);
     void delete(Long idRole, Long idUser);    
 }

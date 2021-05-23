@@ -25,14 +25,14 @@ public class UserDTO {
     private String email;
     private String password;
     private boolean enabled = true;
-    private RoleDTO role;
+   
     
     public UserDTO(Long id) {
         this.id = id;
     }
     public UserDTO() { }
- 
-    public UserDTO(Long id, String firstName, String lastName, LocalDate dob, String address, String phone, String email, String password, RoleDTO role) {
+
+    public UserDTO(Long id, String firstName, String lastName, LocalDate dob, String address, String phone, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,8 +41,7 @@ public class UserDTO {
         this.phone = phone;
         this.email = email;
         this.password = password;
-        this.role = role;
-    }  
+    }
 
     public Long getId() {
         return id;
@@ -124,17 +123,8 @@ public class UserDTO {
         this.enabled = enabled;
     }
 
-    public RoleDTO getRole() {
-        return role;
-    }
-
-    public void setRole(RoleDTO role) {
-        this.role = role;
-    }
-
-    public String getFullName() {
-        return lastName + " " + firstName;
-    }
+    
+    
 
     public String getDobFormat() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -143,8 +133,10 @@ public class UserDTO {
 
     @Override
     public String toString() {
-        return "UserDTO{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dob=" + dob + ", gender=" + gender + ", address=" + address + ", phone=" + phone + ", email=" + email + ", password=" + password + ", enabled=" + enabled + ", role=" + role + '}';
+        return "UserDTO{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dob=" + dob + ", gender=" + gender + ", address=" + address + ", phone=" + phone + ", email=" + email + ", password=" + password + ", enabled=" + enabled + '}';
     }
+
+   
 
    
 }

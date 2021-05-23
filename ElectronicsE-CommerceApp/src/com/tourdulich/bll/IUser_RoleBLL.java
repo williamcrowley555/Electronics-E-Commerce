@@ -5,6 +5,7 @@
  */
 package com.tourdulich.bll;
 
+import com.tourdulich.dto.RoleDTO;
 import com.tourdulich.dto.UserDTO;
 import com.tourdulich.dto.User_RoleDTO;
 import java.util.List;
@@ -16,8 +17,9 @@ import java.util.List;
 public interface IUser_RoleBLL {
     List<User_RoleDTO> findAll();
     List<UserDTO> findByIdRole(Long idRole);
+    List<RoleDTO> findByIdUser(Long idUser);
     User_RoleDTO findById(Long idUser, Long idRole);
-    Long save(User_RoleDTO user_role);
-    void update(User_RoleDTO user_role);
+    Long save(Long idUser, Long idRole);
+    void update(Long idUser, Long idRole,Long idUserOld,Long idRoleOld);
     void delete(Long idRole, Long idUser);    
 }
