@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 @Service
 public class CartServiceImpl implements CartService {
+
     @Override
     public Cart getCart(HttpSession session) {
         Cart cart = (Cart) session.getAttribute(SESSION_KEY_SHOPPING_CART);
@@ -27,6 +28,5 @@ public class CartServiceImpl implements CartService {
     public void removeCart(HttpSession session) {
         session.removeAttribute(SESSION_KEY_SHOPPING_CART);
     }
-
 
 }
