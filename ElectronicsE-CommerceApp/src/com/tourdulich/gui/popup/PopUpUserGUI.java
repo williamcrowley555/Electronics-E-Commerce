@@ -6,11 +6,17 @@
 package com.tourdulich.gui.popup;
 
 import com.toedter.calendar.JTextFieldDateEditor;
+import com.tourdulich.bll.IRoleBLL;
 import com.tourdulich.bll.IUserBLL;
+import com.tourdulich.bll.IUser_RoleBLL;
 import com.tourdulich.bll.IVaiTroBLL;
+import com.tourdulich.bll.impl.RoleBLL;
 import com.tourdulich.bll.impl.UserBLL;
+import com.tourdulich.bll.impl.User_RoleBLL;
 import com.tourdulich.bll.impl.VaiTroBLL;
+import com.tourdulich.dto.RoleDTO;
 import com.tourdulich.dto.UserDTO;
+import com.tourdulich.dto.User_RoleDTO;
 import com.tourdulich.dto.VaiTroDTO;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -49,18 +55,21 @@ public class PopUpUserGUI extends javax.swing.JFrame {
     private String action;
     private UserDTO user = null;
     private IUserBLL userBLL;
-    private IVaiTroBLL vaiTroBLL;
+    private IRoleBLL roleBLL;
+    private IUser_RoleBLL user_roleBLL;
+    private RoleDTO role;
     public PopUpUserGUI(String action) {
         initComponents();
         
         this.action = action;    
         userBLL = new UserBLL();
-        
+        roleBLL = new RoleBLL();
+        user_roleBLL = new User_RoleBLL();
         CustomWindow();
         myTextArea();
-       
+        setComboBox(ComboboxVaiTro, getVaiTroItems());
         disableEditingDateChooser(true);
-        
+        ComboboxVaiTro = myComboBox(ComboboxVaiTro, new Color(77,77,77));
         this.setVisible(true);    
     }
     
@@ -69,13 +78,12 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         this.action = action;  
         this.user = user;
         userBLL = new UserBLL();
-      
+        user_roleBLL = new User_RoleBLL();
         CustomWindow();
         myTextArea();
         
         setLabelText(user);
-        
-       
+        ComboboxVaiTro = myComboBox(ComboboxVaiTro, new Color(77,77,77));
         this.setVisible(true);    
     }
     public void disableEditingDateChooser(boolean flag)
@@ -102,7 +110,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         txtSDT.setText(user.getPhone());
         txtSDT1.setText(user.getEmail());
         txtSDT2.setText(user.getPassword());
-       
+       // ComboboxVaiTro.setSelectedItem(getVaiTroItemName(user_roleBLL.findByIdUser(user.getId()).get(0)));
        
     }
     public boolean validateForm() 
@@ -225,7 +233,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         user.setEmail(txtSDT1.getText().trim());
         String ernText = MD5.encrypt(txtSDT2.getText().trim());
         user.setPassword(ernText);
-   
+
         return user;
     }
     
@@ -234,18 +242,18 @@ public class PopUpUserGUI extends javax.swing.JFrame {
     } 
     
     public String[] getVaiTroItems() {
-        List<VaiTroDTO> vaiTroLists = vaiTroBLL.findAll();
-        String[] vaiTroItems = new String[vaiTroLists.size()];
+        List<RoleDTO> roleLists = roleBLL.findAll();
+        String[] roleItems = new String[roleLists.size()];
         int index = 0;
-        for(VaiTroDTO vt : vaiTroLists) {
-            vaiTroItems[index] = vt.getId() + " - " + vt.getTenVaiTro();
+        for(RoleDTO vt : roleLists) {
+            roleItems[index] = vt.getId() + " - " + vt.getName();
             ++ index;
         }
-        return vaiTroItems;
+        return roleItems;
     }
     
-    public String getVaiTroItemName(VaiTroDTO vaiTro) {
-        return vaiTro.getId() + " - " + vaiTro.getTenVaiTro();
+    public String getVaiTroItemName(RoleDTO role) {
+        return role.getId() + " - " + role.getName();
     }
     
     public PopUpUserGUI() {
@@ -343,6 +351,8 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         txtSDT1 = new javax.swing.JTextField();
         lblSDT2 = new javax.swing.JLabel();
         txtSDT2 = new javax.swing.JTextField();
+        lblVaiTro = new javax.swing.JLabel();
+        ComboboxVaiTro = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -439,14 +449,14 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         lblSDT.setText("Sđt:");
         lblSDT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        btnLuu.setBackground(new java.awt.Color(77, 77, 77));
+        btnLuu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
         btnLuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/gui/popup/save_icon.png"))); // NOI18N
         btnLuu.setText(" Lưu");
-        btnLuu.setBackground(new java.awt.Color(77, 77, 77));
         btnLuu.setBorder(null);
         btnLuu.setContentAreaFilled(false);
         btnLuu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnLuu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
         btnLuu.setOpaque(true);
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -454,14 +464,14 @@ public class PopUpUserGUI extends javax.swing.JFrame {
             }
         });
 
+        btnHuy.setBackground(new java.awt.Color(77, 77, 77));
+        btnHuy.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnHuy.setForeground(new java.awt.Color(255, 255, 255));
         btnHuy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/gui/popup/cancel_icon.png"))); // NOI18N
         btnHuy.setText(" Hủy");
-        btnHuy.setBackground(new java.awt.Color(77, 77, 77));
         btnHuy.setBorder(null);
         btnHuy.setContentAreaFilled(false);
         btnHuy.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnHuy.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnHuy.setForeground(new java.awt.Color(255, 255, 255));
         btnHuy.setOpaque(true);
         btnHuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -483,17 +493,27 @@ public class PopUpUserGUI extends javax.swing.JFrame {
 
         lblValidateHo.setPreferredSize(new java.awt.Dimension(24, 24));
 
-        lblSDT1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblSDT1.setText("Email:");
+        lblSDT1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        txtSDT1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtSDT1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
+        txtSDT1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        lblSDT2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblSDT2.setText("Mật Khẩu:");
+        lblSDT2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        txtSDT2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtSDT2.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
+        txtSDT2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        lblVaiTro.setText("Vai trò:");
+
+        ComboboxVaiTro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboboxVaiTro.setPreferredSize(new java.awt.Dimension(130, 26));
+        ComboboxVaiTro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboboxVaiTroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
@@ -502,64 +522,63 @@ public class PopUpUserGUI extends javax.swing.JFrame {
             .addGroup(pnlBodyLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(pnlBodyLayout.createSequentialGroup()
-                            .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(pnlBodyLayout.createSequentialGroup()
-                                    .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(pnlBodyLayout.createSequentialGroup()
-                                                .addComponent(lblTen)
-                                                .addGap(12, 12, 12)
-                                                .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(lblValidateTen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                            .addGroup(pnlBodyLayout.createSequentialGroup()
-                                                .addComponent(lblHo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(12, 12, 12)
-                                                .addComponent(txtHo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(lblValidateHo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addComponent(DCNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblTen)
+                                    .addGap(12, 12, 12)
+                                    .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(pnlBodyLayout.createSequentialGroup()
-                                            .addComponent(lblSDT1)
-                                            .addGap(38, 38, 38)
-                                            .addComponent(txtSDT1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(pnlBodyLayout.createSequentialGroup()
-                                            .addGap(121, 121, 121)
-                                            .addComponent(lblValidateNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(pnlBodyLayout.createSequentialGroup()
-                                            .addComponent(lblSDT2)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addGroup(pnlBodyLayout.createSequentialGroup()
-                                                    .addComponent(radioNam)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(radioNu, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addComponent(txtSDT2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(lblValidateTen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGroup(pnlBodyLayout.createSequentialGroup()
-                                    .addGap(1, 1, 1)
-                                    .addComponent(lblSDT)
+                                    .addComponent(lblHo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(12, 12, 12)
-                                    .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(12, 12, 12)
-                                    .addComponent(lblValidateSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lblGioiTinh)))
-                            .addGap(10, 10, 10))
-                        .addGroup(pnlBodyLayout.createSequentialGroup()
-                            .addComponent(AreaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(lblValidateDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtHo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(lblValidateHo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(DCNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlBodyLayout.createSequentialGroup()
+                                .addComponent(lblSDT1)
+                                .addGap(38, 38, 38)
+                                .addComponent(txtSDT1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlBodyLayout.createSequentialGroup()
+                                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblVaiTro)
+                                    .addComponent(lblSDT2))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(pnlBodyLayout.createSequentialGroup()
+                                            .addComponent(radioNam)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(radioNu, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtSDT2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(ComboboxVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblValidateNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(lblSDT)
+                        .addGap(12, 12, 12)
+                        .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(lblValidateSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblGioiTinh))
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                        .addComponent(AreaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblValidateDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblNgaySinh)
                     .addComponent(lblDiaChi))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlBodyLayout.setVerticalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -601,16 +620,19 @@ public class PopUpUserGUI extends javax.swing.JFrame {
                             .addComponent(radioNu))))
                 .addGap(18, 18, 18)
                 .addComponent(lblNgaySinh)
-                .addGap(5, 5, 5)
+                .addGap(4, 4, 4)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblValidateNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DCNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(DCNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblVaiTro)
+                        .addComponent(ComboboxVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(lblDiaChi)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 27, Short.MAX_VALUE)
                         .addComponent(lblValidateDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(77, 77, 77))
                     .addGroup(pnlBodyLayout.createSequentialGroup()
@@ -618,17 +640,17 @@ public class PopUpUserGUI extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
                         .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(39, Short.MAX_VALUE))))
+                        .addContainerGap(41, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
-            .addComponent(pnlBody, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+            .addComponent(pnlBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -665,10 +687,20 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTenActionPerformed
 
+    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnHuyActionPerformed
+
+    private void ComboboxVaiTroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboboxVaiTroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboboxVaiTroActionPerformed
+
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         if (validateForm())
         {
             UserDTO newUser = null;
+           
             try {
                 newUser = getFormInfo();
             } catch (IOException ex) {
@@ -677,18 +709,21 @@ public class PopUpUserGUI extends javax.swing.JFrame {
                 Logger.getLogger(PopUpUserGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            if(this.action.equals("POST")) {           
-                    Long newUserId = userBLL.save(newUser);
-                    if(newUserId != null) {
+            if(this.action.equals("POST")) {
+                Long newUserId = userBLL.save(newUser);
+                String selectedRole = ComboboxVaiTro.getSelectedItem().toString();
+                Long idRole = Long.parseLong(selectedRole.substring(0, selectedRole.indexOf(" - ")));
+                //  Long newRoleId = user_roleBLL.save(newRole);
+                if(newUserId != null) {
+                    user_roleBLL.save(newUserId,idRole);
+                    JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
 
-                        JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                        dispose();
-
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Lưu thất bại!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Lưu thất bại!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
             } else if(this.action.equals("PUT")) {
-                try {    
+                try {
                     userBLL.update(newUser);
                     JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
@@ -699,11 +734,6 @@ public class PopUpUserGUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnLuuActionPerformed
-
-    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_btnHuyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -749,6 +779,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane AreaScrollPane;
+    private javax.swing.JComboBox<String> ComboboxVaiTro;
     private com.github.lgooddatepicker.components.DatePicker DCNgaySinh;
     private javax.swing.ButtonGroup btnGroupGioiTinh;
     private javax.swing.JButton btnHuy;
@@ -763,6 +794,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblSDT1;
     private javax.swing.JLabel lblSDT2;
     private javax.swing.JLabel lblTen;
+    private javax.swing.JLabel lblVaiTro;
     private javax.swing.JLabel lblValidateDiaChi;
     private javax.swing.JLabel lblValidateHo;
     private javax.swing.JLabel lblValidateNgaySinh;

@@ -12,4 +12,12 @@ public class InvoiceDetailsId implements Serializable {
 
     @Column(name = "product_id", nullable=false, updatable=false)
     private Long productId;
+
+    public InvoiceDetailsId() {
+    }
+
+    public InvoiceDetailsId(Long invoiceId, Long productId) {
+        this.invoiceId = invoiceId;
+        this.productId = productId;
+    }
 }

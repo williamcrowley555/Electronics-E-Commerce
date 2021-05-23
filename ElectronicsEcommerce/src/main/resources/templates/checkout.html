@@ -21,20 +21,26 @@
                     </div>
                     <div id="checkout" class="col-lg-8">
                         <div class="box">
-                            <form method="get" action="checkout2.html">
+                            <form th:action="@{/invoice/save}" th:object="${invoice}" method="POST">
                                 <h1>Thông tin người nhận</h1>
                                 <div class="content py-3">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
+                                                <div th:if="${#fields.hasErrors('recipientLastName')}" th:errors="*{recipientLastName}"
+                                                     class="alert alert-danger" role="alert">Error Message
+                                                </div>
                                                 <label for="lastname">Họ:</label>
-                                                <input id="lastname" type="text" class="form-control">
+                                                <input th:field="*{recipientLastName}" id="lastname" type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
+                                                <div th:if="${#fields.hasErrors('recipientFirstName')}" th:errors="*{recipientFirstName}"
+                                                     class="alert alert-danger" role="alert">Error Message
+                                                </div>
                                                 <label for="firstname">Tên:</label>
-                                                <input id="firstname" type="text" class="form-control">
+                                                <input th:field="*{recipientFirstName}" id="firstname" type="text" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -42,14 +48,20 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
+                                                <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"
+                                                     class="alert alert-danger" role="alert">Error Message
+                                                </div>
                                                 <label for="phone">Số điện thoại:</label>
-                                                <input id="phone" type="text" class="form-control">
+                                                <input th:field="*{phone}" id="phone" type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
+                                                <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+                                                     class="alert alert-danger" role="alert">Error Message
+                                                </div>
                                                 <label for="address">Địa chỉ:</label>
-                                                <input id="address" type="text" class="form-control">
+                                                <input th:field="*{address}" id="address" type="text" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -58,7 +70,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="note">Ghi chú:</label>
-                                                <textarea id="note" type="text" class="form-control" rows="4"></textarea>
+                                                <textarea th:field="*{note}" id="note" type="text" class="form-control" rows="4"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -86,7 +98,7 @@
                                         <tbody>
                                         <tr>
                                             <td>Thành tiền</td>
-                                            <th>$446.00</th>
+                                            <th>[[${#numbers.formatInteger(session.shoppingCart.total, 4 , 'POINT')}]] VNĐ</th>
                                         </tr>
                                         <tr>
                                             <td>Tiền vận chuyển</td>
@@ -94,7 +106,7 @@
                                         </tr>
                                         <tr class="total">
                                             <td>Tổng cộng</td>
-                                            <th>$456.00</th>
+                                            <th>[[${#numbers.formatInteger(session.shoppingCart.total, 4 , 'POINT')}]] VNĐ</th>
                                         </tr>
                                         </tbody>
                                     </table>

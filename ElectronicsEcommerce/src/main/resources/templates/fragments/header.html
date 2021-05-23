@@ -69,7 +69,7 @@
                             <div sec:authorize="isAuthenticated()" class="dropdown">
                                 <button sec:authentication="principal.fullName" class="btn btn-link text-light shadow-none dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item text-dark" href="#">Lịch sử đặt hàng</a>
+                                    <a th:href="@{/invoice/history}" class="dropdown-item text-dark">Lịch sử đặt hàng</a>
                                     <form th:action="@{/logout}" method="POST">
                                         <input class="dropdown-item" type="submit" value="Đăng xuất">
                                     </form>

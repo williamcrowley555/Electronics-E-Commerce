@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -33,11 +34,22 @@ public class CartController {
     public String addProduct(HttpSession session, HttpServletRequest request,
                              @RequestParam("id") Long productId,
                              @RequestParam(value = "qty", required = false, defaultValue = "1") int quantity) {
+        String referer = request.getHeader("Referer");
         Product product = productService.getProductById(productId);
         Cart cart = cartService.getCart(session);
-        cart.addItem(product, quantity);
 
-        String referer = request.getHeader("Referer");
+        if (cart.getItem(product) == null) {
+            if (quantity > product.getQuantity()) {
+                return "redirect:" + referer + "?inadequate";
+            }
+        }
+        else {
+            if (quantity + cart.getItem(product).getQuantity() > product.getQuantity()) {
+                return "redirect:" + referer + "?inadequate";
+            }
+        }
+
+        cart.addItem(product, quantity);
 
         return "redirect:" + referer;
     }
@@ -57,6 +69,11 @@ public class CartController {
                          @RequestParam(value = "qty") int quantity) {
         Product product = productService.getProductById(productId);
         Cart cart = cartService.getCart(session);
+
+        if (quantity > product.getQuantity()) {
+            return "redirect:/cart?inadequate";
+        }
+
         cart.updateItem(product, quantity);
 
         return "redirect:/cart";

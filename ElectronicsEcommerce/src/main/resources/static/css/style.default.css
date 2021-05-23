@@ -1151,7 +1151,7 @@ h1 {
 }
 
 #content #customer-order .addresses {
-  text-align: right;
+  text-align: left;
 }
 
 #content #customer-order .addresses p {

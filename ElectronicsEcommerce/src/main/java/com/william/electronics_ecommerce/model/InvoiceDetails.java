@@ -35,6 +35,14 @@ public class InvoiceDetails implements Serializable {
     public InvoiceDetails() {
     }
 
+    public InvoiceDetails(InvoiceDetailsId id, Invoice invoice, Product product, int quantity, long subTotal) {
+        this.id = id;
+        this.invoice = invoice;
+        this.product = product;
+        this.quantity = quantity;
+        this.subTotal = subTotal;
+    }
+
     public InvoiceDetails(Invoice invoice, Product product, int quantity, long subTotal) {
         this.invoice = invoice;
         this.product = product;

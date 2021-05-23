@@ -3,5 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group/>
+        <group>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpUserGUI.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/QuanLyGiaTourGUI.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/UserGUI.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/UserDAL.java</file>
+        </group>
     </open-files>
 </project-private>

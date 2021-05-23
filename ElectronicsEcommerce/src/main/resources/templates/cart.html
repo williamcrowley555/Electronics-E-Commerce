@@ -43,6 +43,7 @@
                                     <form th:action="@{/cart/update-product}" method="GET">
                                         <td>
                                             <input type="number" th:value="${item.quantity}" min="1" th:max="${item.product.quantity}" name="qty" class="form-control">
+                                            <p th:if="${param.inadequate}" class="text-danger text-center">Tối đa là [[${item.product.quantity}]]</p>
                                         </td>
                                         <td>[[${#numbers.formatInteger(item.product.price, 4 , 'POINT')}]]</td>
                                         <td>[[${#numbers.formatInteger(item.subTotal, 4 , 'POINT')}]]</td>
@@ -62,7 +63,7 @@
                                 <tfoot>
                                 <tr>
                                     <th colspan="4">Tổng cộng</th>
-                                    <th colspan="3">[[${session.shoppingCart.total}]]</th>
+                                    <th colspan="3">[[${#numbers.formatInteger(session.shoppingCart.total, 4 , 'POINT')}]] VNĐ</th>
                                 </tr>
                                 </tfoot>
                             </table>
@@ -83,7 +84,7 @@
                         <div th:if="${#lists.size(session.shoppingCart.items) > 0}" class="box-footer d-flex justify-content-between flex-column flex-lg-row">
                             <div class="left"><a th:href="@{/product}" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i> Tiếp tục mua sắm</a></div>
                             <div class="right">
-                                <a th:href="@{/checkout}" class="btn btn-primary">Tiến hành thanh toán <i class="fa fa-chevron-right"></i></a>
+                                <a th:href="@{/invoice/checkout}" class="btn btn-primary">Tiến hành thanh toán <i class="fa fa-chevron-right"></i></a>
                             </div>
                         </div>
                     </div>
