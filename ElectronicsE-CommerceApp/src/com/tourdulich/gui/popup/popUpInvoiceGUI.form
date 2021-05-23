@@ -139,16 +139,16 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Component id="txtName1" min="-2" pref="115" max="-2" attributes="0"/>
+                                          <Component id="txtLastName" min="-2" pref="115" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="lblTenDiaDiem1" min="-2" pref="40" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="txtName" min="-2" pref="115" max="-2" attributes="0"/>
+                                          <Component id="txtFirstName" min="-2" pref="115" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
-                                          <Component id="txtName2" min="-2" pref="115" max="-2" attributes="0"/>
+                                          <Component id="txtSDT" min="-2" pref="115" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="btnLuu3" min="-2" pref="125" max="-2" attributes="0"/>
+                                          <Component id="btnUserSelect" min="-2" pref="125" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="0" pref="101" max="32767" attributes="0"/>
@@ -208,9 +208,9 @@
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblTenDiaDiem" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                              <Component id="txtName1" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="txtLastName" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                               <Component id="lblTenDiaDiem1" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                              <Component id="txtName" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="txtFirstName" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
@@ -229,9 +229,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtName2" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="txtSDT" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                               <Component id="lblTenDiaDiem2" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                              <Component id="btnLuu3" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="btnUserSelect" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="lblGioiThieu" min="-2" pref="21" max="-2" attributes="0"/>
@@ -282,7 +282,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="txtName">
+        <Component class="javax.swing.JTextField" name="txtFirstName">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
@@ -296,7 +296,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNameActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFirstNameActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTenDiaDiem">
@@ -392,7 +392,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="txtDescription">
+            <Component class="javax.swing.JTextArea" name="txtAddress">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -435,7 +435,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSoLuongActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtName1">
+        <Component class="javax.swing.JTextField" name="txtLastName">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
@@ -449,7 +449,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtName1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtLastNameActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTenDiaDiem1">
@@ -460,7 +460,7 @@
             <Property name="text" type="java.lang.String" value="T&#xea;n:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtName2">
+        <Component class="javax.swing.JTextField" name="txtSDT">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
@@ -474,7 +474,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtName2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSDTActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTenDiaDiem2">
@@ -503,7 +503,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="txtDescription1">
+            <Component class="javax.swing.JTextArea" name="txtNote">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -619,7 +619,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnLuu3">
+        <Component class="javax.swing.JButton" name="btnUserSelect">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="4d" green="4d" red="4d" type="rgb"/>
@@ -644,7 +644,7 @@
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLuu3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUserSelectActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTinh2">

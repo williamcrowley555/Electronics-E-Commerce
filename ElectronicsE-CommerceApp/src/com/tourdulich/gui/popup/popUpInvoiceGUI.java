@@ -11,6 +11,7 @@ import com.tourdulich.bll.IBrand_CatalogBLL;
 import com.tourdulich.bll.ICatalogBLL;
 import com.tourdulich.bll.IDiaDiemBLL;
 import com.tourdulich.bll.IDiaDiemBLL;
+import com.tourdulich.bll.IInvoiceBLL;
 import com.tourdulich.bll.IProductBLL;
 import com.tourdulich.bll.ITinhBLL;
 import com.tourdulich.bll.ITinhBLL;
@@ -19,6 +20,7 @@ import com.tourdulich.bll.impl.Brand_CatalogBLL;
 import com.tourdulich.bll.impl.CatalogBLL;
 import com.tourdulich.bll.impl.DiaDiemBLL;
 import com.tourdulich.bll.impl.DiaDiemBLL;
+import com.tourdulich.bll.impl.InvoiceBLL;
 import com.tourdulich.bll.impl.ProductBLL;
 import com.tourdulich.bll.impl.TinhBLL;
 import com.tourdulich.bll.impl.TinhBLL;
@@ -26,6 +28,7 @@ import com.tourdulich.dto.BrandDTO;
 import com.tourdulich.dto.CatalogDTO;
 import com.tourdulich.dto.DiaDiemDTO;
 import com.tourdulich.dto.DiaDiemDTO;
+import com.tourdulich.dto.InvoiceDTO;
 import com.tourdulich.dto.ProductDTO;
 import com.tourdulich.dto.TinhDTO;
 import com.tourdulich.dto.TinhDTO;
@@ -52,6 +55,8 @@ import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -79,16 +84,20 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     private String action;
     private DiaDiemDTO diaDiem = null;
     private ProductDTO product = null;
+    private InvoiceDTO invoice = null;
     private IDiaDiemBLL diaDiemBLL;
     private ITinhBLL tinhBLL;
     private IBrandBLL brandBLL;
     private ICatalogBLL catalogBLL;
     private IProductBLL productBLL;
     private IBrand_CatalogBLL brand_catalogBLL;
+    private IInvoiceBLL invoiceBLL;
     TableRowSorter<TableModel> rowSorter = null;
     List<ProductDTO> productList = new ArrayList<>();
     DefaultTableModel model;
     Long total = 0L;
+    Long userId = null;
+    private PopUpTableChonUserGUI popUp = null;
     
     String[] columnNamesProduct = {
                             "Id",
@@ -120,6 +129,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         brandBLL = new BrandBLL();
         catalogBLL = new CatalogBLL();
         brand_catalogBLL = new Brand_CatalogBLL();
+        invoiceBLL = new InvoiceBLL();
         CustomWindow();
         myTextArea();
         loadTableData();
@@ -137,6 +147,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         brandBLL = new BrandBLL();
         catalogBLL = new CatalogBLL();
         brand_catalogBLL = new Brand_CatalogBLL();
+        invoiceBLL = new InvoiceBLL();
         CustomWindow();
         myTextArea();
         loadTableData();
@@ -191,11 +202,19 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         }
     }
      
+    public void setUserInfo(Long id, String ho, String ten, String sdt,String diaChi)
+    {
+        this.userId = id; 
+        txtLastName.setText(ho);
+        txtFirstName.setText(ten);
+        txtSDT.setText(sdt);
+        txtAddress.setText(diaChi);
+    }
     public void setLabelText(ProductDTO product) throws UnsupportedEncodingException
     {
-        txtName.setText(product.getName());
+//        txtName.setText(product.getName());
         txtSoLuong.setText(product.getPrice().toString());
-        txtDescription.setText(product.getDescription());
+        txtAddress.setText(product.getDescription());
         
        // txtDiaChi.setText(diaDiem.getDiaChi());
         
@@ -216,70 +235,66 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     }
     public boolean validateForm() 
     {   
-        
-        boolean Ten, Gia, Mota; 
-        ImageIcon iconCheck = new ImageIcon(getClass().getResource("/com/tourdulich/img/check.png"));
-        ImageIcon iconError = new ImageIcon(getClass().getResource("/com/tourdulich/img/error.png"));
-         
-        
-        if (InputValidatorUtil.isValidAddress(txtName.getText()).isEmpty())  
-        {
-            Ten = true;
-            lblValidateTen.setIcon(iconCheck);
-            lblValidateTen.setToolTipText(null);
-        } else {
-            Ten = false;
-            lblValidateTen.setIcon(iconError);
-            lblValidateTen.setToolTipText(InputValidatorUtil.isValidAddress(txtName.getText()));
-        } 
-        
-        
-        if (InputValidatorUtil.isVailidNumber(txtSoLuong.getText(), 1000, 100000000).isEmpty())  
-        {
-           Gia = true;
-           lblValidateGia.setIcon(iconCheck);
-           lblValidateGia.setToolTipText(null);
-        } else {
-           Gia = false;
-           lblValidateGia.setIcon(iconError);
-           lblValidateGia.setToolTipText(InputValidatorUtil.isVailidNumber(txtSoLuong.getText(), 1000, 100000000));
-        }
-        
-        if (Ten && Gia)
-        return true;
-        else return false;
+//        
+//        boolean Ten, Gia, Mota; 
+//        ImageIcon iconCheck = new ImageIcon(getClass().getResource("/com/tourdulich/img/check.png"));
+//        ImageIcon iconError = new ImageIcon(getClass().getResource("/com/tourdulich/img/error.png"));
+//         
+//        
+//        if (InputValidatorUtil.isValidAddress(txtName.getText()).isEmpty())  
+//        {
+//            Ten = true;
+//            lblValidateTen.setIcon(iconCheck);
+//            lblValidateTen.setToolTipText(null);
+//        } else {
+//            Ten = false;
+//            lblValidateTen.setIcon(iconError);
+//            lblValidateTen.setToolTipText(InputValidatorUtil.isValidAddress(txtName.getText()));
+//        } 
+//        
+//        
+//        if (InputValidatorUtil.isVailidNumber(txtSoLuong.getText(), 1000, 100000000).isEmpty())  
+//        {
+//           Gia = true;
+//           lblValidateGia.setIcon(iconCheck);
+//           lblValidateGia.setToolTipText(null);
+//        } else {
+//           Gia = false;
+//           lblValidateGia.setIcon(iconError);
+//           lblValidateGia.setToolTipText(InputValidatorUtil.isVailidNumber(txtSoLuong.getText(), 1000, 100000000));
+//        }
+//        
+//        if (Ten && Gia)
+//        return true;
+//        else return false;
       
-       
+       return true;
     }
     
     
     
-    private ProductDTO getFormInfo() throws IOException {
-        ProductDTO product = new ProductDTO();
-        if(this.product != null) {
-            product.setId(this.product.getId());
+    private InvoiceDTO getFormInfo() throws IOException {
+        InvoiceDTO invoice = new InvoiceDTO();
+        if(this.invoice != null) {
+            invoice.setId(this.invoice.getId());
         }
-        product.setName(txtName.getText().trim());
-        product.setDescription(txtDescription.getText().trim());
-        product.setPrice(Long.parseLong(txtSoLuong.getText().trim()));
-        product.setQuantity(product.getQuantity());
-        
-       // diaDiem.setDiaChi(txtDiaChi.getText().trim());
-        if (this.selectedImg != null) {
-           
-            String base64Image = Base64.getEncoder().encodeToString(ImageUtil.getByteArray(this.selectedImg));
-            product.setBase64Image(base64Image);
-        } else {
-            if (this.product != null) {
-                if(this.product.getBase64Image()!= null) {
-                   // product.setImage(this.product.getImage());
-                   product.setBase64Image(this.product.getBase64Image());
-                }
-            }
-        }
+        System.out.println(LocalDate.now());
+        invoice.setUserId(this.userId);
+        invoice.setRecipientLastName(txtLastName.getText().trim());
+        invoice.setRecipientFirstName(txtFirstName.getText().trim());
+        invoice.setAddress(txtAddress.getText().trim());
+        invoice.setNote(txtNote.getText());
+        invoice.setStatus(0);
+        invoice.setTotal(Long.parseLong(txtTong.getText()));
+        invoice.setPhone(txtSDT.getText());
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        today.format(formatter);
+        invoice.setOrderDate(today);
         
         
-        return product;
+        
+        return invoice;
     }
     
     public void setComboBox(JComboBox<String> comboBox, String[] listItems) {
@@ -288,24 +303,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     
      
     
-    public String getBrandItemName(BrandDTO brand) {
-        return brand.getId() + " - " + brand.getName();
-    }
     
-    public String[] getCatalogItems() {
-        List<CatalogDTO> catalogLists = catalogBLL.findAll();
-        String[] catalogItems = new String[catalogLists.size()];
-        int index = 0;
-        for(CatalogDTO vt : catalogLists) {
-            catalogItems[index] = vt.getId() + " - " + vt.getName();
-            ++ index;
-        }
-        return catalogItems;
-    }
-    
-    public String getCatalogItemName(CatalogDTO catalog) {
-        return catalog.getId() + " - " + catalog.getName();
-    }
     
     public popUpInvoiceGUI() {
         initComponents();
@@ -328,8 +326,8 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
 //        txtDiaChi.setWrapStyleWord(true);
   //      txtDiaChi.setLineWrap(true);
         
-        txtDescription.setWrapStyleWord(true);
-        txtDescription.setLineWrap(true);
+        txtAddress.setWrapStyleWord(true);
+        txtAddress.setLineWrap(true);
     }
     public JComboBox myComboBox(JComboBox box, Color color)
     {   
@@ -362,6 +360,8 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
        return box;
     }
     
+     
+    
     public void center()
     {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -381,7 +381,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         lblMinimize = new javax.swing.JLabel();
         lblExit = new javax.swing.JLabel();
         pnlBody = new javax.swing.JPanel();
-        txtName = new javax.swing.JTextField();
+        txtFirstName = new javax.swing.JTextField();
         lblTenDiaDiem = new javax.swing.JLabel();
         lblGioiThieu = new javax.swing.JLabel();
         btnLuu = new javax.swing.JButton();
@@ -390,23 +390,23 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         lblValidateMota = new javax.swing.JLabel();
         lblValidateGia = new javax.swing.JLabel();
         AreaScrollPane1 = new javax.swing.JScrollPane();
-        txtDescription = new javax.swing.JTextArea();
+        txtAddress = new javax.swing.JTextArea();
         lblTinh1 = new javax.swing.JLabel();
         txtSoLuong = new javax.swing.JTextField();
-        txtName1 = new javax.swing.JTextField();
+        txtLastName = new javax.swing.JTextField();
         lblTenDiaDiem1 = new javax.swing.JLabel();
-        txtName2 = new javax.swing.JTextField();
+        txtSDT = new javax.swing.JTextField();
         lblTenDiaDiem2 = new javax.swing.JLabel();
         lblGioiThieu1 = new javax.swing.JLabel();
         AreaScrollPane2 = new javax.swing.JScrollPane();
-        txtDescription1 = new javax.swing.JTextArea();
+        txtNote = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProduct = new javax.swing.JTable();
         btnXoa = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblInvoice_Product = new javax.swing.JTable();
         btnThem = new javax.swing.JButton();
-        btnLuu3 = new javax.swing.JButton();
+        btnUserSelect = new javax.swing.JButton();
         lblTinh2 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
         txtTong = new javax.swing.JTextField();
@@ -461,11 +461,11 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
 
         pnlBody.setBackground(new java.awt.Color(255, 255, 255));
 
-        txtName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtName.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
-        txtName.addActionListener(new java.awt.event.ActionListener() {
+        txtFirstName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtFirstName.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
+        txtFirstName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
+                txtFirstNameActionPerformed(evt);
             }
         });
 
@@ -509,11 +509,11 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
 
         AreaScrollPane1.setToolTipText("");
 
-        txtDescription.setColumns(20);
-        txtDescription.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtDescription.setRows(5);
-        txtDescription.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 2, new java.awt.Color(204, 204, 204)));
-        AreaScrollPane1.setViewportView(txtDescription);
+        txtAddress.setColumns(20);
+        txtAddress.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtAddress.setRows(5);
+        txtAddress.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 2, new java.awt.Color(204, 204, 204)));
+        AreaScrollPane1.setViewportView(txtAddress);
 
         lblTinh1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblTinh1.setText("Số lượng:");
@@ -526,22 +526,22 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
             }
         });
 
-        txtName1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtName1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
-        txtName1.addActionListener(new java.awt.event.ActionListener() {
+        txtLastName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtLastName.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
+        txtLastName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtName1ActionPerformed(evt);
+                txtLastNameActionPerformed(evt);
             }
         });
 
         lblTenDiaDiem1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblTenDiaDiem1.setText("Tên:");
 
-        txtName2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtName2.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
-        txtName2.addActionListener(new java.awt.event.ActionListener() {
+        txtSDT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtSDT.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
+        txtSDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtName2ActionPerformed(evt);
+                txtSDTActionPerformed(evt);
             }
         });
 
@@ -553,11 +553,11 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
 
         AreaScrollPane2.setToolTipText("");
 
-        txtDescription1.setColumns(20);
-        txtDescription1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtDescription1.setRows(5);
-        txtDescription1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 2, new java.awt.Color(204, 204, 204)));
-        AreaScrollPane2.setViewportView(txtDescription1);
+        txtNote.setColumns(20);
+        txtNote.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNote.setRows(5);
+        txtNote.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 2, new java.awt.Color(204, 204, 204)));
+        AreaScrollPane2.setViewportView(txtNote);
 
         tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -615,18 +615,18 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
             }
         });
 
-        btnLuu3.setBackground(new java.awt.Color(77, 77, 77));
-        btnLuu3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnLuu3.setForeground(new java.awt.Color(255, 255, 255));
-        btnLuu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/gui/popup/save_icon.png"))); // NOI18N
-        btnLuu3.setText("Chọn khách");
-        btnLuu3.setBorder(null);
-        btnLuu3.setContentAreaFilled(false);
-        btnLuu3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnLuu3.setOpaque(true);
-        btnLuu3.addActionListener(new java.awt.event.ActionListener() {
+        btnUserSelect.setBackground(new java.awt.Color(77, 77, 77));
+        btnUserSelect.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnUserSelect.setForeground(new java.awt.Color(255, 255, 255));
+        btnUserSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/gui/popup/save_icon.png"))); // NOI18N
+        btnUserSelect.setText("Chọn khách");
+        btnUserSelect.setBorder(null);
+        btnUserSelect.setContentAreaFilled(false);
+        btnUserSelect.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUserSelect.setOpaque(true);
+        btnUserSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLuu3ActionPerformed(evt);
+                btnUserSelectActionPerformed(evt);
             }
         });
 
@@ -684,15 +684,15 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                                        .addComponent(txtName1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(lblTenDiaDiem1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                                        .addComponent(txtName2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnLuu3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(btnUserSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 101, Short.MAX_VALUE)))
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlBodyLayout.createSequentialGroup()
@@ -736,9 +736,9 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTenDiaDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtName1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblTenDiaDiem1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(30, 30, 30))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -752,9 +752,9 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtName2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblTenDiaDiem2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLuu3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnUserSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(lblGioiThieu, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -822,13 +822,13 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         setLocation (evt.getXOnScreen()-(getWidth()/2),evt.getYOnScreen()-10);
     }//GEN-LAST:event_panelHeaderMouseDragged
 
-    private void txtName2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtName2ActionPerformed
+    private void txtSDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSDTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtName2ActionPerformed
+    }//GEN-LAST:event_txtSDTActionPerformed
 
-    private void txtName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtName1ActionPerformed
+    private void txtLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLastNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtName1ActionPerformed
+    }//GEN-LAST:event_txtLastNameActionPerformed
 
     private void txtSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoLuongActionPerformed
         // TODO add your handling code here:
@@ -842,16 +842,16 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         if (validateForm())
         {
-            ProductDTO newProduct = null;
+            InvoiceDTO newInvoice = null;
             try {
-                newProduct = getFormInfo();
+                newInvoice = getFormInfo();
             } catch (IOException ex) {
                 Logger.getLogger(popUpInvoiceGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             if(this.action.equals("POST")) {
-                Long newProcutId = productBLL.save(newProduct);
-                if(newProcutId != null) {
+                Long newInvoiceId = invoiceBLL.save(newInvoice);
+                if(newInvoiceId != null) {
 
                     JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
@@ -861,12 +861,12 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                 }
             } else if(this.action.equals("PUT")) {
                 try {
-                    newProduct.setQuantity(this.product.getQuantity());
-                    productBLL.update(newProduct);
-
-                    System.out.println(newProduct);
-                    JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
+//                    newProduct.setQuantity(this.product.getQuantity());
+//                    productBLL.update(newProduct);
+//
+//                    System.out.println(newProduct);
+//                    JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//                    dispose();
                 } catch(Exception e) {
                     JOptionPane.showMessageDialog(this, "Lưu thất bại!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
                     e.printStackTrace();
@@ -875,9 +875,9 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLuuActionPerformed
 
-    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
+    private void txtFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFirstNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNameActionPerformed
+    }//GEN-LAST:event_txtFirstNameActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
        int rowindex = tblInvoice_Product.getSelectedRow();
@@ -980,9 +980,18 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
        }    else JOptionPane.showMessageDialog(this, "Hãy chọn 1 sản phẩm để thêm", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnThemActionPerformed
 
-    private void btnLuu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuu3ActionPerformed
+    private void btnUserSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserSelectActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnLuu3ActionPerformed
+        if (this.popUp == null) {
+            this.popUp = new PopUpTableChonUserGUI(this);
+            popUp.setVisible(true);
+        } else {
+            this.popUp.toFront();
+            this.popUp.center();
+        }
+        
+        
+    }//GEN-LAST:event_btnUserSelectActionPerformed
 
     private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
         // TODO add your handling code here:
@@ -1073,9 +1082,9 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btnGroupGioiTinh;
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnLuu;
-    private javax.swing.JButton btnLuu3;
     private javax.swing.JButton btnSum;
     private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnUserSelect;
     private javax.swing.JButton btnXoa;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1095,11 +1104,11 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     private javax.swing.JPanel pnlBody;
     private javax.swing.JTable tblInvoice_Product;
     private javax.swing.JTable tblProduct;
-    private javax.swing.JTextArea txtDescription;
-    private javax.swing.JTextArea txtDescription1;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtName1;
-    private javax.swing.JTextField txtName2;
+    private javax.swing.JTextArea txtAddress;
+    private javax.swing.JTextField txtFirstName;
+    private javax.swing.JTextField txtLastName;
+    private javax.swing.JTextArea txtNote;
+    private javax.swing.JTextField txtSDT;
     private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtTimKiem;
     private javax.swing.JTextField txtTong;

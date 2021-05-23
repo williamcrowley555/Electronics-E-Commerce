@@ -6,6 +6,7 @@
 package com.tourdulich.dto;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -158,6 +159,12 @@ public class InvoiceDTO {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+    
+    public String getOrderDateFormat() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return orderDate.format(formatter);
+    }
+    
     
     
 }

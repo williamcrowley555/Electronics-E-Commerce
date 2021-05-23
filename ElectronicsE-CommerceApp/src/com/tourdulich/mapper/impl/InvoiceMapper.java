@@ -30,10 +30,15 @@ public class InvoiceMapper implements RowMapper<InvoiceDTO>{
             invoice.setAddress(rs.getString("address"));
             invoice.setRecipientLastName(rs.getString("recipient_last_name"));
             invoice.setRecipientFirstName(rs.getString("recipient_first_name"));
+            if (rs.getDate("order_date") != null)
             invoice.setOrderDate(rs.getDate("order_date").toLocalDate());
+             if (rs.getDate("payment_date") != null)
             invoice.setPaymentDate(rs.getDate("payment_date").toLocalDate());
+            if (rs.getDate("cancelling_date") != null) 
             invoice.setCancellingDate(rs.getDate("cancelling_date").toLocalDate());
+            if (rs.getDate("confirmation_date") != null) 
             invoice.setConfirmationDate(rs.getDate("confirmation_date").toLocalDate());
+            if (rs.getDate("ship_date") != null) 
             invoice.setShipDate(rs.getDate("ship_date").toLocalDate());
             invoice.setTotal(rs.getLong("total"));
           

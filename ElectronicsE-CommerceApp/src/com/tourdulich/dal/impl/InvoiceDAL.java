@@ -40,7 +40,7 @@ public class InvoiceDAL extends AbstractDAL<InvoiceDTO> implements IInvoiceDAL {
         String sql = "INSERT INTO invoice (`address`, `cancelling_date`, `confirmation_date`, `order_date`, `payment_date`, "
                     + "`phone`, `recipient_first_name`, `recipient_last_name`, `ship_date`, `status`, `total`, `user_id`) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-        return insert(sql, invoice.getAddress(), invoice.getCancellingDate(), invoice.getConfirmationDate(), invoice.getOrderDate(), invoice.getPaymentDate(),
+        return insert(sql, invoice.getAddress(), invoice.getCancellingDate(), invoice.getConfirmationDate(), invoice.getOrderDateFormat(), invoice.getPaymentDate(),
                      invoice.getPhone(), invoice.getRecipientFirstName(), invoice.getRecipientLastName(), invoice.getShipDate(), invoice.getStatus(),
                      invoice.getTotal(), invoice.getUserId()
                      );
