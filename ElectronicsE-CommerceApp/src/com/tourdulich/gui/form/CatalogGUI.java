@@ -5,8 +5,10 @@
  */
 package com.tourdulich.gui.form;
 
+import com.tourdulich.bll.ICatalogBLL;
 import com.tourdulich.bll.IDichVuBLL;
 import com.tourdulich.bll.IVaiTroBLL;
+import com.tourdulich.bll.impl.CatalogBLL;
 import com.tourdulich.bll.impl.DichVuBLL;
 import com.tourdulich.bll.impl.NhanVienBLL;
 import com.tourdulich.bll.impl.VaiTroBLL;
@@ -20,6 +22,7 @@ import com.tourdulich.gui.menu.MyScrollBarUI;
 import com.tourdulich.gui.popup.PopUpCatalogGUI;
 import com.tourdulich.gui.popup.PopUpDichVuGUI;
 import com.tourdulich.gui.popup.PopUpNhanVienGUI;
+import com.tourdulich.util.CatalogTableLoaderUtil;
 import com.tourdulich.util.DichVuTableLoaderUtil;
 import com.tourdulich.util.NhanVienTableLoaderUtil;
 import com.tourdulich.util.TableSetupUtil;
@@ -40,6 +43,7 @@ public class CatalogGUI extends javax.swing.JPanel {
                         "Tên loại sản phẩm"
     };
     private IDichVuBLL dichVuBLL;
+    private ICatalogBLL catalogBLL;
     private PopUpCatalogGUI popUp = null;
     TableRowSorter<TableModel> rowSorter = null;
 
@@ -47,15 +51,15 @@ public class CatalogGUI extends javax.swing.JPanel {
         initComponents();
         // Ghi chu
         dichVuBLL = new DichVuBLL();
-        
-       // loadTableData();   // Sua ham nay 
+        catalogBLL = new CatalogBLL();
+        loadTableData();   // Sua ham nay 
         
         headerColor(77,77,77,tblCatalog);
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
     
     public void loadTableData() {
-        tblCatalog.setModel(new DichVuTableLoaderUtil().setTable(dichVuBLL.findAll(), this.listColumns)) ;
+        tblCatalog.setModel(new CatalogTableLoaderUtil().setTable(catalogBLL.findAll(), this.listColumns)) ;
         this.rowSorter = TableSetupUtil.setTableFilter(tblCatalog, txtTimKiem);
         headerColor(77,77,77,tblCatalog);
     }
@@ -257,7 +261,7 @@ public class CatalogGUI extends javax.swing.JPanel {
         int rowindex = tblCatalog.getSelectedRow();
         Long id = Long.parseLong(tblCatalog.getValueAt(rowindex,0).toString());
         if (this.popUp == null) {
-        popUp = new PopUpCatalogGUI("PUT", dichVuBLL.findById(id));
+        popUp = new PopUpCatalogGUI("PUT", catalogBLL.findById(id));
         } else {
             this.popUp.toFront();
             this.popUp.center();

@@ -5,9 +5,12 @@
  */
 package com.tourdulich.gui.popup;
 
+import com.tourdulich.bll.ICatalogBLL;
 import com.tourdulich.bll.IDichVuBLL;
+import com.tourdulich.bll.impl.CatalogBLL;
 import com.tourdulich.bll.impl.DichVuBLL;
 import com.tourdulich.bll.impl.VaiTroBLL;
+import com.tourdulich.dto.CatalogDTO;
 import com.tourdulich.dto.DichVuDTO;
 import com.tourdulich.dto.VaiTroDTO;
 import java.awt.Color;
@@ -36,47 +39,47 @@ import javax.swing.JOptionPane;
  */
 public class PopUpCatalogGUI extends javax.swing.JFrame {
     private String action;
-    private IDichVuBLL dichVuBLL;
-    private DichVuDTO dichVu;
+    private ICatalogBLL catalogBLL;
+    private CatalogDTO catalog;
    
     public PopUpCatalogGUI(String action) {
         initComponents();
         
         this.action = action;
-        dichVuBLL = new DichVuBLL();
+        catalogBLL = new CatalogBLL();
         
         CustomWindow();
       
         this.setVisible(true);
     }
 
-    public PopUpCatalogGUI(String action, DichVuDTO dichVu) {
+    public PopUpCatalogGUI(String action, CatalogDTO catalog) {
         initComponents();
         this.action = action;
-        this.dichVu = dichVu;
-        dichVuBLL = new DichVuBLL();
+        this.catalog = catalog;
+        catalogBLL = new CatalogBLL();
         CustomWindow();
       
-        setLabelText(dichVu);
+        setLabelText(catalog);
         this.setVisible(true);
     }
     
-    public void setLabelText(DichVuDTO dichVu)
+    public void setLabelText(CatalogDTO catalog)
     {
-        txtCatalogName.setText(dichVu.getTenDichVu());
+        txtCatalogName.setText(catalog.getName());
      
     }
     
    
     
-    private DichVuDTO getFormInfo() {
-        DichVuDTO dichVu = new DichVuDTO();
-        if(this.dichVu != null) {
-            dichVu.setId(this.dichVu.getId());
+    private CatalogDTO getFormInfo() {
+        CatalogDTO catalog = new CatalogDTO();
+        if(this.catalog != null) {
+            catalog.setId(this.catalog.getId());
         }
-      dichVu.setTenDichVu(txtCatalogName.getText().trim());
+      catalog.setName(txtCatalogName.getText().trim());
       
-        return dichVu;
+        return catalog;
     }
  
     public PopUpCatalogGUI() {
@@ -301,11 +304,11 @@ public class PopUpCatalogGUI extends javax.swing.JFrame {
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         if (validateForm())
         {    
-            DichVuDTO dichVu = getFormInfo();
+            CatalogDTO catalog = getFormInfo();
 
             if(this.action.equals("POST")) {             
-                    Long newDichVuId = dichVuBLL.save(dichVu);
-                    if(newDichVuId != null) {
+                    Long newCatalogId = catalogBLL.save(catalog);
+                    if(newCatalogId != null) {
                         JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
                     } else {
@@ -313,7 +316,7 @@ public class PopUpCatalogGUI extends javax.swing.JFrame {
                     }              
             } else if(this.action.equals("PUT")) {              
                     try {
-                        dichVuBLL.update(dichVu);
+                        catalogBLL.update(catalog);
                         JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
                     } catch(Exception e) {

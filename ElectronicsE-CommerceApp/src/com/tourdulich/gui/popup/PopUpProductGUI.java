@@ -64,10 +64,7 @@ import javax.swing.JTextField;
 public class PopUpProductGUI extends javax.swing.JFrame {
     private File selectedImg = null;
     private String action;
-    private DiaDiemDTO diaDiem = null;
     private ProductDTO product = null;
-    private IDiaDiemBLL diaDiemBLL;
-    private ITinhBLL tinhBLL;
     private IBrandBLL brandBLL;
     private ICatalogBLL catalogBLL;
     private IProductBLL productBLL;
@@ -76,9 +73,7 @@ public class PopUpProductGUI extends javax.swing.JFrame {
         initComponents();
         
         this.action = action;    
-        diaDiemBLL = new DiaDiemBLL();
         productBLL = new ProductBLL();
-        tinhBLL = new TinhBLL();
         brandBLL = new BrandBLL();
         catalogBLL = new CatalogBLL();
         brand_catalogBLL = new Brand_CatalogBLL();
@@ -96,9 +91,7 @@ public class PopUpProductGUI extends javax.swing.JFrame {
     public PopUpProductGUI(String action, ProductDTO product) throws UnsupportedEncodingException {
         initComponents();
         this.action = action;  
-        this.diaDiem = diaDiem;
         this.product = product;
-        diaDiemBLL = new DiaDiemBLL();
         productBLL = new ProductBLL();
         brandBLL = new BrandBLL();
         catalogBLL = new CatalogBLL();
@@ -222,6 +215,7 @@ public class PopUpProductGUI extends javax.swing.JFrame {
         //List<BrandDTO> brandLists = brandBLL.findAll();
         List<BrandDTO> brandLists = brand_catalogBLL.findByIdCatalog(idCatalog);
         String[] brandItems = new String[brandLists.size()];
+        //System.out.println(brandLists.size());
         int index = 0;
         for(BrandDTO vt : brandLists) {
             brandItems[index] = vt.getId() + " - " + vt.getName();
