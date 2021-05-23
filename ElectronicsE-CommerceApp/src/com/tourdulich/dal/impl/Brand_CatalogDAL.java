@@ -32,18 +32,14 @@ public class Brand_CatalogDAL extends AbstractDAL<Brand_CatalogDTO> implements I
 
     @Override
     public Long save(Brand_CatalogDTO catalog_brand) {
-<<<<<<< HEAD
         String sql = "INSERT INTO brand_catalog(brand_id,catalog_id) VALUES (?,?)";
         return insert(sql,catalog_brand.getBrand_id(),catalog_brand.getCatalog_id());
-=======
-       String sql = "INSERT INTO brand_catalog(brand_id, catalog_id) VALUES(?, ?)";
-       return insert(sql, catalog_brand.getBrand_id(), catalog_brand.getCatalog_id());
->>>>>>> 35567cb0a4f08b0ad6eb3cbb689ad118081740e1
     }
 
     @Override
     public void update(Brand_CatalogDTO catalog_brand) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "UPDATE brand_catalog SET brand_id = ? WHERE catalog_id = ?";
+        update(sql, catalog_brand.getBrand_id(), catalog_brand.getCatalog_id());
     }
 
     @Override

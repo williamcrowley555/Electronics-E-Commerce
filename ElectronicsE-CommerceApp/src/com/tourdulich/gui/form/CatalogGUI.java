@@ -261,7 +261,7 @@ public class CatalogGUI extends javax.swing.JPanel {
         int rowindex = tblCatalog.getSelectedRow();
         Long id = Long.parseLong(tblCatalog.getValueAt(rowindex,0).toString());
         if (this.popUp == null) {
-        popUp = new PopUpCatalogGUI("PUT", dichVuBLL.findById(id));
+        popUp = new PopUpCatalogGUI("PUT", catalogBLL.findById(id));
         } else {
             this.popUp.toFront();
             this.popUp.center();
