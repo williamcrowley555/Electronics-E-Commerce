@@ -6,9 +6,11 @@
 package com.tourdulich.gui.form;
 
 import com.tourdulich.bll.IGiaTourBLL;
+import com.tourdulich.bll.IInvoiceBLL;
 import com.tourdulich.bll.ILoaiDuLichBLL;
 import com.tourdulich.bll.ITourBLL;
 import com.tourdulich.bll.impl.GiaTourBLL;
+import com.tourdulich.bll.impl.InvoiceBLL;
 import com.tourdulich.bll.impl.LoaiDuLichBLL;
 import com.tourdulich.bll.impl.TourBLL;
 import com.tourdulich.dto.TourDTO;
@@ -22,7 +24,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import com.tourdulich.gui.menu.MyScrollBarUI;
 import com.tourdulich.gui.popup.PopUpGiaTourGUI;
+import com.tourdulich.gui.popup.popUpInvoiceGUI;
 import com.tourdulich.util.GiaTourTableLoaderUtil;
+import com.tourdulich.util.InvoiceTableLoaderUtil;
 import com.tourdulich.util.LoaiDuLichTableLoaderUtil;
 import com.tourdulich.util.TableSetupUtil;
 import java.util.List;
@@ -50,24 +54,26 @@ public class BillGUI extends javax.swing.JPanel {
     
          String[] columnNames = {
                             "Id",
-                            "Id Tour",
-                            "Ngày Bắt Đầu",
-                            "Ngày Kết Thúc",
-                            "Giá Tiền"
+                            "Họ",
+                            "Tên",
+                            "Địa Chỉ",
+                            "SĐT",
+                            "Ghi chú",
+                            "Tổng tiền",
+                            "Trạng thái"
                             };
          
     private ILoaiDuLichBLL loaiDuLichBLL;
     private ITourBLL tourBLL;
     private IGiaTourBLL giaTourBLL;
-    private PopUpGiaTourGUI popUp = null;
+    private IInvoiceBLL invoiceBLL;
+    private popUpInvoiceGUI popUp = null;
     TableRowSorter<TableModel> rowSorter = null;
     
     public BillGUI() {
         initComponents();
-        loaiDuLichBLL = new LoaiDuLichBLL();
-        tourBLL = new TourBLL();
-        giaTourBLL = new GiaTourBLL();       
-        headerColor(14,142,233,tblGiaTour);
+       
+        invoiceBLL = new InvoiceBLL();
        
         loadTableData();
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
@@ -76,10 +82,10 @@ public class BillGUI extends javax.swing.JPanel {
     
     public void loadTableData() {
       
-      
+        tblGiaTour.setModel(new InvoiceTableLoaderUtil().setTable(invoiceBLL.findAll(), this.columnNames)) ; 
      
         this.rowSorter = TableSetupUtil.setTableFilter(tblGiaTour, txtTimKiem);
-        headerColor(14,142,233,tblGiaTour);
+        headerColor(77,77,77,tblGiaTour);
     }
     
     public String[] getTourItems() {
@@ -186,7 +192,7 @@ public class BillGUI extends javax.swing.JPanel {
         pnlHead.setBackground(new java.awt.Color(255, 255, 255));
         pnlHead.setPreferredSize(new java.awt.Dimension(808, 200));
 
-        btnThem.setBackground(new java.awt.Color(14, 142, 233));
+        btnThem.setBackground(new java.awt.Color(77, 77, 77));
         btnThem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
         btnThem.setText("Thêm");
@@ -204,7 +210,7 @@ public class BillGUI extends javax.swing.JPanel {
         });
 
         txtTimKiem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtTimKiem.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(14, 142, 233)));
+        txtTimKiem.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(77, 77, 77)));
         txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTimKiemActionPerformed(evt);
@@ -213,7 +219,7 @@ public class BillGUI extends javax.swing.JPanel {
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTitle.setText("Quản Lý Hóa Đơn");
+        lblTitle.setText("Quản Lý Đơn Hàng");
 
         lblTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/search_icon.png"))); // NOI18N
 
@@ -264,6 +270,7 @@ public class BillGUI extends javax.swing.JPanel {
         ));
         tblGiaTour.setFillsViewportHeight(true);
         tblGiaTour.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tblGiaTour.setRowHeight(35);
         tblGiaTour.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tblGiaTourMouseReleased(evt);
@@ -303,7 +310,7 @@ public class BillGUI extends javax.swing.JPanel {
     private void btnThemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMousePressed
         
           if (this.popUp == null) {
-            this.popUp = new PopUpGiaTourGUI("POST");
+            this.popUp = new popUpInvoiceGUI("POST");
             
         } else {
             this.popUp.toFront();
@@ -341,7 +348,7 @@ public class BillGUI extends javax.swing.JPanel {
         int rowindex = tblGiaTour.getSelectedRow();
         Long id = Long.parseLong(tblGiaTour.getValueAt(rowindex,0).toString());
         if (this.popUp == null) {
-            popUp = new PopUpGiaTourGUI("PUT", giaTourBLL.findById(id));
+            //popUp = new PopUpGiaTourGUI("PUT", giaTourBLL.findById(id));
         } else {
             this.popUp.toFront();
             this.popUp.center();

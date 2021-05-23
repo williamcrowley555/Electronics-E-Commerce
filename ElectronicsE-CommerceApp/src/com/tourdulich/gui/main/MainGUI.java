@@ -8,6 +8,7 @@ package com.tourdulich.gui.main;
 import com.tourdulich.bll.INhanVienBLL;
 import com.tourdulich.bll.impl.NhanVienBLL;
 import com.tourdulich.dto.NhanVienDTO;
+import com.tourdulich.gui.form.BillGUI;
 import com.tourdulich.gui.form.BrandGUI;
 import com.tourdulich.gui.form.CatalogGUI;
 import com.tourdulich.gui.form.QuanLyChiPhiGUI;
@@ -113,11 +114,11 @@ public class MainGUI extends javax.swing.JFrame {
             }
         }, menuBrand, menuCatalog);
         
-        MenuItem menuKhachHang = new MenuItem(iconKhachHang, "Nhập Hàng", new ActionListener() {
+        MenuItem menuKhachHang = new MenuItem(iconKhachHang, "Quản Lý Đơn Hàng", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 panelBody.removeAll();
-                panelBody.add(new QuanLyKhachHangGUI());
+                panelBody.add(new BillGUI());
                 panelBody.repaint();
                 panelBody.revalidate();
                 Selected(menuKhachHang);
