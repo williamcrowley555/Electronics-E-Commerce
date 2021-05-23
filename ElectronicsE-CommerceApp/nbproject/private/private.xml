@@ -47,5 +47,18 @@
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpProductGUI.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/BillGUI.java</file>
         </group>
+        <group>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/User_RoleDAL.java</file>
+        </group>
+        <group>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/bll/impl/User_RoleBLL.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/ProductDTO.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/BrandDTO.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/Brand_CatalogDTO.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/User_RoleDTO.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/User_RoleDAL.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/RoleDTO.java</file>
+            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/UserDTO.java</file>
+        </group>
     </open-files>
 </project-private>

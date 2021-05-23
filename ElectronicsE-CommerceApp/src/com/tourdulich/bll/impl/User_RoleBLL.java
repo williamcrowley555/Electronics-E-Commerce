@@ -36,7 +36,7 @@ public class User_RoleBLL implements IUser_RoleBLL{
 
     @Override
     public List<UserDTO> findByIdRole(Long idRole) {
-       List<Long> userIds = user_RoleDAL.findByIdCatalog(idRole);
+       List<Long> userIds = user_RoleDAL.findByIdRole(idRole);
         List<UserDTO> userList = new ArrayList<>();
         for(Long userId : userIds)
         {
