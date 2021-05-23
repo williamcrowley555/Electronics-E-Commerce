@@ -63,6 +63,7 @@
                                     <a href="#details" class="scroll-to">Xem mô tả tại đây</a>
                                 </p>
                                 <div class="buttons">
+                                    <div th:if="${param.inadequate}" class="col-sm-12 alert alert-danger" role="alert">Rất tiếc, số lượng sản phẩm này hiện tại chỉ còn [[${product.quantity}]]</div>
                                     <form th:action="@{/cart/add-product}" method="GET"  class="d-flex flex-column">
                                         <input type="hidden" th:value="${product.id}" name="id" />
                                         <label class="form-inline d-block">Số lượng:
