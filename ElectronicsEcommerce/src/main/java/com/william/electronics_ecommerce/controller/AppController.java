@@ -46,11 +46,10 @@ public class AppController {
     public String viewHomePage(Model model) {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        User currentUser = userService.getUserByEmail(auth.getName());
-//        Role adminRole = roleService.getRoleByNormalizedName("ROLE_ADMIN");
 //
 //        model.addAttribute("currentUser", currentUser);
 
-        List<Product> productList = productService.getAllProducts();
+        List<Product> productList = productService.getAllProducts().stream().filter(item -> item.getQuantity() > 0).collect(Collectors.toList());
         model.addAttribute("productList", productList);
 
         return "index";

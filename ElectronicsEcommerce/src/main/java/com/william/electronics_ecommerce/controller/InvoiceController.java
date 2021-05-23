@@ -11,13 +11,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping(path = "/invoice")
@@ -62,6 +60,49 @@ public class InvoiceController {
 
         Invoice savedInvoice = invoiceService.saveInvoice(invoice, session);
 
-        return "redirect:/";
+        return "checkout_success";
+    }
+
+    @GetMapping("/history")
+    public String showAllCustomerInvoices(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth instanceof AnonymousAuthenticationToken) {
+            return "redirect:/";
+        }
+
+        User currentUser = userService.getUserByEmail(auth.getName());
+
+        List<Invoice> invoiceList = invoiceService.getInvoiceByUser(currentUser);
+
+        model.addAttribute("invoiceList", invoiceList);
+
+        return "invoice_history";
+    }
+
+    @GetMapping("/details/{invoiceId}")
+    public String showInvoiceDetails(Model model, @PathVariable("invoiceId") Long invoiceId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth instanceof AnonymousAuthenticationToken) {
+            return "redirect:/";
+        }
+
+        Invoice invoice = invoiceService.getInvoiceById(invoiceId);
+
+        model.addAttribute("invoice", invoice);
+
+        return "invoice_details";
+    }
+
+    @GetMapping("/cancel/{invoiceId}")
+    public String cancelInvoice(Model model, @PathVariable("invoiceId") Long invoiceId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth instanceof AnonymousAuthenticationToken) {
+            return "redirect:/";
+        }
+
+        Invoice invoice = invoiceService.getInvoiceById(invoiceId);
+        invoiceService.cancelInvoice(invoice);
+
+        return "redirect:/invoice/history";
     }
 }

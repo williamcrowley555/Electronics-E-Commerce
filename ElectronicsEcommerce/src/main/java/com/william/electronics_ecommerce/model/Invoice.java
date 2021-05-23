@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +49,8 @@ public class Invoice {
     @Max(value = 5)
 //    1: Confirmed
 //    2: Shipped
-//    3: Cancelled
+//    3: Paid
+//    4: Cancelled
     private Integer status;
 
     @Column(name = "orderDate", nullable = false)
@@ -139,6 +141,10 @@ public class Invoice {
         this.recipientLastName = recipientLastName;
     }
 
+    public String getRecipientFullName() {
+        return recipientLastName + " " + recipientFirstName;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -185,6 +191,11 @@ public class Invoice {
 
     public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public String getOrderDateFormat() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return orderDate.format(formatter);
     }
 
     public LocalDate getPaymentDate() {

@@ -4,10 +4,12 @@ import com.william.electronics_ecommerce.model.*;
 import com.william.electronics_ecommerce.repository.InvoiceRepository;
 import com.william.electronics_ecommerce.service.CartService;
 import com.william.electronics_ecommerce.service.InvoiceService;
+import com.william.electronics_ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +22,17 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private ProductService productService;
+
     @Override
     public List<Invoice> getAllInvoices() {
         return invoiceRepository.findAll();
+    }
+
+    @Override
+    public List<Invoice> getInvoiceByUser(User user) {
+        return invoiceRepository.findByUser(user);
     }
 
     @Override
@@ -52,6 +62,10 @@ public class InvoiceServiceImpl implements InvoiceService {
         for (CartItem item : cart.getItems()) {
             savedInvoice.getDetails().add(new InvoiceDetails(new InvoiceDetailsId(savedInvoice.getId(), item.getProduct().getId()),
                                             savedInvoice, item.getProduct(), item.getQuantity(), item.getSubTotal()));
+
+            Product product = item.getProduct();
+            product.setQuantity(product.getQuantity() - item.getQuantity());
+            productService.saveProduct(product);
         }
 
         cartService.clearCart(session);
@@ -62,5 +76,12 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public void deleteInvoiceById(Long id) {
         invoiceRepository.deleteById(id);
+    }
+
+    @Override
+    public Invoice cancelInvoice(Invoice invoice) {
+        invoice.setStatus(4);
+        invoice.setCancellingDate(LocalDate.now());
+        return invoiceRepository.save(invoice);
     }
 }
