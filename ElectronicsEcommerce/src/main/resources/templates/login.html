@@ -30,6 +30,9 @@
                                 <div th:if="${param.logout}">
                                     <div class="col-sm-12 alert alert-info" role="alert">Bạn đã đăng xuất</div>
                                 </div>
+                                <div th:if="${param.checkout}">
+                                    <div class="col-sm-12 alert alert-info" role="alert">Vui lòng đăng nhập để thanh toán</div>
+                                </div>
 
                                 <div class="form-group">
                                     <label for="email">Email:</label>

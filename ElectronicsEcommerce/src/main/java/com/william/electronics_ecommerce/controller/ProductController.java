@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(path = "/product")
@@ -46,7 +47,7 @@ public class ProductController {
         Integer pageSize = 9;
 
         Page<Product> page = productService.getPaginated(pageNo, pageSize, catalog, brand);
-        List<Product> productList = page.getContent();
+        List<Product> productList = page.getContent().stream().filter(item -> item.getQuantity() > 0).collect(Collectors.toList());
 
         List<Catalog> catalogList = catalogService.getAllCatalog();
         List<Brand> brandList = brandService.getAllBrands();

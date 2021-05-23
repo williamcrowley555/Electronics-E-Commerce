@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments/header :: html_head(headTitle = 'Invoice History')"></head>
+
+<body>
+<th:block th:replace="fragments/header :: navbar"></th:block>
+
+<div id="all">
+    <div id="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- breadcrumb-->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+                            <li aria-current="page" class="breadcrumb-item active">Lịch sử đặt hàng</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <!--
+                    *** CUSTOMER MENU ***
+                    _________________________________________________________
+                    -->
+                    <div class="card sidebar-menu">
+                        <div class="card-header">
+                            <h3 class="h4 card-title">Tùy chọn</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="nav nav-pills flex-column">
+                                <a th:href="@{/invoice/history}" class="nav-link active"><i class="fa fa-list"></i>Lịch sử đặt hàng</a>
+                                <form th:action="@{/logout}" method="POST">
+                                    <button class="btn btn-link nav-link" type="submit"><i class="fa fa-sign-out"></i> Đăng xuất</button>
+                                </form>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.col-lg-3-->
+                    <!-- *** CUSTOMER MENU END ***-->
+                </div>
+                <div id="customer-orders" class="col-lg-9">
+                    <div class="box">
+                        <h1>Đơn hàng của tôi</h1>
+                        <hr>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Tổng cộng</th>
+                                    <th>Trạng thái</th>
+                                    <th>Chi tiết</th>
+                                    <th>Hủy đơn</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="invoice : ${invoiceList}">
+                                    <th># [[${invoice.id}]]</th>
+                                    <td>[[${invoice.orderDateFormat}]]</td>
+                                    <td>[[${#numbers.formatInteger(invoice.total, 4 , 'POINT')}]] VNĐ</td>
+                                    <td th:switch="${invoice.status}">
+                                        <span th:case="1" class="badge badge-info">Đã xác nhận</span>
+                                        <span th:case="2" class="badge badge-warning">Đang giao hàng</span>
+                                        <span th:case="3" class="badge badge-success">Đã thanh toán</span>
+                                        <span th:case="4" class="badge badge-danger">Đã hủy</span>
+                                        <span th:case="*" class="badge badge-secondary">Đang chờ xác nhận</span>
+                                    </td>
+                                    <td><a th:href="@{|/invoice/details/${invoice.id}|}" class="btn btn-primary btn-sm">Xem</a></td>
+                                    <td><a th:if="${invoice.status == null || invoice.status == 1}" th:href="@{|/invoice/cancel/${invoice.id}|}"
+                                           th:onclick="|return confirm('Bạn có chắc muốn huỷ đơn hàng?')|" class="btn btn-danger btn-sm">Hủy</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+<th:block th:replace="fragments/footer :: copy_right"></th:block>
+
+<th:block th:replace="fragments/script :: scripts"></th:block>
+
+</body>
+</html>
