@@ -110,7 +110,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         txtSDT.setText(user.getPhone());
         txtSDT1.setText(user.getEmail());
         txtSDT2.setText(user.getPassword());
-      //  ComboboxVaiTro.setSelectedItem(getVaiTroItemName(user_roleBLL.findByIdUser(user.getId()).get(0)));
+       // ComboboxVaiTro.setSelectedItem(getVaiTroItemName(user_roleBLL.findByIdUser(user.getId()).get(0)));
        
     }
     public boolean validateForm() 
