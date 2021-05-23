@@ -68,16 +68,16 @@ public class BillGUI extends javax.swing.JPanel {
         tourBLL = new TourBLL();
         giaTourBLL = new GiaTourBLL();       
         headerColor(14,142,233,tblGiaTour);
-        setComboBox(comboBoxTour, getTourItems());
+       
         loadTableData();
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
-        comboBoxTour = myComboBox(comboBoxTour, new Color(14,142,233));
+       
     }
     
     public void loadTableData() {
-        String selectedTour = comboBoxTour.getSelectedItem().toString();        
-        Long idTour = Long.parseLong(selectedTour.substring(0, selectedTour.indexOf(" - ")));
-        tblGiaTour.setModel(new GiaTourTableLoaderUtil().setTable(giaTourBLL.findByIdTour(idTour), this.columnNames)) ; 
+      
+      
+     
         this.rowSorter = TableSetupUtil.setTableFilter(tblGiaTour, txtTimKiem);
         headerColor(14,142,233,tblGiaTour);
     }
