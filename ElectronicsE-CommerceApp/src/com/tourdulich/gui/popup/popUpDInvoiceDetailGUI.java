@@ -53,6 +53,7 @@ import com.tourdulich.gui.menu.MyComboBoxEditor;
 import com.tourdulich.gui.menu.MyComboBoxRenderer;
 import com.tourdulich.util.ImageUtil;
 import com.tourdulich.util.InputValidatorUtil;
+import com.tourdulich.util.InvoiceDetailTableLoaderUtil;
 import com.tourdulich.util.ProductTableLoaderUtil;
 import com.tourdulich.util.TableSetupUtil;
 import java.awt.Component;
@@ -101,6 +102,7 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
     private IUserBLL userBLL;
     TableRowSorter<TableModel> rowSorter = null;
     List<ProductDTO> productList = new ArrayList<>();
+    List<InvoiceDetailDTO> invoiceDetails = new ArrayList<>();
     DefaultTableModel model;
     Long total = 0L;
     Long userId = null;
@@ -109,21 +111,12 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
     String[] columnNamesProduct = {
                             "Id",
                             "Tên sản phẩm",
-                            "Giá",
-                            "Nhãn hiệu",
-                            "Loại",
-                            "SL"
+                            "Số Lượng",
+                            "tổng"
                                           
     };
     
-    String[] columnNamesInvoice_Product = {
-                            "Id Sản phẩm",
-                            "Tên sản phẩm",
-                            "Giá",
-                            "Số Lượng",
-                            "Thành tiền"
-                                                                 
-    };
+  
     
     
     public popUpDInvoiceDetailGUI(String action) {
@@ -165,7 +158,14 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
     
     public void loadTableData() {
         //tblDiaDiem.setModel(new DiaDiemTableLoaderUtil().setTable(diaDiemBLL.findAll(), this.columnNames)) ;
-        tblInvoice_Product.setModel(new ProductTableLoaderUtil().setTable(invoiceDetailBLL.findByIdInvoice(this.invoice.getId()), this.columnNamesProduct)) ;
+        
+        
+        List<ProductDTO> products = invoiceDetailBLL.findByIdInvoice(this.invoice.getId());
+        for( int i = 0; i < products.size(); i++)
+        {
+            this.invoiceDetails.add(invoiceDetailBLL.findById(invoice.getId(), products.get(i).getId()));
+        }
+        tblInvoice_Product.setModel(new InvoiceDetailTableLoaderUtil().setTable(invoiceDetails, columnNamesProduct));
         headerColor(77,77,77,tblInvoice_Product);
         resizeColumnWidth(tblInvoice_Product);
        
