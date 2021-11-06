@@ -2,84 +2,29 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group/>
+        <group/>
+        <group/>
+        <group/>
+        <group/>
         <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/UserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/QuanLyGiaTourGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/main/MainGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpImportGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpProductGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/BillGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/util/InputValidatorUtil.java</file>
         </group>
         <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/UserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/QuanLyGiaTourGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/main/MainGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpImportGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpProductGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/BillGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/MainGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/ProductGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/dal/IDichVuDAL.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/dal/IChiPhiDoanDAL.java</file>
         </group>
         <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/UserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/QuanLyGiaTourGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/main/MainGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpImportGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpProductGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/BillGUI.java</file>
-        </group>
-        <group>
-            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/User_RoleDAL.java</file>
-        </group>
-        <group>
-            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/bll/impl/User_RoleBLL.java</file>
-            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/ProductDTO.java</file>
-            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/BrandDTO.java</file>
-            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/Brand_CatalogDTO.java</file>
-            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/User_RoleDTO.java</file>
-            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/User_RoleDAL.java</file>
-            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/RoleDTO.java</file>
-            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dto/UserDTO.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/bll/impl/Brand_CatalogBLL.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/BrandDAL.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/IBrand_CatalogDAL.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/bll/IBrand_CatalogBLL.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/Brand_CatalogDAL.java</file>
-            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpUserGUI.java</file>
-            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/QuanLyGiaTourGUI.java</file>
-            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/UserGUI.java</file>
-            <file>file:/D:/XDPMTMHPL/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/UserDAL.java</file>
-        </group>
-        <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpTableDiaDiemGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/InvoiceDAL.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/main/MainGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpTourGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/bll/impl/InvoiceBLL.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/BillGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/popUpInvoiceGUI.java</file>
-        </group>
-        <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/InvoiceDAL.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpTableChonUserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/util/InvoiceDetailTableLoaderUtil.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/popUpDInvoiceDetailGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/main/MainGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/util/InvoiceTableLoaderUtil.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/mapper/impl/InvoiceMapper.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/BillGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/popUpInvoiceGUI.java</file>
-        </group>
-        <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/UserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/dal/impl/InvoiceDAL.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpTableChonUserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/util/InvoiceDetailTableLoaderUtil.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/popUpDInvoiceDetailGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/main/MainGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/PopUpUserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/util/InvoiceTableLoaderUtil.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/mapper/impl/InvoiceMapper.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/form/BillGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/tourdulich/gui/popup/popUpInvoiceGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpUserGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpProductGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/MainGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/ProductGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/RoleGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/UserGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/menu/MenuItem.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpRoleGUI.java</file>
         </group>
     </open-files>
 </project-private>
