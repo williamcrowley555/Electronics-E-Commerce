@@ -126,7 +126,6 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
     public void CustomWindow()
     {   
         Color flatBlue = new Color(77,77,77);  
-        
         this.getRootPane().setBorder(BorderFactory.createMatteBorder(0,1,1,1, flatBlue));   
         center();
         lblMinimize.setText("\u2014");
@@ -169,20 +168,20 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
             }
         });
 
+        lblMinimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMinimize.setBackground(new java.awt.Color(255, 255, 255));
         lblMinimize.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblMinimize.setForeground(new java.awt.Color(255, 255, 255));
-        lblMinimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMinimize.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMinimizeMouseClicked(evt);
             }
         });
 
+        lblExit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblExit.setBackground(new java.awt.Color(255, 255, 255));
         lblExit.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblExit.setForeground(new java.awt.Color(255, 255, 255));
-        lblExit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblExit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblExitMouseClicked(evt);
@@ -194,7 +193,7 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
         panelHeaderLayout.setHorizontalGroup(
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHeaderLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(189, Short.MAX_VALUE)
                 .addComponent(lblMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(lblExit, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -207,11 +206,11 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
 
         pnlBody.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblTenRole.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblTenRole.setText("Tên vai trò:");
+        lblTenRole.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        txtRoleName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtRoleName.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
+        txtRoleName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         btnLuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/gui/popup/save_icon.png"))); // NOI18N
         btnLuu.setText(" Lưu");
@@ -243,11 +242,11 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
             }
         });
 
-        txtNormalizedName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtNormalizedName.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
+        txtNormalizedName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        lblTenChuanHoa.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblTenChuanHoa.setText("Tên chuẩn hóa:");
+        lblTenChuanHoa.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         lblValidateTenChuanHoa.setPreferredSize(new java.awt.Dimension(24, 24));
 
@@ -256,7 +255,7 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
         pnlBodyLayout.setHorizontalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBodyLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGap(5, 5, 5)
@@ -276,7 +275,7 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
                                 .addComponent(lblTenRole, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(29, 29, 29)
                                 .addComponent(lblValidateTenRole, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 57, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(20, 20, 20))))
         );
         pnlBodyLayout.setVerticalGroup(
@@ -308,10 +307,8 @@ public class PopUpRoleGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlBody, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(panelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+            .addComponent(pnlBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

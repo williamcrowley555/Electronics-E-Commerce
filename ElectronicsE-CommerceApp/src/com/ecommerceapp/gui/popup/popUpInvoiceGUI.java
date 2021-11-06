@@ -19,13 +19,9 @@ import com.ecommerceapp.bll.ITinhBLL;
 import com.ecommerceapp.bll.impl.BrandBLL;
 import com.ecommerceapp.bll.impl.Brand_CatalogBLL;
 import com.ecommerceapp.bll.impl.CatalogBLL;
-import com.ecommerceapp.bll.impl.DiaDiemBLL;
-import com.ecommerceapp.bll.impl.DiaDiemBLL;
 import com.ecommerceapp.bll.impl.InvoiceBLL;
 import com.ecommerceapp.bll.impl.InvoiceDetailBLL;
 import com.ecommerceapp.bll.impl.ProductBLL;
-import com.ecommerceapp.bll.impl.TinhBLL;
-import com.ecommerceapp.bll.impl.TinhBLL;
 import com.ecommerceapp.dto.BrandDTO;
 import com.ecommerceapp.dto.CatalogDTO;
 import com.ecommerceapp.dto.DiaDiemDTO;
@@ -49,6 +45,7 @@ import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.plaf.basic.ComboPopup;
 import com.ecommerceapp.gui.menu.MyComboBoxEditor;
 import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
+import com.ecommerceapp.gui.menu.MyScrollBarUI;
 import com.ecommerceapp.util.ImageUtil;
 import com.ecommerceapp.util.InputValidatorUtil;
 import com.ecommerceapp.util.ProductTableLoaderUtil;
@@ -127,9 +124,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         initComponents();
         
         this.action = action;    
-        diaDiemBLL = new DiaDiemBLL();
         productBLL = new ProductBLL();
-        tinhBLL = new TinhBLL();
         brandBLL = new BrandBLL();
         catalogBLL = new CatalogBLL();
         brand_catalogBLL = new Brand_CatalogBLL();
@@ -138,7 +133,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         CustomWindow();
         myTextArea();
         loadTableData();
-        
+        initNullTable();
         this.setVisible(true);    
     }
     
@@ -147,7 +142,6 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         this.action = action;  
         this.diaDiem = diaDiem;
         this.product = product;
-        diaDiemBLL = new DiaDiemBLL();
         productBLL = new ProductBLL();
         brandBLL = new BrandBLL();
         catalogBLL = new CatalogBLL();
@@ -158,8 +152,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         myTextArea();
         loadTableData();
         setLabelText(product);
-        
-       
+        initNullTable();
         this.setVisible(true);    
     }
     
@@ -168,11 +161,19 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         //tblDiaDiem.setModel(new DiaDiemTableLoaderUtil().setTable(diaDiemBLL.findAll(), this.columnNames)) ;
         tblProduct.setModel(new ProductTableLoaderUtil().setTable(productBLL.findAll(), this.columnNamesProduct)) ;
         this.rowSorter = TableSetupUtil.setTableFilter(tblProduct, txtTimKiem);
-         headerColor(77,77,77,tblProduct);
-         resizeColumnWidth(tblProduct);
+        headerColor(77,77,77,tblProduct);
+        resizeColumnWidth(tblProduct);
+        productChooserScrollpane.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
     
-    
+    public void initNullTable()
+    {   
+        DefaultTableModel emptyModel;
+        emptyModel = new DefaultTableModel(columnNamesInvoice_Product,0);
+        tblInvoice_Product.setModel(emptyModel);
+        headerColor(77,77,77,tblInvoice_Product);
+        productChoseScrollpane.getVerticalScrollBar().setUI(new MyScrollBarUI());
+    }
     
     public void headerColor(int r, int b, int g, JTable table)
     {
@@ -434,10 +435,10 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         lblGioiThieu1 = new javax.swing.JLabel();
         AreaScrollPane2 = new javax.swing.JScrollPane();
         txtNote = new javax.swing.JTextArea();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        productChooserScrollpane = new javax.swing.JScrollPane();
         tblProduct = new javax.swing.JTable();
         btnXoa = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        productChoseScrollpane = new javax.swing.JScrollPane();
         tblInvoice_Product = new javax.swing.JTable();
         btnThem = new javax.swing.JButton();
         btnUserSelect = new javax.swing.JButton();
@@ -609,12 +610,12 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         tblProduct.setFillsViewportHeight(true);
         tblProduct.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tblProduct.setRowHeight(35);
-        jScrollPane1.setViewportView(tblProduct);
+        productChooserScrollpane.setViewportView(tblProduct);
 
         btnXoa.setBackground(new java.awt.Color(77, 77, 77));
         btnXoa.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnXoa.setForeground(new java.awt.Color(255, 255, 255));
-        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/minus_icon.png"))); // NOI18N
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/minus_icon.png"))); // NOI18N
         btnXoa.setText("Xóa");
         btnXoa.setBorder(null);
         btnXoa.setContentAreaFilled(false);
@@ -640,12 +641,12 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         tblInvoice_Product.setFillsViewportHeight(true);
         tblInvoice_Product.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tblInvoice_Product.setRowHeight(35);
-        jScrollPane2.setViewportView(tblInvoice_Product);
+        productChoseScrollpane.setViewportView(tblInvoice_Product);
 
         btnThem.setBackground(new java.awt.Color(77, 77, 77));
         btnThem.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
-        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/plus_icon.png"))); // NOI18N
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/plus_icon.png"))); // NOI18N
         btnThem.setText("Thêm");
         btnThem.setBorder(null);
         btnThem.setContentAreaFilled(false);
@@ -660,7 +661,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         btnUserSelect.setBackground(new java.awt.Color(77, 77, 77));
         btnUserSelect.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnUserSelect.setForeground(new java.awt.Color(255, 255, 255));
-        btnUserSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/staff_icon.png"))); // NOI18N
+        btnUserSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/staff_icon.png"))); // NOI18N
         btnUserSelect.setText("Chọn khách");
         btnUserSelect.setBorder(null);
         btnUserSelect.setContentAreaFilled(false);
@@ -694,7 +695,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         btnSum.setBackground(new java.awt.Color(77, 77, 77));
         btnSum.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnSum.setForeground(new java.awt.Color(255, 255, 255));
-        btnSum.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tourdulich/img/plus_icon.png"))); // NOI18N
+        btnSum.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/plus_icon.png"))); // NOI18N
         btnSum.setText("Tổng");
         btnSum.setBorder(null);
         btnSum.setContentAreaFilled(false);
@@ -730,7 +731,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(36, 36, 36)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblGioiThieu)
                             .addComponent(AreaScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -746,7 +747,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                                         .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(lblTenDiaDiem1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                                         .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(pnlBodyLayout.createSequentialGroup()
                                         .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -758,18 +759,18 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                                 .addComponent(lblTinh2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                                 .addComponent(lblTinh1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
                                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1)))
+                            .addComponent(productChooserScrollpane)))
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(productChoseScrollpane, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -828,13 +829,13 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                         .addComponent(lblGioiThieu1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(AreaScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(productChooserScrollpane, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(productChoseScrollpane, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -863,7 +864,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 972, Short.MAX_VALUE)
+            .addComponent(panelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 982, Short.MAX_VALUE)
             .addComponent(pnlBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -1193,8 +1194,6 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnUserSelect;
     private javax.swing.JButton btnXoa;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblExit;
     private javax.swing.JLabel lblGioiThieu;
     private javax.swing.JLabel lblGioiThieu1;
@@ -1210,6 +1209,8 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblValidateTen;
     private javax.swing.JPanel panelHeader;
     private javax.swing.JPanel pnlBody;
+    private javax.swing.JScrollPane productChooserScrollpane;
+    private javax.swing.JScrollPane productChoseScrollpane;
     private javax.swing.JTable tblInvoice_Product;
     private javax.swing.JTable tblProduct;
     private javax.swing.JTextArea txtAddress;

@@ -9,7 +9,6 @@ import com.ecommerceapp.dal.ICatalogDAL;
 import com.ecommerceapp.dto.LoaiDuLichDTO;
 import com.ecommerceapp.mapper.impl.LoaiDuLichMapper;
 import java.util.List;
-import com.ecommerceapp.dal.ILoaiDuLichDAL;
 import com.ecommerceapp.dto.CatalogDTO;
 import com.ecommerceapp.mapper.impl.CatalogMapper;
 

@@ -19,7 +19,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.ecommerceapp.gui.menu.MyScrollBarUI;
-import com.ecommerceapp.gui.popup.PopUpTableNhanVienGUI;
 import com.ecommerceapp.gui.popup.PopUpUserGUI;
 import com.ecommerceapp.util.UserTableLoaderUtil;
 import com.ecommerceapp.util.TableSetupUtil;

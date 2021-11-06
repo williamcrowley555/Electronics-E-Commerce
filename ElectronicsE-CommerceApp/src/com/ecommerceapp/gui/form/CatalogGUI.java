@@ -9,7 +9,6 @@ import com.ecommerceapp.bll.ICatalogBLL;
 import com.ecommerceapp.bll.IDichVuBLL;
 import com.ecommerceapp.bll.IVaiTroBLL;
 import com.ecommerceapp.bll.impl.CatalogBLL;
-import com.ecommerceapp.bll.impl.DichVuBLL;
 import com.ecommerceapp.bll.impl.NhanVienBLL;
 import com.ecommerceapp.bll.impl.VaiTroBLL;
 import java.awt.Color;
@@ -20,10 +19,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import com.ecommerceapp.gui.menu.MyScrollBarUI;
 import com.ecommerceapp.gui.popup.PopUpCatalogGUI;
-import com.ecommerceapp.gui.popup.PopUpDichVuGUI;
 import com.ecommerceapp.gui.popup.PopUpNhanVienGUI;
 import com.ecommerceapp.util.CatalogTableLoaderUtil;
-import com.ecommerceapp.util.DichVuTableLoaderUtil;
 import com.ecommerceapp.util.NhanVienTableLoaderUtil;
 import com.ecommerceapp.util.TableSetupUtil;
 import java.awt.Dimension;
@@ -50,7 +47,6 @@ public class CatalogGUI extends javax.swing.JPanel {
     public CatalogGUI() {
         initComponents();
         // Ghi chu
-        dichVuBLL = new DichVuBLL();
         catalogBLL = new CatalogBLL();
         loadTableData();   // Sua ham nay 
         

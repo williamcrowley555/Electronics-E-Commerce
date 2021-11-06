@@ -13,12 +13,8 @@ import com.ecommerceapp.bll.INhanVienBLL;
 import com.ecommerceapp.bll.ITinhBLL;
 import com.ecommerceapp.bll.IUserBLL;
 import com.ecommerceapp.bll.IVaiTroBLL;
-import com.ecommerceapp.bll.impl.DiaDiemBLL;
-import com.ecommerceapp.bll.impl.DsDiaDiemTourBLL;
-import com.ecommerceapp.bll.impl.GiaTourBLL;
 import com.ecommerceapp.bll.impl.KhachHangBLL;
 import com.ecommerceapp.bll.impl.NhanVienBLL;
-import com.ecommerceapp.bll.impl.TinhBLL;
 import com.ecommerceapp.bll.impl.UserBLL;
 import com.ecommerceapp.dto.DiaDiemDTO;
 import com.ecommerceapp.dto.DsDiaDiemTourDTO;
@@ -28,8 +24,6 @@ import com.ecommerceapp.dto.TinhDTO;
 import com.ecommerceapp.dto.UserDTO;
 import com.ecommerceapp.gui.menu.MyComboBoxEditor;
 import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
-import com.ecommerceapp.util.DiaDiemTableLoaderUtil;
-import com.ecommerceapp.util.GiaTourTableLoaderUtil;
 import com.ecommerceapp.util.KhachHangTableLoaderUtil;
 import com.ecommerceapp.util.NhanVienTableLoaderUtil;
 import com.ecommerceapp.util.UserTableLoaderUtil;
@@ -215,14 +209,14 @@ public class PopUpTableChonUserGUI extends javax.swing.JFrame {
             .addGap(0, 50, Short.MAX_VALUE)
         );
 
+        btnLuu.setBackground(new java.awt.Color(77, 77, 77));
+        btnLuu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
         btnLuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/gui/popup/save_icon.png"))); // NOI18N
         btnLuu.setText(" Lưu");
-        btnLuu.setBackground(new java.awt.Color(14, 142, 233));
         btnLuu.setBorder(null);
         btnLuu.setContentAreaFilled(false);
         btnLuu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnLuu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
         btnLuu.setOpaque(true);
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -230,14 +224,14 @@ public class PopUpTableChonUserGUI extends javax.swing.JFrame {
             }
         });
 
+        btnHuy.setBackground(new java.awt.Color(77, 77, 77));
+        btnHuy.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnHuy.setForeground(new java.awt.Color(255, 255, 255));
         btnHuy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/gui/popup/cancel_icon.png"))); // NOI18N
         btnHuy.setText(" Hủy");
-        btnHuy.setBackground(new java.awt.Color(14, 142, 233));
         btnHuy.setBorder(null);
         btnHuy.setContentAreaFilled(false);
         btnHuy.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnHuy.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnHuy.setForeground(new java.awt.Color(255, 255, 255));
         btnHuy.setOpaque(true);
         btnHuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,9 +239,9 @@ public class PopUpTableChonUserGUI extends javax.swing.JFrame {
             }
         });
 
-        lblTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("Chọn Khách Hàng");
+        lblTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

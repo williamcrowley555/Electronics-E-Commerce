@@ -28,7 +28,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelHeader" pref="972" max="32767" attributes="0"/>
+          <Component id="panelHeader" pref="982" max="32767" attributes="0"/>
           <Component id="pnlBody" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
@@ -125,7 +125,7 @@
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lblGioiThieu" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="AreaScrollPane1" alignment="0" min="-2" pref="320" max="-2" attributes="0"/>
@@ -142,7 +142,7 @@
                                           <Component id="txtLastName" min="-2" pref="115" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="lblTenDiaDiem1" min="-2" pref="40" max="-2" attributes="0"/>
-                                          <EmptySpace pref="15" max="32767" attributes="0"/>
+                                          <EmptySpace pref="9" max="32767" attributes="0"/>
                                           <Component id="txtFirstName" min="-2" pref="115" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
@@ -159,21 +159,21 @@
                                   <Component id="lblTinh2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="txtTimKiem" min="-2" pref="134" max="-2" attributes="0"/>
-                                  <EmptySpace pref="25" max="32767" attributes="0"/>
+                                  <EmptySpace pref="14" max="32767" attributes="0"/>
                                   <Component id="lblTinh1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="txtSoLuong" min="-2" pref="50" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                                   <Component id="btnThem" min="-2" pref="100" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jScrollPane1" max="32767" attributes="0"/>
+                              <Component id="productChooserScrollpane" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnXoa" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" min="-2" pref="576" max="-2" attributes="0"/>
+                              <Component id="productChoseScrollpane" min="-2" pref="576" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -250,14 +250,14 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="AreaScrollPane2" min="-2" pref="48" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" min="-2" pref="266" max="-2" attributes="0"/>
+                      <Component id="productChooserScrollpane" min="-2" pref="266" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="47" max="32767" attributes="0"/>
                   <Component id="btnXoa" min="-2" pref="38" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jScrollPane2" min="-2" pref="266" max="-2" attributes="0"/>
+                          <Component id="productChoseScrollpane" min="-2" pref="266" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -533,7 +533,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+        <Container class="javax.swing.JScrollPane" name="productChooserScrollpane">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
@@ -571,7 +571,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/tourdulich/img/minus_icon.png"/>
+              <Image iconType="3" name="/com/ecommerceapp/img/minus_icon.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -587,7 +587,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaActionPerformed"/>
           </Events>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+        <Container class="javax.swing.JScrollPane" name="productChoseScrollpane">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
@@ -625,7 +625,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/tourdulich/img/plus_icon.png"/>
+              <Image iconType="3" name="/com/ecommerceapp/img/plus_icon.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -653,7 +653,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/tourdulich/img/staff_icon.png"/>
+              <Image iconType="3" name="/com/ecommerceapp/img/staff_icon.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n kh&#xe1;ch"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -723,7 +723,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/tourdulich/img/plus_icon.png"/>
+              <Image iconType="3" name="/com/ecommerceapp/img/plus_icon.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="T&#x1ed5;ng"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

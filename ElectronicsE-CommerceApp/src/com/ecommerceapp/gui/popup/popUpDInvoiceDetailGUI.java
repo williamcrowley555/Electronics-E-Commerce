@@ -20,13 +20,9 @@ import com.ecommerceapp.bll.IUserBLL;
 import com.ecommerceapp.bll.impl.BrandBLL;
 import com.ecommerceapp.bll.impl.Brand_CatalogBLL;
 import com.ecommerceapp.bll.impl.CatalogBLL;
-import com.ecommerceapp.bll.impl.DiaDiemBLL;
-import com.ecommerceapp.bll.impl.DiaDiemBLL;
 import com.ecommerceapp.bll.impl.InvoiceBLL;
 import com.ecommerceapp.bll.impl.InvoiceDetailBLL;
 import com.ecommerceapp.bll.impl.ProductBLL;
-import com.ecommerceapp.bll.impl.TinhBLL;
-import com.ecommerceapp.bll.impl.TinhBLL;
 import com.ecommerceapp.bll.impl.UserBLL;
 import com.ecommerceapp.dto.BrandDTO;
 import com.ecommerceapp.dto.CatalogDTO;
@@ -51,6 +47,7 @@ import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.plaf.basic.ComboPopup;
 import com.ecommerceapp.gui.menu.MyComboBoxEditor;
 import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
+import com.ecommerceapp.gui.menu.MyScrollBarUI;
 import com.ecommerceapp.util.ImageUtil;
 import com.ecommerceapp.util.InputValidatorUtil;
 import com.ecommerceapp.util.InvoiceDetailTableLoaderUtil;
@@ -112,7 +109,7 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
                             "Id",
                             "Tên sản phẩm",
                             "Số Lượng",
-                            "tổng"
+                            "Tổng"
                                           
     };
     
@@ -123,9 +120,7 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
         initComponents();
         
         this.action = action;    
-        diaDiemBLL = new DiaDiemBLL();
         productBLL = new ProductBLL();
-        tinhBLL = new TinhBLL();
         brandBLL = new BrandBLL();
         catalogBLL = new CatalogBLL();
         brand_catalogBLL = new Brand_CatalogBLL();
@@ -287,6 +282,8 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
         
         txtAddress.setWrapStyleWord(true);
         txtAddress.setLineWrap(true);
+        AreaScrollPane1.getVerticalScrollBar().setUI(new MyScrollBarUI());
+        AreaScrollPane2.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
     public JComboBox myComboBox(JComboBox box, Color color)
     {   
@@ -593,26 +590,25 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
                     .addComponent(lblGioiThieu, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(AreaScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                    .addComponent(AreaScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
                     .addComponent(AreaScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                        .addGap(18, 18, 18)
                         .addComponent(lblTenDiaDiem5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE))
+                        .addGap(0, 38, Short.MAX_VALUE))
                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                        .addGap(153, 153, 153)
+                        .addGap(147, 147, 147)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTenDiaDiem3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTong, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblValidateTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(92, 92, 92)
-                        .addComponent(lblValidateGia, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                        .addComponent(lblValidateGia, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(lblValidateMota, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
         );

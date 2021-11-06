@@ -10,7 +10,6 @@ import com.ecommerceapp.bll.IVaiTroBLL;
 import com.ecommerceapp.bll.impl.RoleBLL;
 import com.ecommerceapp.bll.impl.VaiTroBLL;
 import com.ecommerceapp.dto.VaiTroDTO;
-import com.ecommerceapp.gui.popup.PopUpVaiTroGUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Vector;

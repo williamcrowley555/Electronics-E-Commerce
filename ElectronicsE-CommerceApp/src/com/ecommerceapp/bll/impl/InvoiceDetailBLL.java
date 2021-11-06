@@ -7,14 +7,10 @@ package com.ecommerceapp.bll.impl;
 
 import com.ecommerceapp.bll.IDsDiaDiemTourBLL;
 import com.ecommerceapp.bll.IInvoiceDetailBLL;
-import com.ecommerceapp.dal.impl.DiaDiemDAL;
-import com.ecommerceapp.dal.impl.DsDiaDiemTourDAL;
 import com.ecommerceapp.dto.DiaDiemDTO;
 import com.ecommerceapp.dto.DsDiaDiemTourDTO;
 import java.util.ArrayList;
 import java.util.List;
-import com.ecommerceapp.dal.IDiaDiemDAL;
-import com.ecommerceapp.dal.IDsDiaDiemTourDAL;
 import com.ecommerceapp.dal.IInvoiceDetailDAL;
 import com.ecommerceapp.dal.IProductDAL;
 import com.ecommerceapp.dal.impl.InvoiceDetailDAL;
