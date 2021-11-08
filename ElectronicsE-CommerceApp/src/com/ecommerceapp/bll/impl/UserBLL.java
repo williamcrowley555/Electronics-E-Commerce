@@ -10,6 +10,7 @@ import com.ecommerceapp.dal.IUserDAL;
 import com.ecommerceapp.dal.impl.UserDAL;
 import com.ecommerceapp.dto.UserDTO;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -31,6 +32,23 @@ public class UserBLL implements IUserBLL{
     @Override
     public UserDTO findById(Long id) {
         return userDAL.findById(id);
+    } 
+
+    @Override
+    public UserDTO findByEmail(String email) {
+        return userDAL.findByEmail(email);
+    }
+
+    @Override
+    public UserDTO findByEmailAndPassword(String email, String password) {
+        UserDTO user = findByEmail(email);
+        
+        if (user != null) {
+            if (verifyHash(password, user.getPassword())) {
+                return user;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -41,10 +59,21 @@ public class UserBLL implements IUserBLL{
     @Override
     public void update(UserDTO user) {
         userDAL.update(user);
+    }  
+
+    @Override
+    public void changePassword(UserDTO user, String newPassword) {
+        String encryptedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(10));
+        user.setPassword(encryptedPassword);
+        update(user);
     }
 
     @Override
     public void delete(Long id) {
         userDAL.delete(id);
-    }    
+    } 
+    
+    private boolean verifyHash(String password, String hash) {
+        return BCrypt.checkpw(password, hash);
+    }
 }
