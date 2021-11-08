@@ -35,7 +35,7 @@ public class UserDAL extends AbstractDAL<UserDTO> implements IUserDAL{
         List<UserDTO> user = query(sql, new UserMapper(), email);
         return user.isEmpty() ? null : user.get(0);
     }
-    
+   
     @Override
     public Long save(UserDTO user) {
         String sql = "INSERT INTO user(address, dob, email, enabled, first_name, gender, last_name, password, phone) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";

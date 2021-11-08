@@ -3,71 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/MainGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/ProductGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/dal/IDichVuDAL.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/dal/IChiPhiDoanDAL.java</file>
-        </group>
-        <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpUserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpProductGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/MainGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/ProductGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/RoleGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/UserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/menu/MenuItem.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpRoleGUI.java</file>
-        </group>
-        <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpUserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/MainGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpBrandGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/util/ProductTableLoaderUtil.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/menu/MenuItem.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpRoleGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpTableChonUserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/CatalogGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpProductGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/popUpInvoiceGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/ProductGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/RoleGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/UserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/BillGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/BrandGUI.java</file>
-        </group>
-        <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpUserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/MainGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpBrandGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/util/ProductTableLoaderUtil.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/menu/MenuItem.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpRoleGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpTableChonUserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/CatalogGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpProductGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/popUpInvoiceGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/ProductGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/RoleGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/popUpDInvoiceDetailGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/UserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/BillGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/BrandGUI.java</file>
-        </group>
-        <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/LoginGUI.java</file>
-        </group>
-        <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/LoginGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/others/MD5.java</file>
-        </group>
-        <group>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/LoginGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/others/MD5.java</file>
-        </group>
-        <group>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpUserGUI.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/LoginGUI.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/MainGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/dal/impl/UserDAL.java</file>
         </group>
     </open-files>
 </project-private>

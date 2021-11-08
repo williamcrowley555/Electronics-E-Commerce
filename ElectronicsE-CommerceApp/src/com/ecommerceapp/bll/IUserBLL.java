@@ -18,5 +18,6 @@ public interface IUserBLL {
     UserDTO findByEmail(String email);
     Long save(UserDTO user);
     void update(UserDTO user);
+    void changePassword(UserDTO user, String newPassword);
     void delete(Long id);
 }
