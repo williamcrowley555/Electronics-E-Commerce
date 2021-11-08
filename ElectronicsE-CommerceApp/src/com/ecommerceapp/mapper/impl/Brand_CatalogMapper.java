@@ -6,7 +6,6 @@
 package com.ecommerceapp.mapper.impl;
 
 import com.ecommerceapp.dto.Brand_CatalogDTO;
-import com.ecommerceapp.dto.DsDiaDiemTourDTO;
 import com.ecommerceapp.mapper.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;

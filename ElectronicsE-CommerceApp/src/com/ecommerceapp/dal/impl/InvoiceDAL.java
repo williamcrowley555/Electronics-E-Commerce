@@ -7,8 +7,6 @@ package com.ecommerceapp.dal.impl;
 
 import com.ecommerceapp.dal.ICatalogDAL;
 import com.ecommerceapp.dal.IInvoiceDAL;
-import com.ecommerceapp.dto.LoaiDuLichDTO;
-import com.ecommerceapp.mapper.impl.LoaiDuLichMapper;
 import java.util.List;
 import com.ecommerceapp.dto.CatalogDTO;
 import com.ecommerceapp.dto.InvoiceDTO;

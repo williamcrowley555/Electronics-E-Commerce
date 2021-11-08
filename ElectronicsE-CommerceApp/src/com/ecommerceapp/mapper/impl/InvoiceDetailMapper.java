@@ -5,7 +5,6 @@
  */
 package com.ecommerceapp.mapper.impl;
 
-import com.ecommerceapp.dto.DsDiaDiemTourDTO;
 import com.ecommerceapp.dto.InvoiceDetailDTO;
 import com.ecommerceapp.mapper.RowMapper;
 import java.sql.ResultSet;

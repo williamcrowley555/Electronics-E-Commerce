@@ -5,20 +5,16 @@
  */
 package com.ecommerceapp.gui.form;
 
-import com.ecommerceapp.bll.IDiaDiemBLL;
 import com.ecommerceapp.bll.IProductBLL;
-import com.ecommerceapp.bll.ITinhBLL;
 import com.ecommerceapp.bll.impl.ProductBLL;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import com.ecommerceapp.gui.menu.MyScrollBarUI;
 import com.ecommerceapp.gui.popup.PopUpImportGUI;
 import com.ecommerceapp.gui.popup.PopUpProductGUI;
-import com.ecommerceapp.gui.popup.PopUpKhachHangGUI;
 import com.ecommerceapp.util.ProductTableLoaderUtil;
 import com.ecommerceapp.util.TableSetupUtil;
 import java.awt.Component;

@@ -7,25 +7,13 @@ package com.ecommerceapp.gui.popup;
 
 import com.ecommerceapp.bll.IRoleBLL;
 import com.ecommerceapp.bll.impl.RoleBLL;
-import com.ecommerceapp.bll.impl.VaiTroBLL;
 import com.ecommerceapp.dto.RoleDTO;
-import com.ecommerceapp.dto.VaiTroDTO;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.border.MatteBorder;
-import javax.swing.plaf.basic.BasicArrowButton;
-import javax.swing.plaf.basic.BasicComboBoxUI;
-import javax.swing.plaf.basic.BasicComboPopup;
-import javax.swing.plaf.basic.ComboPopup;
-import com.ecommerceapp.gui.menu.MyComboBoxEditor;
-import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
 import com.ecommerceapp.util.InputValidatorUtil;
-import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 

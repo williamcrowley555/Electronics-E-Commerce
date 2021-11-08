@@ -5,7 +5,6 @@
  */
 package com.ecommerceapp.util;
 
-import com.ecommerceapp.dto.VaiTroDTO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 

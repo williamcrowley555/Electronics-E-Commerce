@@ -72,10 +72,10 @@ public class User_RoleBLL implements IUser_RoleBLL{
 
     @Override
     public List<RoleDTO> findByIdUser(Long idUser) {
-        List<Long> roleIds = user_RoleDAL.findByIdRole(idUser);
+        List<Long> roleIds = user_RoleDAL.findByIdUser(idUser);
         List<RoleDTO> roleList = new ArrayList<>();
         for(Long roleId : roleIds)
-        {
+        {   
             roleList.add(roleDAL.findById(roleId));
         }
         return roleList;

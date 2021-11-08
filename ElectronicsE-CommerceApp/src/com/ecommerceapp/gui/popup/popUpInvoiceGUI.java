@@ -5,32 +5,21 @@
  */
 package com.ecommerceapp.gui.popup;
 
-import com.toedter.calendar.JTextFieldDateEditor;
 import com.ecommerceapp.bll.IBrandBLL;
 import com.ecommerceapp.bll.IBrand_CatalogBLL;
 import com.ecommerceapp.bll.ICatalogBLL;
-import com.ecommerceapp.bll.IDiaDiemBLL;
-import com.ecommerceapp.bll.IDiaDiemBLL;
 import com.ecommerceapp.bll.IInvoiceBLL;
 import com.ecommerceapp.bll.IInvoiceDetailBLL;
 import com.ecommerceapp.bll.IProductBLL;
-import com.ecommerceapp.bll.ITinhBLL;
-import com.ecommerceapp.bll.ITinhBLL;
 import com.ecommerceapp.bll.impl.BrandBLL;
 import com.ecommerceapp.bll.impl.Brand_CatalogBLL;
 import com.ecommerceapp.bll.impl.CatalogBLL;
 import com.ecommerceapp.bll.impl.InvoiceBLL;
 import com.ecommerceapp.bll.impl.InvoiceDetailBLL;
 import com.ecommerceapp.bll.impl.ProductBLL;
-import com.ecommerceapp.dto.BrandDTO;
-import com.ecommerceapp.dto.CatalogDTO;
-import com.ecommerceapp.dto.DiaDiemDTO;
-import com.ecommerceapp.dto.DiaDiemDTO;
 import com.ecommerceapp.dto.InvoiceDTO;
 import com.ecommerceapp.dto.InvoiceDetailDTO;
 import com.ecommerceapp.dto.ProductDTO;
-import com.ecommerceapp.dto.TinhDTO;
-import com.ecommerceapp.dto.TinhDTO;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -46,7 +35,6 @@ import javax.swing.plaf.basic.ComboPopup;
 import com.ecommerceapp.gui.menu.MyComboBoxEditor;
 import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
 import com.ecommerceapp.gui.menu.MyScrollBarUI;
-import com.ecommerceapp.util.ImageUtil;
 import com.ecommerceapp.util.InputValidatorUtil;
 import com.ecommerceapp.util.ProductTableLoaderUtil;
 import com.ecommerceapp.util.TableSetupUtil;
@@ -82,11 +70,8 @@ import javax.swing.table.TableRowSorter;
 public class popUpInvoiceGUI extends javax.swing.JFrame {
     private File selectedImg = null;
     private String action;
-    private DiaDiemDTO diaDiem = null;
     private ProductDTO product = null;
     private InvoiceDTO invoice = null;
-    private IDiaDiemBLL diaDiemBLL;
-    private ITinhBLL tinhBLL;
     private IBrandBLL brandBLL;
     private ICatalogBLL catalogBLL;
     private IProductBLL productBLL;
@@ -140,7 +125,6 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     public popUpInvoiceGUI(String action, ProductDTO product) throws UnsupportedEncodingException {
         initComponents();
         this.action = action;  
-        this.diaDiem = diaDiem;
         this.product = product;
         productBLL = new ProductBLL();
         brandBLL = new BrandBLL();

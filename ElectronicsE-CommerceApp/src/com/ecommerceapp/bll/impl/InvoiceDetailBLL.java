@@ -5,10 +5,7 @@
  */
 package com.ecommerceapp.bll.impl;
 
-import com.ecommerceapp.bll.IDsDiaDiemTourBLL;
 import com.ecommerceapp.bll.IInvoiceDetailBLL;
-import com.ecommerceapp.dto.DiaDiemDTO;
-import com.ecommerceapp.dto.DsDiaDiemTourDTO;
 import java.util.ArrayList;
 import java.util.List;
 import com.ecommerceapp.dal.IInvoiceDetailDAL;

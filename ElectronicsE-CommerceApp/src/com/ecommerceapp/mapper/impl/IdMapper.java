@@ -5,7 +5,6 @@
  */
 package com.ecommerceapp.mapper.impl;
 
-import com.ecommerceapp.dto.DiaDiemDTO;
 import com.ecommerceapp.mapper.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;

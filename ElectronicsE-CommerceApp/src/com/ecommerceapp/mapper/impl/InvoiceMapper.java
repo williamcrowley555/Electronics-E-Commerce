@@ -7,7 +7,6 @@ package com.ecommerceapp.mapper.impl;
 
 import com.ecommerceapp.dto.CatalogDTO;
 import com.ecommerceapp.dto.InvoiceDTO;
-import com.ecommerceapp.dto.LoaiDuLichDTO;
 import com.ecommerceapp.mapper.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;

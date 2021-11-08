@@ -6,25 +6,17 @@
 package com.ecommerceapp.gui.form;
 
 import com.ecommerceapp.bll.ICatalogBLL;
-import com.ecommerceapp.bll.IDichVuBLL;
-import com.ecommerceapp.bll.IVaiTroBLL;
 import com.ecommerceapp.bll.impl.CatalogBLL;
-import com.ecommerceapp.bll.impl.NhanVienBLL;
-import com.ecommerceapp.bll.impl.VaiTroBLL;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import com.ecommerceapp.gui.menu.MyScrollBarUI;
 import com.ecommerceapp.gui.popup.PopUpCatalogGUI;
-import com.ecommerceapp.gui.popup.PopUpNhanVienGUI;
 import com.ecommerceapp.util.CatalogTableLoaderUtil;
-import com.ecommerceapp.util.NhanVienTableLoaderUtil;
 import com.ecommerceapp.util.TableSetupUtil;
 import java.awt.Dimension;
-import javax.swing.JOptionPane;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -39,7 +31,6 @@ public class CatalogGUI extends javax.swing.JPanel {
                         "Id",
                         "Tên loại sản phẩm"
     };
-    private IDichVuBLL dichVuBLL;
     private ICatalogBLL catalogBLL;
     private PopUpCatalogGUI popUp = null;
     TableRowSorter<TableModel> rowSorter = null;

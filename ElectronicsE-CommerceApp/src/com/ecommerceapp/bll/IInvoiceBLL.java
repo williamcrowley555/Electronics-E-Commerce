@@ -5,9 +5,7 @@
  */
 package com.ecommerceapp.bll;
 
-import com.ecommerceapp.dto.CatalogDTO;
 import com.ecommerceapp.dto.InvoiceDTO;
-import com.ecommerceapp.dto.LoaiDuLichDTO;
 import java.util.List;
 
 /**

@@ -6,9 +6,7 @@
 package com.ecommerceapp.gui.form;
 
 import com.ecommerceapp.bll.IUserBLL;
-import com.ecommerceapp.bll.IVaiTroBLL;
 import com.ecommerceapp.bll.impl.UserBLL;
-import com.ecommerceapp.bll.impl.VaiTroBLL;
 import com.ecommerceapp.dto.UserDTO;
 //import com.tourdulich.gui.popup.PopUpUserGUI;
 import java.awt.Color;

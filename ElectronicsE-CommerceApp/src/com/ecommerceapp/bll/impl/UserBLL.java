@@ -32,6 +32,11 @@ public class UserBLL implements IUserBLL{
     public UserDTO findById(Long id) {
         return userDAL.findById(id);
     }
+    
+    @Override
+    public UserDTO findByEmail(String email) {
+        return userDAL.findByEmail(email);
+    }
 
     @Override
     public Long save(UserDTO user) {
@@ -47,4 +52,6 @@ public class UserBLL implements IUserBLL{
     public void delete(Long id) {
         userDAL.delete(id);
     }    
+
+    
 }

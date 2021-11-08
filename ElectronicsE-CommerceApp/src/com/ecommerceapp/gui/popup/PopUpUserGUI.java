@@ -5,19 +5,14 @@
  */
 package com.ecommerceapp.gui.popup;
 
-import com.toedter.calendar.JTextFieldDateEditor;
 import com.ecommerceapp.bll.IRoleBLL;
 import com.ecommerceapp.bll.IUserBLL;
 import com.ecommerceapp.bll.IUser_RoleBLL;
-import com.ecommerceapp.bll.IVaiTroBLL;
 import com.ecommerceapp.bll.impl.RoleBLL;
 import com.ecommerceapp.bll.impl.UserBLL;
 import com.ecommerceapp.bll.impl.User_RoleBLL;
-import com.ecommerceapp.bll.impl.VaiTroBLL;
 import com.ecommerceapp.dto.RoleDTO;
 import com.ecommerceapp.dto.UserDTO;
-import com.ecommerceapp.dto.User_RoleDTO;
-import com.ecommerceapp.dto.VaiTroDTO;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -33,9 +28,7 @@ import javax.swing.plaf.basic.ComboPopup;
 import com.ecommerceapp.gui.menu.MyComboBoxEditor;
 import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
 import com.ecommerceapp.gui.others.MD5;
-import com.ecommerceapp.util.ImageUtil;
 import com.ecommerceapp.util.InputValidatorUtil;
-import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -108,8 +101,8 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         DCNgaySinh.setDate(user.getDob());
         txtDiaChi.setText(user.getAddress());
         txtSDT.setText(user.getPhone());
-        txtSDT1.setText(user.getEmail());
-        txtSDT2.setText(user.getPassword());
+        txtEmail.setText(user.getEmail());
+        txtPassword.setText(user.getPassword());
        // ComboboxVaiTro.setSelectedItem(getVaiTroItemName(user_roleBLL.findByIdUser(user.getId()).get(0)));
        
     }
@@ -191,7 +184,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
            lblValidateDiaChi.setToolTipText(InputValidatorUtil.isValidAddress(txtDiaChi.getText()));
         }
         
-        if (InputValidatorUtil.isValidEmail(txtSDT1.getText()).isEmpty())  
+        if (InputValidatorUtil.isValidEmail(txtEmail.getText()).isEmpty())  
         {
            Email = true;
            lblValidateEmail.setIcon(iconCheck);
@@ -202,7 +195,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
            lblValidateEmail.setToolTipText(InputValidatorUtil.isValidAddress(txtDiaChi.getText()));
         }
         
-        if (InputValidatorUtil.isValidAddress(txtSDT2.getText()).isEmpty())  
+        if (InputValidatorUtil.isValidAddress(txtPassword.getText()).isEmpty())  
         {
            Password = true;
            lblValidatePassword.setIcon(iconCheck);
@@ -230,8 +223,8 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         user.setDob(DCNgaySinh.getDate());
         user.setAddress(txtDiaChi.getText().trim());
         user.setPhone(txtSDT.getText().trim());
-        user.setEmail(txtSDT1.getText().trim());
-        String ernText = MD5.encrypt(txtSDT2.getText().trim());
+        user.setEmail(txtEmail.getText().trim());
+        String ernText = MD5.encrypt(txtPassword.getText().trim());
         user.setPassword(ernText);
 
         return user;
@@ -348,9 +341,9 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         lblValidateDiaChi = new javax.swing.JLabel();
         lblValidateNgaySinh = new javax.swing.JLabel();
         lblSDT1 = new javax.swing.JLabel();
-        txtSDT1 = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         lblSDT2 = new javax.swing.JLabel();
-        txtSDT2 = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JTextField();
         lblVaiTro = new javax.swing.JLabel();
         ComboboxVaiTro = new javax.swing.JComboBox<>();
         lblValidateEmail = new javax.swing.JLabel();
@@ -451,14 +444,14 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         lblSDT.setText("Sđt:");
         lblSDT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        btnLuu.setBackground(new java.awt.Color(77, 77, 77));
+        btnLuu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
         btnLuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/gui/popup/save_icon.png"))); // NOI18N
         btnLuu.setText(" Lưu");
-        btnLuu.setBackground(new java.awt.Color(77, 77, 77));
         btnLuu.setBorder(null);
         btnLuu.setContentAreaFilled(false);
         btnLuu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnLuu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
         btnLuu.setOpaque(true);
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -466,14 +459,14 @@ public class PopUpUserGUI extends javax.swing.JFrame {
             }
         });
 
+        btnHuy.setBackground(new java.awt.Color(77, 77, 77));
+        btnHuy.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnHuy.setForeground(new java.awt.Color(255, 255, 255));
         btnHuy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/gui/popup/cancel_icon.png"))); // NOI18N
         btnHuy.setText(" Hủy");
-        btnHuy.setBackground(new java.awt.Color(77, 77, 77));
         btnHuy.setBorder(null);
         btnHuy.setContentAreaFilled(false);
         btnHuy.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnHuy.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnHuy.setForeground(new java.awt.Color(255, 255, 255));
         btnHuy.setOpaque(true);
         btnHuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -498,14 +491,14 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         lblSDT1.setText("Email:");
         lblSDT1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        txtSDT1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
-        txtSDT1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtEmail.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
+        txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         lblSDT2.setText("Mật Khẩu:");
         lblSDT2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        txtSDT2.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
-        txtSDT2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtPassword.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
+        txtPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         lblVaiTro.setText("Vai trò:");
 
@@ -562,11 +555,11 @@ public class PopUpUserGUI extends javax.swing.JFrame {
                                     .addComponent(lblValidateNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlBodyLayout.createSequentialGroup()
-                                .addComponent(txtSDT1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblValidateEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlBodyLayout.createSequentialGroup()
-                                .addComponent(txtSDT2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblValidatePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(pnlBodyLayout.createSequentialGroup()
@@ -617,14 +610,14 @@ public class PopUpUserGUI extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtSDT1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblSDT1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lblValidateEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(lblSDT2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtSDT2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lblValidatePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -818,10 +811,10 @@ public class PopUpUserGUI extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioNam;
     private javax.swing.JRadioButton radioNu;
     private javax.swing.JTextArea txtDiaChi;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtHo;
+    private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtSDT;
-    private javax.swing.JTextField txtSDT1;
-    private javax.swing.JTextField txtSDT2;
     private javax.swing.JTextField txtTen;
     // End of variables declaration//GEN-END:variables
 }

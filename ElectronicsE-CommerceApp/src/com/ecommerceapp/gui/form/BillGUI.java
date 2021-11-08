@@ -5,18 +5,14 @@
  */
 package com.ecommerceapp.gui.form;
 
-import com.ecommerceapp.bll.IGiaTourBLL;
 import com.ecommerceapp.bll.IInvoiceBLL;
 import com.ecommerceapp.bll.IInvoiceDetailBLL;
-import com.ecommerceapp.bll.ILoaiDuLichBLL;
 import com.ecommerceapp.bll.IProductBLL;
-import com.ecommerceapp.bll.ITourBLL;
 import com.ecommerceapp.bll.impl.InvoiceBLL;
 import com.ecommerceapp.bll.impl.InvoiceDetailBLL;
 import com.ecommerceapp.bll.impl.ProductBLL;
 import com.ecommerceapp.dto.InvoiceDTO;
 import com.ecommerceapp.dto.ProductDTO;
-import com.ecommerceapp.dto.TourDTO;
 import com.ecommerceapp.gui.menu.MyComboBoxEditor;
 import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
 import java.awt.Color;
@@ -75,7 +71,6 @@ public class BillGUI extends javax.swing.JPanel {
                             "Trạng thái"
                             };
          
-    private ITourBLL tourBLL;
     private IInvoiceBLL invoiceBLL;
     private popUpInvoiceGUI popUp = null;
     private popUpDInvoiceDetailGUI popUpDetail = null;
@@ -103,16 +98,7 @@ public class BillGUI extends javax.swing.JPanel {
         headerColor(77,77,77,tblInvoice);
     }
     
-    public String[] getTourItems() {
-        List<TourDTO> tourLists = tourBLL.findAll();
-        String[] tourItems = new String[tourLists.size()];
-        int index = 0;
-        for(TourDTO vt : tourLists) {
-            tourItems[index] = vt.getId() + " - " + vt.getTenTour();
-            ++ index;
-        }
-        return tourItems;
-    }
+   
      
      public void setComboBox(JComboBox<String> comboBox, String[] listItems) {
         comboBox.setModel(new DefaultComboBoxModel<>(listItems));

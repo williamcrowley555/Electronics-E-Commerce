@@ -5,15 +5,13 @@
  */
 package com.ecommerceapp.gui.main;
 
-import com.ecommerceapp.bll.INhanVienBLL;
-import com.ecommerceapp.bll.impl.NhanVienBLL;
-import com.ecommerceapp.dto.NhanVienDTO;
+
+import com.ecommerceapp.dto.UserDTO;
 import com.ecommerceapp.gui.form.BillGUI;
 import com.ecommerceapp.gui.form.BrandGUI;
 import com.ecommerceapp.gui.form.CatalogGUI;
 import com.ecommerceapp.gui.others.ComponentResizer;
 import com.ecommerceapp.gui.form.ProductGUI;
-import com.ecommerceapp.gui.form.QuanLyKhachHangGUI;
 import com.ecommerceapp.gui.form.UserGUI;
 import com.ecommerceapp.gui.form.RoleGUI;
 import java.awt.Color;
@@ -96,20 +94,20 @@ public class MainGUI extends javax.swing.JFrame {
             }
         }, menuBrand, menuCatalog);
         
-        MenuItem menuKhachHang = new MenuItem(iconInvoice, "Quản Lý Đơn Hàng", new ActionListener() {
+        MenuItem menuInvoice = new MenuItem(iconInvoice, "Quản Lý Đơn Hàng", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 panelBody.removeAll();
                 panelBody.add(new BillGUI());
                 panelBody.repaint();
                 panelBody.revalidate();
-                Selected(menuKhachHang);
+                Selected(menuInvoice);
             }
         });
         
         
         //----Sub menu vai tro -----
-                MenuItem menuVaiTro = new MenuItem(iconRole, "Quản Lý Vai Trò", new ActionListener() {
+                MenuItem menuRole = new MenuItem(iconRole, "Quản Lý Vai Trò", new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
                         panelBody.removeAll();
@@ -131,41 +129,45 @@ public class MainGUI extends javax.swing.JFrame {
                 
                 Selected(menuUser);
             }
-        }, menuVaiTro);
+        }, menuRole);
         
-       
-        
-      
-         
-    public MainGUI() {
+    UserDTO currentUser;
+    
+    public MainGUI(UserDTO currentUser, String role) {
         initComponents();
-       
+        invisibleMenuScrollBar(8);
+        this.currentUser = currentUser;
+        panelBody.add(new ProductGUI());
+        panelBody.repaint();
+        panelBody.revalidate();
+        CustomWindow();
+        switch(role){
+            case "ROLE_ADMIN":
+            {
+                addMenu(menuProduct,menuInvoice,menuUser);
+                break;
+            }
+            
+            case "ROLE_EMPLOYEE":
+            {
+                addMenu(menuProduct,menuInvoice);
+                break;
+            }
+        }
+        lblWelcome.setText("Xin chào "+ currentUser.getLastName() + " " + currentUser.getFirstName());
+        Selected(menuProduct);
+        
+    }
+
+    private MainGUI() {
+        initComponents();
         invisibleMenuScrollBar(8);
         panelBody.add(new ProductGUI());
         panelBody.repaint();
         panelBody.revalidate();
         CustomWindow();
-        addMenu(menuProduct,menuKhachHang,menuUser);
+        addMenu(menuProduct,menuInvoice,menuUser);
         Selected(menuProduct);
-        
-//        TESTING
-        INhanVienBLL nhanVienBLL = new NhanVienBLL();
-        NhanVienDTO nhanVien = new NhanVienDTO();
-//INSERT DATA
-//        vaiTro.setTenVaiTro("Bảo vệ");
-//        vaiTroBLL.save(vaiTro);
-////UPDATE DATA
-//        vaiTro.setId(6L);
-//        vaiTro.setTenVaiTro("Tai xe");
-//        vaiTroBLL.update(vaiTro);
-//DELETE DATA
-//        vaiTroBLL.delete(7L);
-
-//DISPLAY DATA
-//        List<NhanVienDTO> list = nhanVienBLL.findAll();
-//        for(NhanVienDTO vt : list) {
-//            System.out.println(vt.toString() + "\n");
-//        }
     }
     
     public void invisibleMenuScrollBar(int speed)
@@ -226,7 +228,7 @@ public class MainGUI extends javax.swing.JFrame {
        Color flatBlack = new Color(77,77,77);
      
        menuProduct.setColor(flatBlack);
-       menuKhachHang.setColor(flatBlack);
+       menuInvoice.setColor(flatBlack);
        menuUser.setColor(flatBlack);
        
     }
@@ -267,6 +269,7 @@ public class MainGUI extends javax.swing.JFrame {
         pnlAccount = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
+        lblWelcome = new javax.swing.JLabel();
         panelBody = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -358,6 +361,11 @@ public class MainGUI extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/logo.png"))); // NOI18N
 
+        lblWelcome.setBackground(new java.awt.Color(41, 241, 195));
+        lblWelcome.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblWelcome.setForeground(new java.awt.Color(41, 241, 195));
+        lblWelcome.setText("Hello");
+
         javax.swing.GroupLayout pnlAccountLayout = new javax.swing.GroupLayout(pnlAccount);
         pnlAccount.setLayout(pnlAccountLayout);
         pnlAccountLayout.setHorizontalGroup(
@@ -365,14 +373,22 @@ public class MainGUI extends javax.swing.JFrame {
             .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
             .addGroup(pnlAccountLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlAccountLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(lblWelcome)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlAccountLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         pnlAccountLayout.setVerticalGroup(
             pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAccountLayout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblWelcome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -389,7 +405,7 @@ public class MainGUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMenuLayout.createSequentialGroup()
                 .addComponent(pnlAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(menuScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
+                .addComponent(menuScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelMenu, java.awt.BorderLayout.LINE_START);
@@ -477,6 +493,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblMaximize_Restore;
     private javax.swing.JLabel lblMinimize;
     private javax.swing.JLabel lblShow_HideMenu;
+    private javax.swing.JLabel lblWelcome;
     private javax.swing.JScrollPane menuScroll;
     private javax.swing.JPanel menus;
     private javax.swing.JPanel panelBody;

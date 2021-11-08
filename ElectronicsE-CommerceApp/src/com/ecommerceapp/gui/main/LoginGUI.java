@@ -5,9 +5,16 @@
  */
 package com.ecommerceapp.gui.main;
 
+import com.ecommerceapp.bll.impl.RoleBLL;
+import com.ecommerceapp.bll.impl.UserBLL;
+import com.ecommerceapp.bll.impl.User_RoleBLL;
+import com.ecommerceapp.dto.RoleDTO;
+import com.ecommerceapp.dto.UserDTO;
+import com.ecommerceapp.util.BCrypt;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +30,9 @@ public class LoginGUI extends javax.swing.JFrame {
     /**
      * Creates new form LoginGUI
      */
+    UserBLL userBLL;
+    User_RoleBLL user_roleBLL;
+    RoleBLL roleBLL;
     Color  lightGreen = new Color(41, 241, 195);  
     Color  matteGrey = new Color(223,230,233); 
     Color  white = new Color(255,255,255); 
@@ -65,19 +75,81 @@ public class LoginGUI extends javax.swing.JFrame {
         {
             lblCanhBao.setText("");
             lblCanhBao.setOpaque(false);
-            Boolean authorized = true;
-          
-            // xu li login
+            String role = getRole(txtTenDangNhap.getText());
             
-            if (authorized)   ///
-            {   
-                MainGUI main = new MainGUI();
-                main.setVisible(true);
-                this.dispose();
-            }
-            else lblCanhBao.setText("Tên đăng nhập hoặc Mật khẩu không đúng"); 
+            if (role != null)
+            {
+                userBLL = new UserBLL();
+                UserDTO loginUser = userBLL.findByEmail(txtTenDangNhap.getText());
+                if (role.equals("ROLE_CUSTOMER")) 
+                {
+                    lblCanhBao.setText("Tài khoản khách không thể đăng nhập");
+                    lblCanhBao.setBackground(new Color(231, 76, 60));
+                    lblCanhBao.setOpaque(true);
+                } 
+                else 
+                {   
+                    if (!txtMatKhau.getText().equals("Mật khẩu"))
+                    {
+                        Boolean authorized = isMatch(txtTenDangNhap.getText(), txtMatKhau.getText());
+
+                        if (authorized)   
+                        {        
+                            MainGUI main = new MainGUI(loginUser, role);
+                            main.setVisible(true);
+                            this.dispose();
+                        } 
+                        else 
+                        {
+                            lblCanhBao.setText("Mật khẩu không đúng");
+                            lblCanhBao.setBackground(new Color(231, 76, 60));
+                            lblCanhBao.setOpaque(true);
+                        } 
+                    }
+                    else 
+                        {
+                            lblCanhBao.setText("Mật khẩu còn trống");
+                            lblCanhBao.setBackground(new Color(231, 76, 60));
+                            lblCanhBao.setOpaque(true);
+                        } 
+                } 
+                
+            } 
+            else 
+            {
+                lblCanhBao.setText("Tên đăng nhập không tồn tại");
+                lblCanhBao.setBackground(new Color(231, 76, 60));
+                lblCanhBao.setOpaque(true);
+            } 
+            
+            
         }
     } 
+    
+    public boolean isMatch(String email, String password)
+    {   
+        userBLL = new UserBLL();
+        Boolean matched = false;
+        UserDTO user = userBLL.findByEmail(email);
+        if (user != null)
+        matched = BCrypt.checkpw(password, user.getPassword());
+        return matched; 
+    }
+    
+    public String getRole(String email)
+    {   
+        userBLL = new UserBLL();
+        user_roleBLL =  new User_RoleBLL();
+        roleBLL = new RoleBLL();
+        List<RoleDTO> role;
+        UserDTO user = userBLL.findByEmail(email);
+        if(user != null)
+        {
+            role = user_roleBLL.findByIdUser(user.getId());
+            return role.get(0).getNormalizedName();
+        }
+        return null;
+    }
     
     public ImageIcon scale(ImageIcon icon,int width, int height)
     {
@@ -540,11 +612,6 @@ public class LoginGUI extends javax.swing.JFrame {
 
     private void txtMatKhauKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMatKhauKeyReleased
         // TODO add your handling code here:
-        try {
-            TimeUnit.MILLISECONDS.sleep(120);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_txtMatKhauKeyReleased
 
     /**

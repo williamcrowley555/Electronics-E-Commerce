@@ -7,9 +7,6 @@ package com.ecommerceapp.bll;
 
 import com.ecommerceapp.dto.BrandDTO;
 import com.ecommerceapp.dto.Brand_CatalogDTO;
-import com.ecommerceapp.dto.CatalogDTO;
-import com.ecommerceapp.dto.DiaDiemDTO;
-import com.ecommerceapp.dto.DsDiaDiemTourDTO;
 import java.util.List;
 
 /**

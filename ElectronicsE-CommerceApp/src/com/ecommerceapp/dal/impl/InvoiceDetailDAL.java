@@ -5,9 +5,6 @@
  */
 package com.ecommerceapp.dal.impl;
 
-import com.ecommerceapp.dto.DsDiaDiemTourDTO;
-import com.ecommerceapp.mapper.impl.DsDiaDiemTourMapper;
-import com.ecommerceapp.mapper.impl.IdDiaDiemTourMapper;
 import java.util.List;
 import com.ecommerceapp.dal.IInvoiceDetailDAL;
 import com.ecommerceapp.dto.InvoiceDetailDTO;

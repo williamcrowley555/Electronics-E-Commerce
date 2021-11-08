@@ -5,17 +5,9 @@
  */
 package com.ecommerceapp.util;
 
-import com.ecommerceapp.bll.IBrandBLL;
-import com.ecommerceapp.bll.ICatalogBLL;
-import com.ecommerceapp.bll.IDiaDiemBLL;
 import com.ecommerceapp.bll.IProductBLL;
-import com.ecommerceapp.bll.ITinhBLL;
-import com.ecommerceapp.bll.impl.BrandBLL;
-import com.ecommerceapp.bll.impl.CatalogBLL;
 import com.ecommerceapp.bll.impl.ProductBLL;
-import com.ecommerceapp.dto.DiaDiemDTO;
 import com.ecommerceapp.dto.InvoiceDetailDTO;
-import com.ecommerceapp.dto.ProductDTO;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;

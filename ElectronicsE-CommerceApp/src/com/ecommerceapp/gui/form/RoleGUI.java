@@ -6,10 +6,7 @@
 package com.ecommerceapp.gui.form;
 
 import com.ecommerceapp.bll.IRoleBLL;
-import com.ecommerceapp.bll.IVaiTroBLL;
 import com.ecommerceapp.bll.impl.RoleBLL;
-import com.ecommerceapp.bll.impl.VaiTroBLL;
-import com.ecommerceapp.dto.VaiTroDTO;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Vector;
@@ -21,7 +18,6 @@ import com.ecommerceapp.gui.menu.MyScrollBarUI;
 import com.ecommerceapp.gui.popup.PopUpRoleGUI;
 import com.ecommerceapp.util.RoleTableLoaderUtil;
 import com.ecommerceapp.util.TableSetupUtil;
-import com.ecommerceapp.util.VaiTroTableLoaderUtil;
 import java.awt.Dimension;
 import java.util.List;
 import javax.swing.JButton;

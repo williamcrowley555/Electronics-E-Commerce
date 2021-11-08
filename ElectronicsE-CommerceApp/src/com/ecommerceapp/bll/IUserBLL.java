@@ -15,6 +15,7 @@ import java.util.List;
 public interface IUserBLL {
     List<UserDTO> findAll();
     UserDTO findById(Long id);
+    UserDTO findByEmail(String email);
     Long save(UserDTO user);
     void update(UserDTO user);
     void delete(Long id);

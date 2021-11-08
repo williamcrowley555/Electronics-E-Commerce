@@ -6,9 +6,7 @@
 package com.ecommerceapp.bll.impl;
 
 import com.ecommerceapp.bll.ICatalogBLL;
-import com.ecommerceapp.bll.ILoaiDuLichBLL;
 import com.ecommerceapp.dal.ICatalogDAL;
-import com.ecommerceapp.dto.LoaiDuLichDTO;
 import java.util.List;
 import com.ecommerceapp.dal.impl.CatalogDAL;
 import com.ecommerceapp.dto.CatalogDTO;
