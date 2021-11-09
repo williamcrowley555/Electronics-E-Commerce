@@ -21,6 +21,12 @@ public class InvoiceDetails implements Serializable {
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private Product product;
 
+    @Column(name = "price", nullable = false)
+    @NotNull(message = "Giá tiền không được để trống")
+    @Min(value = 0, message = "Giá tiền không hợp lệ")
+    @Max(value = 1000000000, message = "Giá tiền quá lớn")
+    private long price;
+
     @Column(name = "quantity", nullable = false)
     @NotNull(message = "Số lượng không được để trống")
     @Min(value = 1, message = "Số lượng không hợp lệ")
@@ -35,17 +41,19 @@ public class InvoiceDetails implements Serializable {
     public InvoiceDetails() {
     }
 
-    public InvoiceDetails(InvoiceDetailsId id, Invoice invoice, Product product, int quantity, long subTotal) {
+    public InvoiceDetails(InvoiceDetailsId id, Invoice invoice, Product product, long price, int quantity, long subTotal) {
         this.id = id;
         this.invoice = invoice;
         this.product = product;
+        this.price = price;
         this.quantity = quantity;
         this.subTotal = subTotal;
     }
 
-    public InvoiceDetails(Invoice invoice, Product product, int quantity, long subTotal) {
+    public InvoiceDetails(Invoice invoice, Product product, long price, int quantity, long subTotal) {
         this.invoice = invoice;
         this.product = product;
+        this.price = price;
         this.quantity = quantity;
         this.subTotal = subTotal;
     }
@@ -74,6 +82,14 @@ public class InvoiceDetails implements Serializable {
         this.product = product;
     }
 
+    public long getPrice() {
+        return price;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -96,6 +112,7 @@ public class InvoiceDetails implements Serializable {
                 "id=" + id +
                 ", invoice=" + invoice +
                 ", product=" + product +
+                ", price=" + price +
                 ", quantity=" + quantity +
                 ", subTotal=" + subTotal +
                 '}';

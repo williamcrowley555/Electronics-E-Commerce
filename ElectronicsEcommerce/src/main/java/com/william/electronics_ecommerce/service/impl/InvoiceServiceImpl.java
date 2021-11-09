@@ -61,7 +61,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         for (CartItem item : cart.getItems()) {
             savedInvoice.getDetails().add(new InvoiceDetails(new InvoiceDetailsId(savedInvoice.getId(), item.getProduct().getId()),
-                                            savedInvoice, item.getProduct(), item.getQuantity(), item.getSubTotal()));
+                                            savedInvoice, item.getProduct(), item.getPrice(), item.getQuantity(), item.getSubTotal()));
 
             Product product = item.getProduct();
             product.setQuantity(product.getQuantity() - item.getQuantity());

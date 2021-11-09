@@ -246,8 +246,8 @@ public class Invoice {
         this.details = details;
     }
 
-    public void addDetail(Product product, int quantity, long subTotal) {
-        this.details.add(new InvoiceDetails(this, product, quantity, subTotal));
+    public void addDetail(Product product, long price, int quantity, long subTotal) {
+        this.details.add(new InvoiceDetails(this, product, price, quantity, subTotal));
     }
 
     public void setDetail(InvoiceDetails detail) {
