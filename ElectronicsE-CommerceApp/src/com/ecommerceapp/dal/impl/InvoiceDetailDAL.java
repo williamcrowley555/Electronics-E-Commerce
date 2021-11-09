@@ -26,8 +26,8 @@ public class InvoiceDetailDAL extends AbstractDAL<InvoiceDetailDTO> implements I
 
     @Override
     public Long save(InvoiceDetailDTO invoiceDetail) {
-        String sql = "INSERT INTO invoice_details(invoice_id, product_id, quantity, sub_total) VALUES(?, ?, ?, ?)";
-        return insert(sql, invoiceDetail.getInvoice_id(), invoiceDetail.getProduct_id(), invoiceDetail.getQuantity(), invoiceDetail.getSubTotal());
+        String sql = "INSERT INTO invoice_details(invoice_id, product_id, quantity, sub_total, price) VALUES(?, ?, ?, ?, ?)";
+        return insert(sql, invoiceDetail.getInvoice_id(), invoiceDetail.getProduct_id(), invoiceDetail.getQuantity(), invoiceDetail.getSubTotal(), invoiceDetail.getPrice());
     }
 
     @Override

@@ -14,9 +14,11 @@ import com.ecommerceapp.bll.impl.BrandBLL;
 import com.ecommerceapp.bll.impl.Brand_CatalogBLL;
 import com.ecommerceapp.bll.impl.CatalogBLL;
 import com.ecommerceapp.bll.impl.ProductBLL;
+import com.ecommerceapp.bll.impl.ProductPriceHistoryBLL;
 import com.ecommerceapp.dto.BrandDTO;
 import com.ecommerceapp.dto.CatalogDTO;
 import com.ecommerceapp.dto.ProductDTO;
+import com.ecommerceapp.dto.ProductPriceHistoryDTO;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -36,7 +38,11 @@ import com.ecommerceapp.util.InputValidatorUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -152,13 +158,10 @@ public class PopUpProductGUI extends javax.swing.JFrame {
         }
         
         if (Ten && Gia)
-        return true;
-        else return false;
-      
-       
+            return true;
+        else 
+            return false;
     }
-    
-    
     
     private ProductDTO getFormInfo() throws IOException {
         ProductDTO product = new ProductDTO();
@@ -627,9 +630,18 @@ public class PopUpProductGUI extends javax.swing.JFrame {
             } else if(this.action.equals("PUT")) {
                 try {    
                     newProduct.setQuantity(this.product.getQuantity());
+                    ProductPriceHistoryBLL productPriceHistoryBLL = new ProductPriceHistoryBLL();
+                    Long oldPrice = this.product.getPrice();
+                    Long newPrice = newProduct.getPrice();
+                    ProductPriceHistoryDTO newProductPriceHistory = new ProductPriceHistoryDTO();
+                    if (oldPrice != newPrice) 
+                    {   
+                        newProductPriceHistory.setEffective_date(Calendar.getInstance().getTime());
+                        newProductPriceHistory.setPrice(newPrice);
+                        newProductPriceHistory.setProduct_id(this.product.getId());
+                        productPriceHistoryBLL.save(newProductPriceHistory);
+                    }
                     productBLL.update(newProduct);
-                    
-                    System.out.println(newProduct);
                     JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                 } catch(Exception e) {

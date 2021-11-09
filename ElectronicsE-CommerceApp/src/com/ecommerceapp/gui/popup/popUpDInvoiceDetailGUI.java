@@ -97,7 +97,8 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
                             "Id",
                             "Tên sản phẩm",
                             "Số Lượng",
-                            "Tổng"
+                            "Giá",
+                            "Tổng",
                                           
     };
     
@@ -141,8 +142,7 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
     
     public void loadTableData() {
         //tblDiaDiem.setModel(new DiaDiemTableLoaderUtil().setTable(diaDiemBLL.findAll(), this.columnNames)) ;
-        
-        
+     
         List<ProductDTO> products = invoiceDetailBLL.findByIdInvoice(this.invoice.getId());
         for( int i = 0; i < products.size(); i++)
         {

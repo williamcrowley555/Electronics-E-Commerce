@@ -36,8 +36,8 @@ public class InvoiceDetailTableLoaderUtil implements ITableLoaderUtil<InvoiceDet
             row.add(invoice.getProduct_id());
             row.add(productBLL.findById(invoice.getProduct_id()).getName());
             row.add(invoice.getQuantity());
+            row.add(invoice.getPrice());
             row.add(invoice.getSubTotal());
-           
             model.addRow(row);
         }
         

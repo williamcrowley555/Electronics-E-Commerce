@@ -23,8 +23,8 @@ public class InvoiceDetailMapper implements RowMapper<InvoiceDetailDTO>{
             invoiceDetail.setInvoice_id(rs.getLong("invoice_id"));
             invoiceDetail.setProduct_id(rs.getLong("product_id"));
             invoiceDetail.setQuantity(rs.getInt("quantity"));
+            invoiceDetail.setPrice(rs.getLong("price"));
             invoiceDetail.setSubTotal(rs.getLong("sub_total"));
-            
             return invoiceDetail;
         } catch(SQLException e) {
             System.out.println(e.getMessage());

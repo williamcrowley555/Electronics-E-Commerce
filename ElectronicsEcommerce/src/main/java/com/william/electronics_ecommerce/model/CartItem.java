@@ -35,7 +35,7 @@ public class CartItem {
     }
 
     public long getSubTotal() {
-        subTotal = product.getPrice() * quantity;
+        subTotal = price * quantity;
         return subTotal;
     }
 

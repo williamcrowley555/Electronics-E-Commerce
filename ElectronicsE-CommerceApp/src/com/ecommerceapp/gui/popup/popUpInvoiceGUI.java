@@ -909,7 +909,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                     for (int i = 0; i < productList.size(); ++i) 
                     {
                         invoiceDetail = new InvoiceDetailDTO(newInvoiceId, productList.get(i).getId(), productList.get(i).getQuantity(),
-                        productList.get(i).getQuantity()*productList.get(i).getPrice());
+                        productList.get(i).getQuantity() * productList.get(i).getPrice(), productList.get(i).getPrice());
                         invoiceDetailBLL.save(invoiceDetail);
                     }
                     

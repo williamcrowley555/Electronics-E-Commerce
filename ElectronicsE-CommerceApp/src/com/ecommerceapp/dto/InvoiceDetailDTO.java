@@ -14,15 +14,17 @@ public class InvoiceDetailDTO {
     private Long product_id;
     private int quantity;
     private Long subTotal;
+    private Long price;
 
     public InvoiceDetailDTO() {
     }
 
-    public InvoiceDetailDTO(Long invoice_id, Long product_id, int quantity, Long subTotal) {
+    public InvoiceDetailDTO(Long invoice_id, Long product_id, int quantity, Long subTotal, Long price) {
         this.invoice_id = invoice_id;
         this.product_id = product_id;
         this.quantity = quantity;
         this.subTotal = subTotal;
+        this.price = price;
     }
 
     public Long getInvoice_id() {
@@ -56,6 +58,13 @@ public class InvoiceDetailDTO {
     public void setSubTotal(Long subTotal) {
         this.subTotal = subTotal;
     }
-    
-    
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+ 
 }
