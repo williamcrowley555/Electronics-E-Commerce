@@ -46,18 +46,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getPaginated(int pageNo, int pageSize, String catalog, String brand) {
+    public Page<Product> getPaginated(int pageNo, int pageSize, String catalog, String brand, String keyword) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
 
         if (catalog != null && brand != null) {
             return productRepository.findByBrandNameAndCatalogName(brand, catalog, pageable);
-        }
-        else if (catalog != null || brand != null) {
+        } else if (catalog != null || brand != null) {
             if (catalog != null) {
                 return productRepository.findByCatalogName(catalog, pageable);
             }
             else {
                 return productRepository.findByBrandName(brand, pageable);
+            }
+        } else {
+            if(keyword != null) {
+                return productRepository.findAll(keyword, pageable);
             }
         }
 

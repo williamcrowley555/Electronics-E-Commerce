@@ -50,7 +50,12 @@
                     </div>
                     <div class="col-lg-9">
                         <div class="box">
-                            <h2>Thương hiệu: [[${currentBrand == null ? 'Tất cả' : #strings.capitalize(currentBrand)}]]</h2>
+                            <th:block th:if="${keyword != null}">
+                                <h2>Kết quả tìm kiếm cho `[[${keyword}]]`</h2>
+                            </th:block>
+                            <th:block th:unless="${keyword != null}">
+                                <h2>Thương hiệu: [[${currentBrand == null ? 'Tất cả' : #strings.capitalize(currentBrand)}]]</h2>
+                            </th:block>
                         </div>
                         <div class="box info-bar">
                             <div class="row d-flex justify-content-between">
@@ -69,36 +74,45 @@
                             </div>
                         </div>
                         <div class="row products">
-                            <div th:each="product : ${productList}" class="col-lg-4 col-md-6">
-                                <div class="product">
-                                    <div class="flip-container">
-                                        <div class="flipper">
-                                            <div class="front"><a th:href="@{|/product/details/${product.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" width="100%" class="img-fluid" style="height: 260px; object-fit: contain;"></a></div>
-                                            <div class="back"><a th:href="@{|/product/details/${product.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" width="100%" class="img-fluid" style="height: 260px; object-fit: contain;"></a></div>
+<!--                            PRODUCT LIST-->
+                            <th:block th:if="${#lists.size(productList) > 0}">
+                                <div th:each="product : ${productList}" class="col-lg-4 col-md-6">
+                                    <div class="product">
+                                        <div class="flip-container">
+                                            <div class="flipper">
+                                                <div class="front"><a th:href="@{|/product/details/${product.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" width="100%" class="img-fluid" style="height: 260px; object-fit: contain;"></a></div>
+                                                <div class="back"><a th:href="@{|/product/details/${product.id}|}"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" alt="" width="100%" class="img-fluid" style="height: 260px; object-fit: contain;"></a></div>
+                                            </div>
+                                        </div><a href="" class="invisible"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" width="100%" alt="" class="img-fluid" style="height: 260px; object-fit: contain;"></a>
+                                        <div class="text">
+                                            <h3 th:text="${product.name}"></h3>
+                                            <p class="price">
+                                                <del></del>[[${#numbers.formatInteger(product.price, 4 , 'POINT')}]] VNĐ
+                                            </p>
+                                            <div class="buttons">
+                                                <a th:href="@{|/product/details/${product.id}|}" class="btn btn-outline-secondary">Chi tiết</a>
+                                                <form th:action="@{/cart/add-product}" method="GET">
+                                                    <input type="hidden" th:value="${product.id}" name="id" />
+                                                    <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</button>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div><a href="" class="invisible"><img th:src="*{'data:image/jpeg;base64,'+{product.image}}" width="100%" alt="" class="img-fluid" style="height: 260px; object-fit: contain;"></a>
-                                    <div class="text">
-                                        <h3 th:text="${product.name}"></h3>
-                                        <p class="price">
-                                            <del></del>[[${#numbers.formatInteger(product.price, 4 , 'POINT')}]] VNĐ
-                                        </p>
-                                        <div class="buttons">
-                                            <a th:href="@{|/product/details/${product.id}|}" class="btn btn-outline-secondary">Chi tiết</a>
-                                            <form th:action="@{/cart/add-product}" method="GET">
-                                                <input type="hidden" th:value="${product.id}" name="id" />
-                                                <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</button>
-                                            </form>
-                                        </div>
+                                        <!-- /.text-->
                                     </div>
-                                    <!-- /.text-->
+                                    <!-- /.product            -->
                                 </div>
-                                <!-- /.product            -->
-                            </div>
+                            </th:block>
+
+<!--                            NO PRODUCT FOUND-->
+                            <th:block th:unless="${#lists.size(productList) > 0}">
+                                <h4 class="m-auto">Rất tiếc, không tìm thấy sản phẩm phù hợp với lựa chọn của bạn</h4>
+                            </th:block>
                         </div>
 
                         <th:block th:if="${totalPages > 1}" th:with="pageUrlPrefix = '/product/page/',
                                                 pageUrlPostFix = '?catalog=' + ${currentCatalog} +
-                                                                '&brand=' + ${currentBrand}">
+                                                                '&brand=' + ${currentBrand} +
+                                                                ${keyword != null ? '&keyword=' + keyword : ''}">
                         <div class="pages">
                             <nav aria-label="Page navigation example" class="d-flex justify-content-center">
                                 <ul class="pagination">

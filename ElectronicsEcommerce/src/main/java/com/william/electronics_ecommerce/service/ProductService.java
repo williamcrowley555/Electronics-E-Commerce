@@ -11,5 +11,5 @@ public interface ProductService {
     Product getProductById(Long id);
     Product saveProduct(Product product);
     void deleteProductById(Long id);
-    Page<Product> getPaginated(int pageNo, int pageSize, String catalog, String brand);
+    Page<Product> getPaginated(int pageNo, int pageSize, String catalog, String brand, String keyword);
 }
