@@ -6,6 +6,7 @@
 package com.ecommerceapp.bll;
 
 import com.ecommerceapp.dto.InvoiceDTO;
+import com.ecommerceapp.dto.RevenueDTO;
 import java.util.List;
 
 /**
@@ -18,4 +19,5 @@ public interface IInvoiceBLL {
     Long save(InvoiceDTO invoice);
     void update(InvoiceDTO invoice);
     void delete(Long id);
+    List<RevenueDTO> getMonthlyProductReport(int month);
 }

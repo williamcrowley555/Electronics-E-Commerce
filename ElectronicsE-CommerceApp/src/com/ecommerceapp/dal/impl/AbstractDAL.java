@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.ecommerceapp.dal.GenericDAL;
+import java.sql.CallableStatement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -30,6 +31,7 @@ public class AbstractDAL<T> implements GenericDAL<T>{
     
     private static Connection connection = null;
     private static PreparedStatement statement = null;
+    private static CallableStatement callableStatement = null;
     private static ResultSet resultSet = null;
     
     private void setParameters(PreparedStatement statement, Object... parameters) {
@@ -98,6 +100,7 @@ public class AbstractDAL<T> implements GenericDAL<T>{
                     resultSet.close();
                 }     
             } catch (SQLException e) {
+                e.printStackTrace();
                 return null;
             }
         }
@@ -114,10 +117,13 @@ public class AbstractDAL<T> implements GenericDAL<T>{
             setParameters(statement, parameters);
             statement.executeUpdate();
             resultSet = statement.getGeneratedKeys();
+            
             if(resultSet.next()) {
                 id = resultSet.getLong(1);
             }
+            
             connection.commit();
+            
             return id;
         } catch (SQLException e) {
                 e.printStackTrace();
@@ -146,6 +152,7 @@ public class AbstractDAL<T> implements GenericDAL<T>{
                     resultSet.close();
                 } 
             } catch (SQLException e) {
+                e.printStackTrace();
                 return null;
             }
         }
@@ -186,5 +193,87 @@ public class AbstractDAL<T> implements GenericDAL<T>{
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public boolean callProc(String sql, Object... parameters) {
+        boolean result = false;
+        try {
+            connection = DBConnectionUtil.getConnection();
+            connection.setAutoCommit(false);
+            callableStatement = connection.prepareCall(sql);
+            setParameters(callableStatement, parameters);
+            result = callableStatement.execute();
+            connection.commit();
+            
+            return result;
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                connection.close();
+                }
+            
+                if (callableStatement != null) {
+                    callableStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return result;
+    }
+
+    @Override
+    public <T> List<T> callQueryProc(String sql, RowMapper<T> rowMapper, Object... parameters) {
+        List<T> results = new ArrayList<>();
+        try {
+            connection = DBConnectionUtil.getConnection();
+            callableStatement = connection.prepareCall(sql);
+            setParameters(callableStatement, parameters);
+            resultSet = callableStatement.executeQuery();
+            while (resultSet.next()) {                
+                results.add(rowMapper.mapRow(resultSet));
+            }
+            return results;
+        } catch (SQLException e) {
+            return null;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(AbstractDAL.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null) {
+                connection.close();
+                }
+            
+                if (callableStatement != null) {
+                    callableStatement.close();
+                }
+            
+                if (resultSet != null) {
+                    resultSet.close();
+                }     
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
     }
 }

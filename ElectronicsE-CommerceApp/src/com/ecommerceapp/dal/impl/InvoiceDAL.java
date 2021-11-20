@@ -10,8 +10,10 @@ import com.ecommerceapp.dal.IInvoiceDAL;
 import java.util.List;
 import com.ecommerceapp.dto.CatalogDTO;
 import com.ecommerceapp.dto.InvoiceDTO;
+import com.ecommerceapp.dto.RevenueDTO;
 import com.ecommerceapp.mapper.impl.CatalogMapper;
 import com.ecommerceapp.mapper.impl.InvoiceMapper;
+import com.ecommerceapp.mapper.impl.RevenueMapper;
 
 /**
  *
@@ -57,5 +59,11 @@ public class InvoiceDAL extends AbstractDAL<InvoiceDTO> implements IInvoiceDAL {
     public void delete(Long id) {
         String sql = "DELETE FROM invoice WHERE id = ?";
         update(sql, id);
+    }
+
+    @Override
+    public List<RevenueDTO> getMonthlyProductReport(int month) {
+        String sql = "{CALL usp_invoice_monthlyReport(?)}";
+        return callQueryProc(sql, new RevenueMapper(), month);
     }
 }

@@ -7,6 +7,7 @@ package com.ecommerceapp.dal;
 
 import com.ecommerceapp.dto.CatalogDTO;
 import com.ecommerceapp.dto.InvoiceDTO;
+import com.ecommerceapp.dto.RevenueDTO;
 import java.util.List;
 
 /**
@@ -20,4 +21,5 @@ public interface IInvoiceDAL extends GenericDAL<InvoiceDTO> {
     Long save(InvoiceDTO invoice);
     void update(InvoiceDTO invoice);
     void delete(Long id);
+    List<RevenueDTO> getMonthlyProductReport(int month);
 }

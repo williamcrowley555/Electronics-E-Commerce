@@ -10,6 +10,7 @@ import com.ecommerceapp.dal.IInvoiceDAL;
 import java.util.List;
 import com.ecommerceapp.dal.impl.InvoiceDAL;
 import com.ecommerceapp.dto.InvoiceDTO;
+import com.ecommerceapp.dto.RevenueDTO;
 
 /**
  *
@@ -46,5 +47,10 @@ public class InvoiceBLL implements IInvoiceBLL {
     @Override
     public void delete(Long id) {
         invoiceDAL.delete(id);
+    }
+
+    @Override
+    public List<RevenueDTO> getMonthlyProductReport(int month) {
+        return invoiceDAL.getMonthlyProductReport(month);
     }
 }
