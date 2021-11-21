@@ -36,7 +36,7 @@ public class ProductController {
 
     @GetMapping("")
     public String listProducts(Model model) {
-        return findPaginated(model, 1, "laptop", null, null);
+        return findPaginated(model, 1, "laptop", null, "price", "asc", null);
     }
 
     @GetMapping("/page/{pageNo}")
@@ -44,10 +44,11 @@ public class ProductController {
                                 @PathVariable(value = "pageNo") Integer pageNo,
                                 @RequestParam(value = "catalog", required = false) String catalog,
                                 @RequestParam(value = "brand", required = false) String brand,
+                                @RequestParam(value = "sortField", required = false, defaultValue = "price") String sortField,
+                                @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir,
                                 @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
         Integer pageSize = 9;
-
-        Page<Product> page = productService.getPaginated(pageNo, pageSize, catalog, brand, keyword);
+        Page<Product> page = productService.getPaginated(pageNo, pageSize, catalog, brand, sortField, sortDir, keyword);
         List<Product> productList = page.getContent().stream().filter(item -> item.getQuantity() > 0).collect(Collectors.toList());
 
         List<Catalog> catalogList = catalogService.getAllCatalog();
@@ -63,6 +64,9 @@ public class ProductController {
         model.addAttribute("catalogList", catalogList);
         model.addAttribute("brandList", brandList);
 
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+
         model.addAttribute("keyword", keyword);
 
         return "product";
@@ -71,7 +75,8 @@ public class ProductController {
     @GetMapping("/details/{productId}")
     public String showAddProductForm(Model model, @PathVariable("productId") Long productId) {
         Product product = productService.getProductById(productId);
-        Page<Product> page = productService.getPaginated(1, 3, product.getCatalog().getName(), null, null);
+        Page<Product> page = productService.getPaginated(1, 3, product.getCatalog().getName(), null,
+                                                    null, null, null);
         List<Product> similarProducts = page.getContent();
         List<Catalog> catalogList = catalogService.getAllCatalog();
         List<Brand> brandList = brandService.getAllBrands();
