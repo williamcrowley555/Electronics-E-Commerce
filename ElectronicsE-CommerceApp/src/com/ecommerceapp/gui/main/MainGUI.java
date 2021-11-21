@@ -10,6 +10,7 @@ import com.ecommerceapp.dto.UserDTO;
 import com.ecommerceapp.gui.form.BillGUI;
 import com.ecommerceapp.gui.form.BrandGUI;
 import com.ecommerceapp.gui.form.CatalogGUI;
+import com.ecommerceapp.gui.form.ProcessedGUI;
 import com.ecommerceapp.gui.others.ComponentResizer;
 import com.ecommerceapp.gui.form.ProductGUI;
 import com.ecommerceapp.gui.form.RevenueGUI;
@@ -132,7 +133,7 @@ public class MainGUI extends javax.swing.JFrame {
             }
         }, menuRole);
         
-        MenuItem menuThongKe = new MenuItem(iconThongKe, "Thống Kê", new ActionListener() {
+        MenuItem menuThongKe = new MenuItem(iconThongKe, "Thống kê theo tháng", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 panelBody.removeAll();
@@ -143,6 +144,16 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
         
+        MenuItem menuThongKeXuLiDon = new MenuItem(iconThongKe, "Thống kê xử lí đơn", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                panelBody.removeAll();
+                panelBody.add(new ProcessedGUI());
+                panelBody.repaint();
+                panelBody.revalidate();
+                Selected(menuThongKeXuLiDon);
+            }
+        });
     UserDTO currentUser;
     
     public MainGUI(UserDTO currentUser, String role) {
@@ -156,7 +167,7 @@ public class MainGUI extends javax.swing.JFrame {
         switch(role){
             case "ROLE_ADMIN":
             {
-                addMenu(menuProduct,menuInvoice,menuUser, menuThongKe);
+                addMenu(menuProduct,menuInvoice,menuUser, menuThongKe, menuThongKeXuLiDon);
                 break;
             }
             
@@ -178,7 +189,7 @@ public class MainGUI extends javax.swing.JFrame {
         panelBody.repaint();
         panelBody.revalidate();
         CustomWindow();
-        addMenu(menuProduct,menuInvoice,menuUser, menuThongKe);
+        addMenu(menuProduct,menuInvoice,menuUser, menuThongKe, menuThongKeXuLiDon);
         Selected(menuProduct);
     }
     
@@ -243,7 +254,7 @@ public class MainGUI extends javax.swing.JFrame {
        menuInvoice.setColor(flatBlack);
        menuUser.setColor(flatBlack);
        menuThongKe.setColor(flatBlack);
-      
+       menuThongKeXuLiDon.setColor(flatBlack);
     }
    
     public void Selected(MenuItem item)

@@ -7,6 +7,7 @@ package com.ecommerceapp.util;
 
 import com.ecommerceapp.bll.IInvoiceBLL;
 import com.ecommerceapp.bll.impl.InvoiceBLL;
+import com.ecommerceapp.dto.InvoiceDTO;
 import com.ecommerceapp.dto.RevenueDTO;
 import java.util.List;
 import java.util.Vector;
@@ -16,11 +17,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author kossp
  */
-public class RevenueTableLoaderUtil implements ITableLoaderUtil<RevenueDTO>{
+public class ProcessUnprocessTableLoaderUtil implements ITableLoaderUtil<InvoiceDTO>{
     private IInvoiceBLL invoiceBLL = new InvoiceBLL();
     
     @Override
-    public DefaultTableModel setTable(List<RevenueDTO> listItems, String[] listColumns) {
+    public DefaultTableModel setTable(List<InvoiceDTO> listItems, String[] listColumns) {
         Vector header = new Vector();
         for(Object colName : listColumns){
             header.add(colName);
@@ -29,13 +30,12 @@ public class RevenueTableLoaderUtil implements ITableLoaderUtil<RevenueDTO>{
         DefaultTableModel model = new DefaultTableModel(header, 0);
         
         Vector row = null;
-        for(RevenueDTO revenue : listItems) {
+        for(InvoiceDTO invoice : listItems) {
             row = new Vector();
-            row.add(revenue.getProductId());
-            row.add(revenue.getProductName());
-            row.add(revenue.getProductPrice());
-            row.add(revenue.getProductTotalQuantity());
-            row.add(revenue.getProductSubTotal());
+            row.add(invoice.getId());
+            row.add(invoice.getRecipientLastName() + " " + invoice.getRecipientFirstName());
+            row.add(invoice.getPhone());
+            row.add(invoice.getOrderDate());
             model.addRow(row);
         }
         return model;
