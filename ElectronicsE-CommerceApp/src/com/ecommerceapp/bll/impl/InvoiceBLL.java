@@ -50,7 +50,17 @@ public class InvoiceBLL implements IInvoiceBLL {
     }
 
     @Override
-    public List<RevenueDTO> getMonthlyProductReport(int month) {
-        return invoiceDAL.getMonthlyProductReport(month);
+    public List<RevenueDTO> getMonthlyProductReport(int month, int year) {
+        return invoiceDAL.getMonthlyProductReport(month, year);
+    }
+
+    @Override
+    public List<InvoiceDTO> getProcessedOrder(int month, int year) {
+        return invoiceDAL.getProcessedOrder(month, year);
+    }
+
+    @Override
+    public List<InvoiceDTO> getUnprocessedOrder(int month, int year) {
+        return invoiceDAL.getUnprocessedOrder(month, year);
     }
 }

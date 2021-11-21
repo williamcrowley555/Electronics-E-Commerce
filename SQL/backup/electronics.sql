@@ -126,7 +126,7 @@ CREATE TABLE `invoice` (
 
 LOCK TABLES `invoice` WRITE;
 /*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
-INSERT INTO `invoice` VALUES (4,'Đà Lạt','2021-05-23',NULL,'2021-05-23',NULL,'0775412685','William','Crowley',NULL,4,150000,4,''),(5,'273 An Dương Vương, Q.5, TP.HCM',NULL,NULL,'2021-05-23',NULL,'0936548123','Tuấn Anh','Nguyễn',NULL,NULL,21510000,4,'Hàng ngon là có tips nha <3'),(6,'Nha Trang',NULL,NULL,'2021-05-23',NULL,'0936874120','Đăng Khoa','Nguyễn',NULL,1,11290000,3,''),(7,'TP.HCM',NULL,NULL,'2021-05-23',NULL,'0936863211','Đức Khải','Phạm',NULL,NULL,31980000,3,'Giao cẩn thận nhé !'),(8,'273 An Dương Vương, Q.5, TP.HCM',NULL,'2021-05-24','2021-05-24','2021-05-24','0936587669','Hoàng Huy','Lê','2021-05-24',3,30310000,1,''),(9,'Hà Nội',NULL,'2021-05-24','2021-05-24','2021-05-24','0936548567','Tuấn Dũng','Nguyễn','2021-05-24',3,64110000,1,'Giao nhanh nhé <3'),(10,'Hà Nội',NULL,NULL,'2021-05-24',NULL,'0936874120','Khôi','Nguyễn',NULL,NULL,1258400,3,NULL),(11,'Vũng Tàu',NULL,NULL,'2021-05-24',NULL,'0936548123','Đức Thắng','Nguyễn',NULL,NULL,17550000,1,'');
+INSERT INTO `invoice` VALUES (4,'Đà Lạt','2021-05-23',NULL,'2021-05-23',NULL,'0775412685','William','Crowley',NULL,4,150000,4,''),(5,'273 An Dương Vương, Q.5, TP.HCM',NULL,NULL,'2021-05-23',NULL,'0936548123','Tuấn Anh','Nguyễn',NULL,NULL,21510000,4,'Hàng ngon là có tips nha <3'),(6,'Nha Trang',NULL,'2021-05-24','2021-05-23',NULL,'0936874120','Đăng Khoa','Nguyễn',NULL,1,11290000,3,''),(7,'TP.HCM',NULL,NULL,'2021-05-23',NULL,'0936863211','Đức Khải','Phạm',NULL,NULL,31980000,3,'Giao cẩn thận nhé !'),(8,'273 An Dương Vương, Q.5, TP.HCM',NULL,'2021-05-24','2021-05-24','2021-05-24','0936587669','Hoàng Huy','Lê','2021-05-24',3,30310000,1,''),(9,'Hà Nội',NULL,'2021-05-24','2021-05-24','2021-05-24','0936548567','Tuấn Dũng','Nguyễn','2021-05-24',3,64110000,1,'Giao nhanh nhé <3'),(10,'Hà Nội',NULL,NULL,'2021-05-24',NULL,'0936874120','Khôi','Nguyễn',NULL,NULL,1258400,3,NULL),(11,'Vũng Tàu',NULL,NULL,'2021-05-24',NULL,'0936548123','Đức Thắng','Nguyễn',NULL,NULL,17550000,1,'');
 /*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -324,14 +324,15 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_invoice_monthlyReport`(
-	IN month_in INT
+	IN month_in INT,
+    IN year_in INT
 )
 BEGIN
 
 	SELECT p.id AS product_id, p.name AS product_name, id.price AS product_price, SUM(id.quantity) AS total_quantity, SUM(id.sub_total) AS sub_total
 	FROM (electronics.invoice AS i JOIN electronics.invoice_details AS id ON i.id = id.invoice_id) 
 		RIGHT JOIN electronics.product AS p ON id.product_id = p.id
-	WHERE payment_date IS NOT NULL AND MONTH(payment_date) = month_in
+	WHERE payment_date IS NOT NULL AND MONTH(payment_date) = month_in AND YEAR(payment_date) = year_in
 	GROUP BY p.id, p.name, id.price;
 
 END ;;
@@ -350,4 +351,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-20 21:30:51
+-- Dump completed on 2021-11-21  8:53:42

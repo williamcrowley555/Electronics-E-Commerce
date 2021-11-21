@@ -21,5 +21,7 @@ public interface IInvoiceDAL extends GenericDAL<InvoiceDTO> {
     Long save(InvoiceDTO invoice);
     void update(InvoiceDTO invoice);
     void delete(Long id);
-    List<RevenueDTO> getMonthlyProductReport(int month);
+    List<RevenueDTO> getMonthlyProductReport(int month, int year);
+    List<InvoiceDTO> getProcessedOrder(int month, int year);
+    List<InvoiceDTO> getUnprocessedOrder(int month, int year);
 }

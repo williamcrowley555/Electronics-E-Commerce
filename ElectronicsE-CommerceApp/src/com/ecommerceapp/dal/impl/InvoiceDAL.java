@@ -62,8 +62,24 @@ public class InvoiceDAL extends AbstractDAL<InvoiceDTO> implements IInvoiceDAL {
     }
 
     @Override
-    public List<RevenueDTO> getMonthlyProductReport(int month) {
-        String sql = "{CALL usp_invoice_monthlyReport(?)}";
-        return callQueryProc(sql, new RevenueMapper(), month);
+    public List<RevenueDTO> getMonthlyProductReport(int month, int year) {
+        String sql = "{CALL usp_invoice_monthlyReport(?, ?)}";
+        return callQueryProc(sql, new RevenueMapper(), month, year);
+    }
+
+    @Override
+    public List<InvoiceDTO> getProcessedOrder(int month, int year) {
+        String sql = "SELECT * " +
+                    "FROM invoice " +
+                    "WHERE status IS NOT NULL AND MONTH(order_date) = ? AND YEAR(order_date) = ?";
+        return query(sql, new InvoiceMapper(), month, year);
+    }
+
+    @Override
+    public List<InvoiceDTO> getUnprocessedOrder(int month, int year) {
+        String sql = "SELECT * " +
+                    "FROM invoice " +
+                    "WHERE status IS NULL AND MONTH(order_date) = ? AND YEAR(order_date) = ?";
+        return query(sql, new InvoiceMapper(), month, year);
     }
 }
