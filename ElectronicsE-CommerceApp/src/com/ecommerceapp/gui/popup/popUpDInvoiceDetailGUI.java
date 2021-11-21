@@ -81,6 +81,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Optional;
+import javax.swing.JFileChooser;
 /**
  *
  * @author Hi
@@ -694,11 +695,14 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        Document document = new Document();
-        try {
+        JFileChooser f = new JFileChooser();
+        f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
+        if (f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            Document document = new Document();
+            try {
         	// khởi tạo một PdfWriter truyền vào document và FileOutputStream
             String id = this.invoice.getId() + "";
-            PdfWriter.getInstance(document, new FileOutputStream("HD"+ id + ".pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(f.getSelectedFile() + "\\HD"+ id + ".pdf"));
 
             // mở file để thực hiện viết
             document.open();
@@ -721,7 +725,8 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
             table.setHorizontalAlignment(0);
 
             List<ProductDTO> products = invoiceDetailBLL.findByIdInvoice(this.invoice.getId());
-
+            PdfPCell space = new PdfPCell(new Paragraph(" "));
+            space.setBorder(Rectangle.NO_BORDER);
             for( int i = 0; i < products.size(); i++)
             {
                 InvoiceDetailDTO detail = invoiceDetailBLL.findById(invoice.getId(), products.get(i).getId());
@@ -737,22 +742,33 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
                 table.addCell(data1);
                 table.addCell(data2);
                 table.addCell(data3);
+                
+                table.addCell(space);
+                table.addCell(space);
+                table.addCell(space);
             }
             
             document.add(table);
             document.add(stars);
-            document.add(new Paragraph("Tong tien                                    " + total));
+            document.add(new Paragraph("Tong tien                                     " + invoice.getTotal()));
             document.add(stars);
             document.add(new Paragraph("         Xin cam on. Hen gap lai Quy khach!            "));
             document.add(stars);
             // đóng file
             document.close();
+            JOptionPane.showMessageDialog(this, "Xuất file thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (DocumentException e) {
             e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(popUpDInvoiceDetailGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }
+
+        System.out.println(f.getCurrentDirectory());
+        System.out.println(f.getSelectedFile());
+            
+        
     }//GEN-LAST:event_btnThemActionPerformed
 
     /**
