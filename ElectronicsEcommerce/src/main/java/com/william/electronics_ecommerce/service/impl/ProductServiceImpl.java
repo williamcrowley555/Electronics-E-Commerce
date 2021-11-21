@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,8 +47,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getPaginated(int pageNo, int pageSize, String catalog, String brand, String keyword) {
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+    public Page<Product> getPaginated(int pageNo, int pageSize, String catalog, String brand, String sortField, String sortDirection, String keyword) {
+        Pageable pageable = null;
+
+
+        System.out.println("Sort Field: " + sortField);
+        if (sortField == null || sortDirection == null)
+            pageable = PageRequest.of(pageNo - 1, pageSize);
+        else {
+            Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
+                    : Sort.by(sortField).descending();
+            pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        }
 
         if (catalog != null && brand != null) {
             return productRepository.findByBrandNameAndCatalogName(brand, catalog, pageable);

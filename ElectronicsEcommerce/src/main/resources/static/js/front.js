@@ -223,7 +223,14 @@ $.fn.alignElementsSameHeight = function () {
         children.innerHeight(maxHeight);
 
     });
+}
 
-
-
+//    SELECT WITH OPTION LINK
+function selectOptionLink(select) {
+    select.onchange = function() {
+        var option = this.options[this.selectedIndex];
+        if (option.value != "nothing") {
+            window.location.href = option.value;
+        }
+    }
 }
