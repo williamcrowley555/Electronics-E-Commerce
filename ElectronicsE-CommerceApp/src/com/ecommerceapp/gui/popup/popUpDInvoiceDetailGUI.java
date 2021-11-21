@@ -44,6 +44,7 @@ import com.ecommerceapp.util.ImageUtil;
 import com.ecommerceapp.util.InputValidatorUtil;
 import com.ecommerceapp.util.InvoiceDetailTableLoaderUtil;
 import com.ecommerceapp.util.TableSetupUtil;
+import com.itextpdf.text.BaseColor;
 import java.awt.Component;
 import java.awt.Font;
 import java.io.File;
@@ -68,7 +69,18 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.Optional;
 /**
  *
  * @author Hi
@@ -347,6 +359,7 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
         lblTenDiaDiem5 = new javax.swing.JLabel();
         lblGioiThieu2 = new javax.swing.JLabel();
         lblNgayTao = new javax.swing.JLabel();
+        btnThem = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -495,16 +508,28 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
 
         lblNgayTao.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
+        btnThem.setBackground(new java.awt.Color(77, 77, 77));
+        btnThem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnThem.setForeground(new java.awt.Color(255, 255, 255));
+        btnThem.setText("Xuất PDF");
+        btnThem.setContentAreaFilled(false);
+        btnThem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnThem.setOpaque(true);
+        btnThem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnThemMousePressed(evt);
+            }
+        });
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
         pnlBodyLayout.setHorizontalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBodyLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblValidateMota, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblValidateGia, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(145, 145, 145))
             .addGroup(pnlBodyLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -515,11 +540,23 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
                                 .addGap(78, 78, 78)
                                 .addComponent(lblValidateTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(pnlBodyLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                                .addComponent(lblTenDiaDiem3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTong, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
+                                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(pnlBodyLayout.createSequentialGroup()
+                                                .addComponent(lblValidateMota, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(145, 145, 145))
+                                            .addGroup(pnlBodyLayout.createSequentialGroup()
+                                                .addComponent(lblValidateGia, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                                        .addComponent(lblTenDiaDiem3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtTong, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(60, 60, 60))))
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -586,16 +623,19 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
                         .addComponent(lblTenDiaDiem5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 38, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGap(147, 147, 147)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTenDiaDiem3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTong, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblValidateTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(92, 92, 92)
-                        .addComponent(lblValidateGia, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
+                                .addComponent(lblValidateTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(160, 160, 160)
+                                .addComponent(lblValidateGia, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnThem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(lblValidateMota, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
@@ -647,6 +687,73 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
     private void txtTongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTongActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTongActionPerformed
+
+    private void btnThemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMousePressed
+
+    }//GEN-LAST:event_btnThemMousePressed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        Document document = new Document();
+        try {
+        	// khởi tạo một PdfWriter truyền vào document và FileOutputStream
+            String id = this.invoice.getId() + "";
+            PdfWriter.getInstance(document, new FileOutputStream("HD"+ id + ".pdf"));
+
+            // mở file để thực hiện viết
+            document.open();
+            // thêm nội dung sử dụng add function
+            Paragraph stars = new Paragraph("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
+            Paragraph brand = new Paragraph("Nexus");
+            Paragraph header = new Paragraph("San pham             SL                   Don gia");
+
+            brand.setIndentationLeft(110);
+            document.add(stars);
+            document.add(brand);
+            document.add(stars);
+            document.add(header);
+            document.add(stars);
+            
+            //Khởi tạo một table có 3 cột
+            PdfPTable table = new PdfPTable(3);
+            table.setTotalWidth(260);
+            table.setLockedWidth(true);
+            table.setHorizontalAlignment(0);
+
+            List<ProductDTO> products = invoiceDetailBLL.findByIdInvoice(this.invoice.getId());
+
+            for( int i = 0; i < products.size(); i++)
+            {
+                InvoiceDetailDTO detail = invoiceDetailBLL.findById(invoice.getId(), products.get(i).getId());
+
+                PdfPCell data1 = new PdfPCell(new Paragraph(products.get(i).getName()));
+                PdfPCell data2 = new PdfPCell(new Paragraph("" + detail.getQuantity()));
+                PdfPCell data3 = new PdfPCell(new Paragraph("" + detail.getPrice()));
+
+                data1.setBorder(Rectangle.NO_BORDER);
+                data2.setBorder(Rectangle.NO_BORDER);
+                data3.setBorder(Rectangle.NO_BORDER);
+
+                table.addCell(data1);
+                table.addCell(data2);
+                table.addCell(data3);
+            }
+            
+            document.add(table);
+            document.add(stars);
+            document.add(new Paragraph("Tong tien                                    " + total));
+            document.add(stars);
+            document.add(new Paragraph("         Xin cam on. Hen gap lai Quy khach!            "));
+            document.add(stars);
+            // đóng file
+            document.close();
+
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnThemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -750,6 +857,7 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane AreaScrollPane1;
     private javax.swing.JScrollPane AreaScrollPane2;
     private javax.swing.ButtonGroup btnGroupGioiTinh;
+    private javax.swing.JButton btnThem;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblExit;
     private javax.swing.JLabel lblGioiThieu;
