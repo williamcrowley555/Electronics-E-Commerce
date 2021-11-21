@@ -12,6 +12,7 @@ import com.ecommerceapp.gui.form.BrandGUI;
 import com.ecommerceapp.gui.form.CatalogGUI;
 import com.ecommerceapp.gui.others.ComponentResizer;
 import com.ecommerceapp.gui.form.ProductGUI;
+import com.ecommerceapp.gui.form.RevenueGUI;
 import com.ecommerceapp.gui.form.UserGUI;
 import com.ecommerceapp.gui.form.RoleGUI;
 import java.awt.Color;
@@ -131,6 +132,17 @@ public class MainGUI extends javax.swing.JFrame {
             }
         }, menuRole);
         
+        MenuItem menuThongKe = new MenuItem(iconThongKe, "Thống Kê", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                panelBody.removeAll();
+                panelBody.add(new RevenueGUI());
+                panelBody.repaint();
+                panelBody.revalidate();
+                Selected(menuThongKe);
+            }
+        });
+        
     UserDTO currentUser;
     
     public MainGUI(UserDTO currentUser, String role) {
@@ -144,7 +156,7 @@ public class MainGUI extends javax.swing.JFrame {
         switch(role){
             case "ROLE_ADMIN":
             {
-                addMenu(menuProduct,menuInvoice,menuUser);
+                addMenu(menuProduct,menuInvoice,menuUser, menuThongKe);
                 break;
             }
             
@@ -166,7 +178,7 @@ public class MainGUI extends javax.swing.JFrame {
         panelBody.repaint();
         panelBody.revalidate();
         CustomWindow();
-        addMenu(menuProduct,menuInvoice,menuUser);
+        addMenu(menuProduct,menuInvoice,menuUser, menuThongKe);
         Selected(menuProduct);
     }
     
@@ -230,7 +242,8 @@ public class MainGUI extends javax.swing.JFrame {
        menuProduct.setColor(flatBlack);
        menuInvoice.setColor(flatBlack);
        menuUser.setColor(flatBlack);
-       
+       menuThongKe.setColor(flatBlack);
+      
     }
    
     public void Selected(MenuItem item)
