@@ -13,6 +13,7 @@ import com.ecommerceapp.bll.impl.InvoiceDetailBLL;
 import com.ecommerceapp.bll.impl.ProductBLL;
 import com.ecommerceapp.dto.InvoiceDTO;
 import com.ecommerceapp.dto.ProductDTO;
+import com.ecommerceapp.dto.UserDTO;
 import com.ecommerceapp.gui.menu.MyComboBoxEditor;
 import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
 import java.awt.Color;
@@ -76,6 +77,7 @@ public class BillGUI extends javax.swing.JPanel {
     private popUpDInvoiceDetailGUI popUpDetail = null;
     private IInvoiceDetailBLL invoiceDetailBLL;
     private IProductBLL productBLL;
+    public UserDTO user;
     TableRowSorter<TableModel> rowSorter = null;
     
     public BillGUI() {
@@ -84,6 +86,18 @@ public class BillGUI extends javax.swing.JPanel {
         invoiceBLL = new InvoiceBLL();
         invoiceDetailBLL = new InvoiceDetailBLL();
         productBLL = new ProductBLL();
+        loadTableData();
+        scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
+       
+    }
+    
+    public BillGUI(UserDTO user) {
+        initComponents();
+        this.user = user;
+        invoiceBLL = new InvoiceBLL();
+        invoiceDetailBLL = new InvoiceDetailBLL();
+        productBLL = new ProductBLL();
+        lblUser.setText("NV: " + user.getLastName() + " " + user.getFirstName());
         loadTableData();
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
        
@@ -193,6 +207,7 @@ public class BillGUI extends javax.swing.JPanel {
         txtTimKiem = new javax.swing.JTextField();
         lblTitle = new javax.swing.JLabel();
         lblTimKiem = new javax.swing.JLabel();
+        lblUser = new javax.swing.JLabel();
         pnlBody = new javax.swing.JPanel();
         scroll = new javax.swing.JScrollPane();
         tblInvoice = new javax.swing.JTable();
@@ -283,15 +298,21 @@ public class BillGUI extends javax.swing.JPanel {
 
         lblTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/search_icon.png"))); // NOI18N
 
+        lblUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblUser.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
         javax.swing.GroupLayout pnlHeadLayout = new javax.swing.GroupLayout(pnlHead);
         pnlHead.setLayout(pnlHeadLayout);
         pnlHeadLayout.setHorizontalGroup(
             pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeadLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlHeadLayout.createSequentialGroup()
+                .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlHeadLayout.createSequentialGroup()
+                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlHeadLayout.createSequentialGroup()
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 438, Short.MAX_VALUE)
                         .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -303,7 +324,9 @@ public class BillGUI extends javax.swing.JPanel {
             pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeadLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -529,6 +552,7 @@ public class BillGUI extends javax.swing.JPanel {
     private javax.swing.JMenuItem itemXemChiTietDon;
     private javax.swing.JLabel lblTimKiem;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblUser;
     private javax.swing.JPanel pnlBody;
     private javax.swing.JPanel pnlHead;
     private javax.swing.JPopupMenu rightClickMenu;

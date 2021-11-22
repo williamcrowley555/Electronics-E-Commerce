@@ -166,13 +166,15 @@ public class MainGUI extends javax.swing.JFrame {
         CustomWindow();
         switch(role){
             case "ROLE_ADMIN":
-            {
+            {   
+                reInitMenusWithUser(currentUser);
                 addMenu(menuProduct,menuInvoice,menuUser, menuThongKe, menuThongKeXuLiDon);
                 break;
             }
             
             case "ROLE_EMPLOYEE":
-            {
+            {   
+                reInitMenusWithUser(currentUser);
                 addMenu(menuProduct,menuInvoice);
                 break;
             }
@@ -191,6 +193,19 @@ public class MainGUI extends javax.swing.JFrame {
         CustomWindow();
         addMenu(menuProduct,menuInvoice,menuUser, menuThongKe, menuThongKeXuLiDon);
         Selected(menuProduct);
+    }
+    
+    public void reInitMenusWithUser(UserDTO user){
+       menuInvoice = new MenuItem(iconInvoice, "Quản Lý Đơn Hàng", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                panelBody.removeAll();
+                panelBody.add(new BillGUI(user));
+                panelBody.repaint();
+                panelBody.revalidate();
+                Selected(menuInvoice);
+            }
+        });
     }
     
     public void invisibleMenuScrollBar(int speed)
