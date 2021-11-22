@@ -28,6 +28,7 @@ import javax.swing.plaf.basic.ComboPopup;
 import com.ecommerceapp.gui.menu.MyComboBoxEditor;
 import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
 import com.ecommerceapp.gui.others.MD5;
+import com.ecommerceapp.util.BCrypt;
 import com.ecommerceapp.util.InputValidatorUtil;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -62,6 +63,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         myTextArea();
         setComboBox(ComboboxVaiTro, getVaiTroItems());
         disableEditingDateChooser(true);
+        txtPass.setEchoChar('\u26AB');
         ComboboxVaiTro = myComboBox(ComboboxVaiTro, new Color(77,77,77));
         this.setVisible(true);    
     }
@@ -71,14 +73,25 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         this.action = action;  
         this.user = user;
         userBLL = new UserBLL();
+        roleBLL = new RoleBLL();
         user_roleBLL = new User_RoleBLL();
+        hideEmailAndPassword();
         CustomWindow();
         myTextArea();
-        
         setLabelText(user);
         ComboboxVaiTro = myComboBox(ComboboxVaiTro, new Color(77,77,77));
         this.setVisible(true);    
     }
+    
+    public void hideEmailAndPassword(){
+        lblEmail.setVisible(false);
+        txtEmail.setVisible(false);
+        lblPass.setVisible(false);
+        txtPass.setVisible(false);
+        lblValidateEmail.setVisible(false);
+        lblValidatePassword.setVisible(false);
+    }
+    
     public void disableEditingDateChooser(boolean flag)
     {
         if (flag)
@@ -89,6 +102,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
             
         }
     }
+    
     public void setLabelText(UserDTO user)
     {
         txtHo.setText(user.getLastName());
@@ -101,14 +115,12 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         DCNgaySinh.setDate(user.getDob());
         txtDiaChi.setText(user.getAddress());
         txtSDT.setText(user.getPhone());
-        txtEmail.setText(user.getEmail());
-        txtPassword.setText(user.getPassword());
-       // ComboboxVaiTro.setSelectedItem(getVaiTroItemName(user_roleBLL.findByIdUser(user.getId()).get(0)));
+        setComboBox(ComboboxVaiTro, getVaiTroItems());
+        ComboboxVaiTro.setSelectedItem(getVaiTroItemName(user_roleBLL.findByIdUser(user.getId()).get(0)));
        
     }
     public boolean validateForm() 
     {   
-        
         boolean Ho, Ten, Sdt = false, DiaChi, NgaySinh, Email, Password; 
         ImageIcon iconCheck = new ImageIcon(getClass().getResource("/com/ecommerceapp/img/check.png"));
         ImageIcon iconError = new ImageIcon(getClass().getResource("/com/ecommerceapp/img/error.png"));
@@ -141,25 +153,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         } else {
             Sdt = true;
             lblValidateSDT.setIcon(iconCheck);
-            lblValidateSDT.setToolTipText(null);
-            
-//            if (this.action.equals("POST")) {
-//                if (userBLL.findBySdt(txtSDT.getText().trim()) != null) {
-//                    Sdt = false;
-//                    lblValidateSDT.setIcon(iconError);
-//                    lblValidateSDT.setToolTipText("Số điện thoại này đã được sử dụng");
-//                }
-//            } else if (this.action.equals("PUT")) {
-//                UserDTO newUser = userBLL.findBySdt(txtSDT.getText().trim());
-//                if (newUser != null) {
-//                    if (newUser.getId() != this.user.getId()) {  
-//                        Sdt = false;
-//                        lblValidateSDT.setIcon(iconError);
-//                        lblValidateSDT.setToolTipText("Số điện thoại này đã được sử dụng");
-//                    }
-//                }
-//                       
-//            }    
+            lblValidateSDT.setToolTipText(null);  
         } 
         
         if (InputValidatorUtil.isValidBirthDate(DCNgaySinh.getDate(), 18).isEmpty())  
@@ -195,7 +189,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
            lblValidateEmail.setToolTipText(InputValidatorUtil.isValidAddress(txtDiaChi.getText()));
         }
         
-        if (InputValidatorUtil.isValidAddress(txtPassword.getText()).isEmpty())  
+        if (InputValidatorUtil.isValidAddress(txtPass.getText()).isEmpty())  
         {
            Password = true;
            lblValidatePassword.setIcon(iconCheck);
@@ -206,14 +200,20 @@ public class PopUpUserGUI extends javax.swing.JFrame {
            lblValidatePassword.setToolTipText(InputValidatorUtil.isValidAddress(txtDiaChi.getText()));
         }
         
-        if (Ho && Ten && Sdt && NgaySinh && DiaChi && Email && Password)
-        return true;
-        else return false;
+        if (action.equals("POST"))
+        {
+            if (Ho && Ten && Sdt && NgaySinh && DiaChi && Email && Password)
+            return true;
+            else return false;
+        } else {
+            if (Ho && Ten && Sdt && NgaySinh && DiaChi)
+            return true;
+            else return false;
+        }
        
     }
     private UserDTO getFormInfo() throws IOException, NoSuchAlgorithmException {
         UserDTO user = new UserDTO();
-        MD5 encrypt = new MD5();
         if(this.user != null) {
             user.setId(this.user.getId());
         }
@@ -223,10 +223,15 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         user.setDob(DCNgaySinh.getDate());
         user.setAddress(txtDiaChi.getText().trim());
         user.setPhone(txtSDT.getText().trim());
-        user.setEmail(txtEmail.getText().trim());
-        String ernText = MD5.encrypt(txtPassword.getText().trim());
-        user.setPassword(ernText);
-
+        
+        if (action.equals("POST")){
+            user.setEmail(txtEmail.getText().trim());
+            String ernText = BCrypt.hashpw(txtPass.getText().trim(), BCrypt.gensalt());
+            user.setPassword(ernText);
+        } else {
+            user.setEmail(this.user.getEmail());
+            user.setPassword(this.user.getPassword());
+        }
         return user;
     }
     
@@ -340,14 +345,14 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         lblValidateSDT = new javax.swing.JLabel();
         lblValidateDiaChi = new javax.swing.JLabel();
         lblValidateNgaySinh = new javax.swing.JLabel();
-        lblSDT1 = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
-        lblSDT2 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
+        lblPass = new javax.swing.JLabel();
         lblVaiTro = new javax.swing.JLabel();
         ComboboxVaiTro = new javax.swing.JComboBox<>();
         lblValidateEmail = new javax.swing.JLabel();
         lblValidatePassword = new javax.swing.JLabel();
+        txtPass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -488,17 +493,14 @@ public class PopUpUserGUI extends javax.swing.JFrame {
 
         lblValidateHo.setPreferredSize(new java.awt.Dimension(24, 24));
 
-        lblSDT1.setText("Email:");
-        lblSDT1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblEmail.setText("Email:");
+        lblEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtEmail.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        lblSDT2.setText("Mật Khẩu:");
-        lblSDT2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        txtPassword.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(204, 204, 204)));
-        txtPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblPass.setText("Mật Khẩu:");
+        lblPass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         lblVaiTro.setText("Vai trò:");
 
@@ -538,8 +540,8 @@ public class PopUpUserGUI extends javax.swing.JFrame {
                             .addGroup(pnlBodyLayout.createSequentialGroup()
                                 .addGap(19, 19, 19)
                                 .addComponent(lblVaiTro))
-                            .addComponent(lblSDT2)
-                            .addComponent(lblSDT1))
+                            .addComponent(lblPass)
+                            .addComponent(lblEmail))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlBodyLayout.createSequentialGroup()
@@ -559,8 +561,8 @@ public class PopUpUserGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblValidateEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlBodyLayout.createSequentialGroup()
-                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblValidatePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGap(1, 1, 1)
@@ -611,20 +613,19 @@ public class PopUpUserGUI extends javax.swing.JFrame {
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblSDT1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lblValidateEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblSDT2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblValidatePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(lblPass, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblValidatePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(radioNam)
                             .addComponent(radioNu))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)))
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblValidateNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -646,7 +647,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(AreaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(42, Short.MAX_VALUE))))
+                        .addContainerGap(31, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -789,14 +790,14 @@ public class PopUpUserGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnLuu;
     private javax.swing.JLabel lblDiaChi;
+    private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblExit;
     private javax.swing.JLabel lblGioiTinh;
     private javax.swing.JLabel lblHo;
     private javax.swing.JLabel lblMinimize;
     private javax.swing.JLabel lblNgaySinh;
+    private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblSDT;
-    private javax.swing.JLabel lblSDT1;
-    private javax.swing.JLabel lblSDT2;
     private javax.swing.JLabel lblTen;
     private javax.swing.JLabel lblVaiTro;
     private javax.swing.JLabel lblValidateDiaChi;
@@ -813,7 +814,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
     private javax.swing.JTextArea txtDiaChi;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtHo;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtSDT;
     private javax.swing.JTextField txtTen;
     // End of variables declaration//GEN-END:variables
