@@ -30,6 +30,11 @@ public class RoleBLL implements IRoleBLL{
     @Override
     public RoleDTO findById(Long id) {
         return roleDAL.findById(id);
+    }  
+
+    @Override
+    public RoleDTO findByNormalizedName(String name) {
+        return roleDAL.findByNormalizedName(name);
     }
 
     @Override
@@ -45,5 +50,5 @@ public class RoleBLL implements IRoleBLL{
     @Override
     public void delete(Long id) {
         roleDAL.delete(id);
-    }    
+    }  
 }

@@ -66,6 +66,9 @@ public class UserDTO {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    public String getFullName() {
+        return lastName + " " + firstName;
+    }
 
     public LocalDate getDob() {
         return dob;

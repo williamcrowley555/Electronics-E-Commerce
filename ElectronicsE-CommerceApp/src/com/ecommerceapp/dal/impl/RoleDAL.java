@@ -27,6 +27,13 @@ public class RoleDAL extends AbstractDAL<RoleDTO> implements IRoleDAL {
         List<RoleDTO> role = query(sql, new RoleMapper(), id);
         return role.isEmpty() ? null : role.get(0);
     }    
+
+    @Override
+    public RoleDTO findByNormalizedName(String name) {
+        String sql = "SELECT * FROM role WHERE normalized_name = ?";
+        List<RoleDTO> role = query(sql, new RoleMapper(), name);
+        return role.isEmpty() ? null : role.get(0);
+    }
     
     @Override
     public Long save(RoleDTO role) {
@@ -44,5 +51,5 @@ public class RoleDAL extends AbstractDAL<RoleDTO> implements IRoleDAL {
     public void delete(Long id) {
         String sql = "DELETE FROM role WHERE id = ?";
         update(sql, id);
-}
+    }
 }

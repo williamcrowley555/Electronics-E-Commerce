@@ -28,8 +28,8 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelHeader" pref="482" max="32767" attributes="0"/>
-          <Component id="pnlBody" alignment="0" max="32767" attributes="0"/>
+          <Component id="panelHeader" pref="524" max="32767" attributes="0"/>
+          <Component id="pnlBody" min="-2" pref="524" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -124,6 +124,23 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="AreaScrollPane" min="-2" pref="248" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblValidateDiaChi" min="-2" pref="24" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                          <Component id="lblSDT" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                          <Component id="txtSDT" min="-2" pref="105" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          <Component id="lblValidateSDT" min="-2" pref="24" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblGioiTinh" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="lblNgaySinh" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblDiaChi" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -161,46 +178,30 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="radioNu" min="-2" pref="49" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Component id="btnHuy" min="-2" pref="100" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="ComboboxVaiTro" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblValidateNgaySinh" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="txtPass" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="ComboboxVaiTro" pref="211" max="32767" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="btnHuy" min="-2" pref="100" max="-2" attributes="0"/>
+                                              <Component id="btnLuu" min="-2" pref="100" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Component id="txtEmail" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="btnLuu" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="txtEmail" min="-2" pref="130" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="lblValidateEmail" min="-2" pref="24" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="txtPass" min="-2" pref="130" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="lblValidatePassword" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="lblValidateNgaySinh" pref="24" max="32767" attributes="0"/>
+                                      <Component id="lblValidateEmail" max="32767" attributes="0"/>
+                                      <Component id="lblValidatePassword" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                          <Component id="lblSDT" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                          <Component id="txtSDT" min="-2" pref="105" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          <Component id="lblValidateSDT" min="-2" pref="24" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblGioiTinh" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="AreaScrollPane" min="-2" pref="248" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblValidateDiaChi" min="-2" pref="24" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="lblNgaySinh" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblDiaChi" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -249,12 +250,12 @@
                               <Component id="lblValidateEmail" min="-2" pref="21" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="lblPass" min="-2" pref="21" max="-2" attributes="0"/>
-                              <Component id="lblValidatePassword" min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="txtPass" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtPass" max="32767" attributes="0"/>
+                              <Component id="lblValidatePassword" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblGioiTinh" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="radioNam" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -280,14 +281,17 @@
                           <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                                  <Component id="AreaScrollPane" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                                   <Component id="btnLuu" min="-2" pref="38" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="btnHuy" min="-2" pref="38" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="AreaScrollPane" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="31" max="32767" attributes="0"/>
                       </Group>

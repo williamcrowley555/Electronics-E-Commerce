@@ -12,6 +12,7 @@ import java.util.Objects;
  * @author Hi
  */
 public class RoleDTO {
+    
     private Long id;
     private String name;
     private String normalizedName;

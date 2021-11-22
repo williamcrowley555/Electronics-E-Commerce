@@ -78,6 +78,10 @@ public class Invoice {
     @Valid
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private User employee;
+
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
     private List<InvoiceDetails> details = new ArrayList<>();
 
@@ -238,6 +242,14 @@ public class Invoice {
         this.user = user;
     }
 
+    public User getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(User employee) {
+        this.employee = employee;
+    }
+
     public List<InvoiceDetails> getDetails() {
         return details;
     }
@@ -271,6 +283,7 @@ public class Invoice {
                 ", shipDate=" + shipDate +
                 ", cancellingDate=" + cancellingDate +
                 ", user=" + user +
+                ", employee=" + employee +
                 ", details=" + details +
                 '}';
     }

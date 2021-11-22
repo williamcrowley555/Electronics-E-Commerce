@@ -27,11 +27,12 @@ public class InvoiceDTO {
     private LocalDate shipDate;
     private LocalDate cancellingDate;
     private Long userId;
+    private Long employeeId;
 
     public InvoiceDTO() {
     }
 
-    public InvoiceDTO(Long id, String recipientFirstName, String recipientLastName, String address, String phone, String note, long total, Integer status, LocalDate orderDate, LocalDate paymentDate, LocalDate confirmationDate, LocalDate shipDate, LocalDate cancellingDate, Long userId) {
+    public InvoiceDTO(Long id, String recipientFirstName, String recipientLastName, String address, String phone, String note, long total, Integer status, LocalDate orderDate, LocalDate paymentDate, LocalDate confirmationDate, LocalDate shipDate, LocalDate cancellingDate, Long userId, Long employeeId) {
         this.id = id;
         this.recipientFirstName = recipientFirstName;
         this.recipientLastName = recipientLastName;
@@ -46,6 +47,7 @@ public class InvoiceDTO {
         this.shipDate = shipDate;
         this.cancellingDate = cancellingDate;
         this.userId = userId;
+        this.employeeId = employeeId;
     }
 
     public Long getId() {
@@ -159,9 +161,16 @@ public class InvoiceDTO {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
     
     public String getOrderDateFormat() {
-        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return orderDate.format(formatter);
     }
@@ -193,5 +202,9 @@ public class InvoiceDTO {
         return shipDate.format(formatter);
         else return null;
     }
-    
+
+    @Override
+    public String toString() {
+        return "InvoiceDTO{" + "id=" + id + ", recipientFirstName=" + recipientFirstName + ", recipientLastName=" + recipientLastName + ", address=" + address + ", phone=" + phone + ", note=" + note + ", total=" + total + ", status=" + status + ", orderDate=" + orderDate + ", paymentDate=" + paymentDate + ", confirmationDate=" + confirmationDate + ", shipDate=" + shipDate + ", cancellingDate=" + cancellingDate + ", userId=" + userId + ", employeeId=" + employeeId + '}';
+    }
 }
