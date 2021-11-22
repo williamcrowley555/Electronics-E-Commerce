@@ -63,4 +63,9 @@ public class InvoiceBLL implements IInvoiceBLL {
     public List<InvoiceDTO> getUnprocessedOrder(int month, int year) {
         return invoiceDAL.getUnprocessedOrder(month, year);
     }
+
+    @Override
+    public List<RevenueDTO> getEmployeeSalesStatistics(Long employeeId, int month, int year) {
+        return invoiceDAL.getEmployeeSalesStatistics(employeeId, month, year);
+    }
 }

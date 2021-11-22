@@ -82,4 +82,10 @@ public class InvoiceDAL extends AbstractDAL<InvoiceDTO> implements IInvoiceDAL {
                     "WHERE status IS NULL AND MONTH(order_date) = ? AND YEAR(order_date) = ?";
         return query(sql, new InvoiceMapper(), month, year);
     }
+
+    @Override
+    public List<RevenueDTO> getEmployeeSalesStatistics(Long employeeId, int month, int year) {
+        String sql = "{CALL usp_invoice_viewEmployeeSalesStatistics(?, ?, ?)}";
+        return callQueryProc(sql, new RevenueMapper(), employeeId, month, year);
+    }
 }
