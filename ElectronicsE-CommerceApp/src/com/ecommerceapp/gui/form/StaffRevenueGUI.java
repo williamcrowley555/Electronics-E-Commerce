@@ -123,9 +123,6 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
             lblTotalQuantity.setText("Tổng số lượng bán: " + noTotal);
             lblTotal.setText("Tổng doanh thu: " + strTotal);
         }
-        
-        
-        
     }
     
     public void loadStaffTable()

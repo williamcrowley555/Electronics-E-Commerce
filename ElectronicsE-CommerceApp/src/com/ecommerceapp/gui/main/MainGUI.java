@@ -555,6 +555,12 @@ public class MainGUI extends javax.swing.JFrame {
             this.popup.toFront();
             this.popup.center();
         }
+        this.popup.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+            popup = null;
+        }
+    });
     }//GEN-LAST:event_lblChangePassMouseClicked
 
     /**
