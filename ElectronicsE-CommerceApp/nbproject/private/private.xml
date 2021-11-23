@@ -7,6 +7,10 @@
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/LoginGUI.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/MainGUI.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/popUpDInvoiceDetailGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/StaffRevenueGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/UserGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpTableChonUserGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/util/ShortUserTableLoaderUtil.java</file>
         </group>
     </open-files>
 </project-private>

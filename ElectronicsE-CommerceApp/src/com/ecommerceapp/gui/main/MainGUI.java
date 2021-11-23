@@ -16,6 +16,7 @@ import com.ecommerceapp.gui.form.ProductGUI;
 import com.ecommerceapp.gui.form.RevenueGUI;
 import com.ecommerceapp.gui.form.UserGUI;
 import com.ecommerceapp.gui.form.RoleGUI;
+import com.ecommerceapp.gui.form.StaffRevenueGUI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -141,7 +142,7 @@ public class MainGUI extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 panelBody.removeAll();
-                panelBody.add(new RevenueGUI());
+                panelBody.add(new StaffRevenueGUI());
                 panelBody.repaint();
                 panelBody.revalidate();
                 Selected(menuThongKe);
