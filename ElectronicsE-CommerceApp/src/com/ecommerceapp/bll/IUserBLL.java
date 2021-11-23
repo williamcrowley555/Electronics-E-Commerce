@@ -14,10 +14,13 @@ import java.util.List;
  */
 public interface IUserBLL {
     List<UserDTO> findAll();
+    List<UserDTO> findByRoleName(String roleName);
+    List<UserDTO> findByRoleName(String roleName, boolean isEnabled);
     UserDTO findById(Long id);
     UserDTO findByEmail(String email);
     Long save(UserDTO user);
     void update(UserDTO user);
     void changePassword(UserDTO user, String newPassword);
+    void disable(UserDTO user);
     void delete(Long id);
 }

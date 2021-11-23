@@ -5,8 +5,8 @@
  */
 package com.ecommerceapp.util;
 
-import com.ecommerceapp.bll.IRevenueBLL;
-import com.ecommerceapp.bll.impl.RevenueBLL;
+import com.ecommerceapp.bll.IInvoiceBLL;
+import com.ecommerceapp.bll.impl.InvoiceBLL;
 import com.ecommerceapp.dto.RevenueDTO;
 import java.util.List;
 import java.util.Vector;
@@ -17,8 +17,7 @@ import javax.swing.table.DefaultTableModel;
  * @author kossp
  */
 public class RevenueTableLoaderUtil implements ITableLoaderUtil<RevenueDTO>{
-    private IRevenueBLL productBLL = new RevenueBLL();
-    
+    private IInvoiceBLL invoiceBLL = new InvoiceBLL();
     
     @Override
     public DefaultTableModel setTable(List<RevenueDTO> listItems, String[] listColumns) {

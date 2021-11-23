@@ -13,6 +13,7 @@ import com.ecommerceapp.bll.impl.InvoiceDetailBLL;
 import com.ecommerceapp.bll.impl.ProductBLL;
 import com.ecommerceapp.dto.InvoiceDTO;
 import com.ecommerceapp.dto.ProductDTO;
+import com.ecommerceapp.dto.UserDTO;
 import com.ecommerceapp.gui.menu.MyComboBoxEditor;
 import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
 import java.awt.Color;
@@ -76,11 +77,23 @@ public class BillGUI extends javax.swing.JPanel {
     private popUpDInvoiceDetailGUI popUpDetail = null;
     private IInvoiceDetailBLL invoiceDetailBLL;
     private IProductBLL productBLL;
+    public UserDTO user;
     TableRowSorter<TableModel> rowSorter = null;
     
     public BillGUI() {
         initComponents();
        
+        invoiceBLL = new InvoiceBLL();
+        invoiceDetailBLL = new InvoiceDetailBLL();
+        productBLL = new ProductBLL();
+        loadTableData();
+        scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
+       
+    }
+    
+    public BillGUI(UserDTO user) {
+        initComponents();
+        this.user = user;
         invoiceBLL = new InvoiceBLL();
         invoiceDetailBLL = new InvoiceDetailBLL();
         productBLL = new ProductBLL();
@@ -98,8 +111,6 @@ public class BillGUI extends javax.swing.JPanel {
         headerColor(77,77,77,tblInvoice);
     }
     
-   
-     
      public void setComboBox(JComboBox<String> comboBox, String[] listItems) {
         comboBox.setModel(new DefaultComboBoxModel<>(listItems));
     } 
@@ -289,9 +300,11 @@ public class BillGUI extends javax.swing.JPanel {
             pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeadLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlHeadLayout.createSequentialGroup()
+                .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlHeadLayout.createSequentialGroup()
+                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlHeadLayout.createSequentialGroup()
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 438, Short.MAX_VALUE)
                         .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -369,7 +382,7 @@ public class BillGUI extends javax.swing.JPanel {
     private void btnThemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMousePressed
         
           if (this.popUp == null) {
-            this.popUp = new popUpInvoiceGUI("POST");
+            this.popUp = new popUpInvoiceGUI("POST", user);
             
         } else {
             this.popUp.toFront();

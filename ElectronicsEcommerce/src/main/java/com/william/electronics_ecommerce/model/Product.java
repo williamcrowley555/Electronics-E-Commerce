@@ -52,6 +52,10 @@ public class Product {
     @Valid
     private Brand brand;
 
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
+
     public Product() {
     }
 
@@ -150,6 +154,14 @@ public class Product {
         this.brand = brand;
     }
 
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -162,6 +174,7 @@ public class Product {
                 ", status=" + status +
                 ", catalog=" + catalog +
                 ", brand=" + brand +
+                ", supplier=" + supplier +
                 '}';
     }
 }

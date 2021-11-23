@@ -20,6 +20,7 @@ import com.ecommerceapp.bll.impl.ProductBLL;
 import com.ecommerceapp.dto.InvoiceDTO;
 import com.ecommerceapp.dto.InvoiceDetailDTO;
 import com.ecommerceapp.dto.ProductDTO;
+import com.ecommerceapp.dto.UserDTO;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -84,7 +85,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     Long total = 0L;
     Long userId = null;
     private PopUpTableChonUserGUI popUp = null;
-    
+    private UserDTO user;
     String[] columnNamesProduct = {
                             "Id",
                             "Tên sản phẩm",
@@ -105,9 +106,9 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
     };
     
     
-    public popUpInvoiceGUI(String action) {
+    public popUpInvoiceGUI(String action, UserDTO user) {
         initComponents();
-        
+        this.user = user;
         this.action = action;    
         productBLL = new ProductBLL();
         brandBLL = new BrandBLL();
@@ -281,7 +282,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         }
         
         if (Ten && Ho && SDT && DiaChi && Total)
-        return true;
+            return true;
         else 
         {   
             JOptionPane.showMessageDialog(this, "Thông tin nhập thiếu hoặc sai, vui lòng kiểm tra lại !", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -290,8 +291,6 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
       
     }
     
-    
-    
     private InvoiceDTO getFormInfo() throws IOException {
         InvoiceDTO invoice = new InvoiceDTO();
         if(this.invoice != null) {
@@ -299,6 +298,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         }
         System.out.println(LocalDate.now());
         invoice.setUserId(this.userId);
+        invoice.setEmployeeId(user.getId());
         invoice.setRecipientLastName(txtLastName.getText().trim());
         invoice.setRecipientFirstName(txtFirstName.getText().trim());
         invoice.setAddress(txtAddress.getText().trim());
@@ -310,8 +310,6 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         today.format(formatter);
         invoice.setOrderDate(today);
-        
-        
         
         return invoice;
     }

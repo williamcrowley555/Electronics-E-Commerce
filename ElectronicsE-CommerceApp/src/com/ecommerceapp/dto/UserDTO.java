@@ -66,6 +66,9 @@ public class UserDTO {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    public String getFullName() {
+        return lastName + " " + firstName;
+    }
 
     public LocalDate getDob() {
         return dob;
@@ -122,9 +125,6 @@ public class UserDTO {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
-    
-    
 
     public String getDobFormat() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

@@ -5,12 +5,17 @@
  */
 package com.ecommerceapp.bll.impl;
 
+import com.ecommerceapp.bll.IRoleBLL;
 import com.ecommerceapp.bll.IUserBLL;
+import com.ecommerceapp.bll.IUser_RoleBLL;
 import com.ecommerceapp.dal.IUserDAL;
 import com.ecommerceapp.dal.impl.UserDAL;
+import com.ecommerceapp.dto.RoleDTO;
 import com.ecommerceapp.dto.UserDTO;
 import com.ecommerceapp.util.BCrypt;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 /**
  *
  * @author Khoa Nguyen
@@ -18,14 +23,31 @@ import java.util.List;
 public class UserBLL implements IUserBLL{
 
     private IUserDAL userDAL;
+    private IRoleBLL roleBLL;
+    private IUser_RoleBLL user_RoleBLL;
 
     public UserBLL() {
         this.userDAL = new UserDAL();
+        this.roleBLL = new RoleBLL();
+        this.user_RoleBLL = new User_RoleBLL();
     }
     
     @Override
     public List<UserDTO> findAll() {
         return userDAL.findAll();
+    }
+
+    @Override
+    public List<UserDTO> findByRoleName(String roleName) {
+        RoleDTO role = roleBLL.findByNormalizedName(roleName);
+        return user_RoleBLL.findByIdRole(role.getId());
+    }
+
+    @Override
+    public List<UserDTO> findByRoleName(String roleName, boolean isEnabled) {
+        RoleDTO role = roleBLL.findByNormalizedName(roleName);
+        List<UserDTO> users = user_RoleBLL.findByIdRole(role.getId());
+        return users.stream().filter(user -> user.isEnabled() == isEnabled).collect(Collectors.toList());
     }
 
     @Override
@@ -37,11 +59,7 @@ public class UserBLL implements IUserBLL{
     public UserDTO findByEmail(String email) {
         return userDAL.findByEmail(email);
     }
-
-   
     
-    
-
     @Override
     public Long save(UserDTO user) {
         return userDAL.save(user);
@@ -64,5 +82,10 @@ public class UserBLL implements IUserBLL{
         userDAL.delete(id);
     }    
 
+    @Override
+    public void disable(UserDTO user) {
+        user.setEnabled(false);
+        update(user);
+    }
 
 }

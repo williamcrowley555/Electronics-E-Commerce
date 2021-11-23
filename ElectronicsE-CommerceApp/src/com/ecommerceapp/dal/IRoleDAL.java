@@ -15,6 +15,7 @@ import java.util.List;
 public interface IRoleDAL {
     List<RoleDTO> findAll();
     RoleDTO findById(Long id);
+    RoleDTO findByNormalizedName(String name);
     Long save(RoleDTO role);
     void update(RoleDTO role);
     void delete(Long id);       

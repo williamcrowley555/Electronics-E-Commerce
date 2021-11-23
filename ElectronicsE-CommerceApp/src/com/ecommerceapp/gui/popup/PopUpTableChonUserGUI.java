@@ -8,6 +8,7 @@ package com.ecommerceapp.gui.popup;
 import com.ecommerceapp.bll.IUserBLL;
 import com.ecommerceapp.bll.impl.UserBLL;
 import com.ecommerceapp.dto.UserDTO;
+import com.ecommerceapp.enums.ERole;
 import com.ecommerceapp.gui.menu.MyComboBoxEditor;
 import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
 import com.ecommerceapp.util.UserTableLoaderUtil;
@@ -75,19 +76,13 @@ public class PopUpTableChonUserGUI extends javax.swing.JFrame {
 
     public void loadTableUser()
     {      
-        tblUser.setModel(new UserTableLoaderUtil().setTable(userBLL.findAll(), listColumns));
+        tblUser.setModel(new UserTableLoaderUtil().setTable(userBLL.findByRoleName(ERole.ROLE_CUSTOMER.name(), true), listColumns));
         headerColor(14,142,233,tblUser);
     }
-    
-    
-    
     
     public void setComboBox(JComboBox<String> comboBox, String[] listItems) {
         comboBox.setModel(new DefaultComboBoxModel<>(listItems));
     } 
-    
-  
-    
    
     public JComboBox myComboBox(JComboBox box, Color color)
     {   
@@ -193,7 +188,7 @@ public class PopUpTableChonUserGUI extends javax.swing.JFrame {
         btnLuu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnLuu.setForeground(new java.awt.Color(255, 255, 255));
         btnLuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/gui/popup/save_icon.png"))); // NOI18N
-        btnLuu.setText(" Lưu");
+        btnLuu.setText("Chọn");
         btnLuu.setBorder(null);
         btnLuu.setContentAreaFilled(false);
         btnLuu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -219,9 +214,9 @@ public class PopUpTableChonUserGUI extends javax.swing.JFrame {
             }
         });
 
+        lblTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("Chọn Khách Hàng");
-        lblTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

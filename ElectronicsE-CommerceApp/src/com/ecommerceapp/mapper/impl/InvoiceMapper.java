@@ -23,6 +23,7 @@ public class InvoiceMapper implements RowMapper<InvoiceDTO>{
             InvoiceDTO invoice = new InvoiceDTO();
             invoice.setId(rs.getLong("id"));
             invoice.setUserId(rs.getLong("user_id"));
+            invoice.setEmployeeId(rs.getLong("employee_id"));
             invoice.setNote(rs.getString("note"));
             invoice.setPhone(rs.getString("phone"));
             invoice.setStatus(rs.getInt("status"));
@@ -41,7 +42,6 @@ public class InvoiceMapper implements RowMapper<InvoiceDTO>{
             invoice.setShipDate(rs.getDate("ship_date").toLocalDate());
             invoice.setTotal(rs.getLong("total"));
           
-            
             return invoice;
         } catch(SQLException e) {
             System.out.println(e.getMessage());

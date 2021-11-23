@@ -24,4 +24,5 @@ public interface IInvoiceDAL extends GenericDAL<InvoiceDTO> {
     List<RevenueDTO> getMonthlyProductReport(int month, int year);
     List<InvoiceDTO> getProcessedOrder(int month, int year);
     List<InvoiceDTO> getUnprocessedOrder(int month, int year);
+    List<RevenueDTO> getEmployeeSalesStatistics(Long employeeId, int month, int year);
 }

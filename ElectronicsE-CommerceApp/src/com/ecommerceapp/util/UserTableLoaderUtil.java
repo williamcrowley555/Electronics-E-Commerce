@@ -48,7 +48,7 @@ public class UserTableLoaderUtil implements ITableLoaderUtil<UserDTO> {
             row.add(user.getAddress());
             row.add(user.getEmail());
             row.add(user.getPhone());
-            row.add(user.isEnabled());
+            row.add(user.isEnabled() ? "kích hoạt" : "vô hiệu");
             
             model.addRow(row);
         }

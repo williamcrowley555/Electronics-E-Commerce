@@ -20,6 +20,6 @@ public interface IUser_RoleBLL {
     List<RoleDTO> findByIdUser(Long idUser);
     User_RoleDTO findById(Long idUser, Long idRole);
     Long save(Long idUser, Long idRole);
-    void update(Long idUser, Long idRole,Long idUserOld,Long idRoleOld);
+    void update(Long userId, Long roleId, Long oldRoleId);
     void delete(Long idRole, Long idUser);    
 }
