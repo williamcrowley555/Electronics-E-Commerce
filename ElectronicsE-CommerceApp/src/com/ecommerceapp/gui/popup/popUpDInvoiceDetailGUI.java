@@ -75,6 +75,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -694,7 +695,14 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThemMousePressed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        // TODO add your handling code here:
+        BaseFont bf = null;
+        try {
+            bf = BaseFont.createFont("c:/windows/fonts/Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        } catch (DocumentException ex) {
+            Logger.getLogger(popUpDInvoiceDetailGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(popUpDInvoiceDetailGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         JFileChooser f = new JFileChooser();
         f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
         if (f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -709,7 +717,7 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
             // thêm nội dung sử dụng add function
             Paragraph stars = new Paragraph("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
             Paragraph brand = new Paragraph("Nexus");
-            Paragraph header = new Paragraph("San pham             SL                   Don gia");
+            Paragraph header = new Paragraph("Sản phẩm             SL                   Đơn giá", new com.itextpdf.text.Font(bf, 12));
 
             brand.setIndentationLeft(110);
             document.add(stars);
@@ -731,7 +739,7 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
             {
                 InvoiceDetailDTO detail = invoiceDetailBLL.findById(invoice.getId(), products.get(i).getId());
 
-                PdfPCell data1 = new PdfPCell(new Paragraph(products.get(i).getName()));
+                PdfPCell data1 = new PdfPCell(new Paragraph(products.get(i).getName(), new com.itextpdf.text.Font(bf, 12)));
                 PdfPCell data2 = new PdfPCell(new Paragraph("" + detail.getQuantity()));
                 PdfPCell data3 = new PdfPCell(new Paragraph("" + detail.getPrice()));
 
@@ -750,9 +758,9 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
             
             document.add(table);
             document.add(stars);
-            document.add(new Paragraph("Tong tien                                     " + invoice.getTotal()));
+            document.add(new Paragraph("Tổng tiền                                     " + invoice.getTotal(), new com.itextpdf.text.Font(bf, 12)));
             document.add(stars);
-            document.add(new Paragraph("         Xin cam on. Hen gap lai Quy khach!            "));
+            document.add(new Paragraph("         Xin cảm ơn. Hẹn gặp lại Quý khách!            ", new com.itextpdf.text.Font(bf, 12)));
             document.add(stars);
             // đóng file
             document.close();
