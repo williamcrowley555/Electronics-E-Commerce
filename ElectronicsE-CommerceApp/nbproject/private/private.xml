@@ -4,12 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpUserGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpCatalogGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/MainGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/dto/UserDTO.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/bll/impl/UserBLL.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/LoginGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpBrandGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/popUpInvoiceGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/main/MainGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/bll/IUserBLL.java</file>
             <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/ProductGUI.java</file>
-            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpChangePasswordGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/form/UserGUI.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/dal/impl/UserDAL.java</file>
+            <file>file:/D:/Project/Electronics-E-Commerce/ElectronicsE-CommerceApp/src/com/ecommerceapp/gui/popup/PopUpTableChonUserGUI.java</file>
         </group>
     </open-files>
 </project-private>
