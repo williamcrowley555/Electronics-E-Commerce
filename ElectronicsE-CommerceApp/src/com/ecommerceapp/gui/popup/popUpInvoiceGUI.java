@@ -282,7 +282,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
         }
         
         if (Ten && Ho && SDT && DiaChi && Total)
-        return true;
+            return true;
         else 
         {   
             JOptionPane.showMessageDialog(this, "Thông tin nhập thiếu hoặc sai, vui lòng kiểm tra lại !", "Lỗi", JOptionPane.ERROR_MESSAGE);

@@ -91,7 +91,7 @@ public class ProcessedGUI extends javax.swing.JPanel {
     public void loadTableData(int month, int year) {
         int noProcess = 0;
         if (invoiceBLL.getProcessedOrder(month, year).isEmpty())
-        JOptionPane.showMessageDialog(this, "Không có đơn đã xử lý tháng " + month + " năm " + year, "Thông báo", JOptionPane.INFORMATION_MESSAGE);    
+            JOptionPane.showMessageDialog(this, "Không có đơn đã xử lý tháng " + month + " năm " + year, "Thông báo", JOptionPane.INFORMATION_MESSAGE);    
         else {
             tblProcessed.setModel(new ProcessUnprocessTableLoaderUtil().setTable(invoiceBLL.getProcessedOrder(month, year), this.columnNames));
             this.rowSorter = TableSetupUtil.setTableFilter(tblProcessed, txtTimKiemDaXuli);
@@ -105,7 +105,7 @@ public class ProcessedGUI extends javax.swing.JPanel {
         
         int noUnprocess = 0;
         if (invoiceBLL.getUnprocessedOrder(month, year).isEmpty())
-        JOptionPane.showMessageDialog(this, "Không có đơn đã xử lý tháng " + month + " năm " + year, "Thông báo", JOptionPane.INFORMATION_MESSAGE);    
+            JOptionPane.showMessageDialog(this, "Không có đơn chưa xử lý tháng " + month + " năm " + year, "Thông báo", JOptionPane.INFORMATION_MESSAGE);    
         else {
             tblUnprocessed.setModel(new ProcessUnprocessTableLoaderUtil().setTable(invoiceBLL.getUnprocessedOrder(month, year), this.columnNames));
             this.rowSorter = TableSetupUtil.setTableFilter(tblUnprocessed, txtTimKiemChuaXuLi);

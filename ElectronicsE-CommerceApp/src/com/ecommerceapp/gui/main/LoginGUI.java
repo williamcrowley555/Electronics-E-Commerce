@@ -56,7 +56,7 @@ public class LoginGUI extends javax.swing.JFrame {
     public Preferences pref = Preferences.userRoot().node("Remember me");
     String serviceName = "Nexus";
     String accountName = "This pc";
-    Keyring keyring = null;
+    Keyring keyring = null; 
     
     public LoginGUI() throws PasswordAccessException, BackendNotSupportedException {
         initComponents();
