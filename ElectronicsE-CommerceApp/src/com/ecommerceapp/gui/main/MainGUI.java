@@ -30,6 +30,7 @@ import javax.swing.JScrollBar;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 import com.ecommerceapp.gui.menu.MenuItem;
 import com.ecommerceapp.gui.menu.MyScrollBarUI;
+import com.ecommerceapp.gui.popup.PopUpChangePasswordGUI;
 import com.github.javakeyring.BackendNotSupportedException;
 import com.github.javakeyring.PasswordAccessException;
 import java.awt.Rectangle;
@@ -159,8 +160,8 @@ public class MainGUI extends javax.swing.JFrame {
                 Selected(menuThongKeXuLiDon);
             }
         });
-    UserDTO currentUser;
-    
+    public UserDTO currentUser;
+    public PopUpChangePasswordGUI popup;
     public MainGUI(UserDTO currentUser, String role) {
         initComponents();
         invisibleMenuScrollBar(8);
@@ -322,6 +323,7 @@ public class MainGUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         lblWelcome = new javax.swing.JLabel();
         lblLogout = new javax.swing.JLabel();
+        lblChangePass = new javax.swing.JLabel();
         panelBody = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -421,11 +423,22 @@ public class MainGUI extends javax.swing.JFrame {
         lblLogout.setBackground(new java.awt.Color(41, 241, 195));
         lblLogout.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblLogout.setForeground(new java.awt.Color(41, 241, 195));
-        lblLogout.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblLogout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/logout_door_green.png"))); // NOI18N
         lblLogout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblLogoutMouseClicked(evt);
+            }
+        });
+
+        lblChangePass.setBackground(new java.awt.Color(41, 241, 195));
+        lblChangePass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblChangePass.setForeground(new java.awt.Color(41, 241, 195));
+        lblChangePass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblChangePass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/changePassword.png"))); // NOI18N
+        lblChangePass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblChangePassMouseClicked(evt);
             }
         });
 
@@ -438,22 +451,26 @@ public class MainGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlAccountLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(pnlAccountLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(lblWelcome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(lblChangePass, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         pnlAccountLayout.setVerticalGroup(
             pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAccountLayout.createSequentialGroup()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblWelcome)
-                    .addComponent(lblLogout))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                    .addComponent(lblLogout)
+                    .addComponent(lblChangePass))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -470,7 +487,7 @@ public class MainGUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMenuLayout.createSequentialGroup()
                 .addComponent(pnlAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(menuScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
+                .addComponent(menuScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelMenu, java.awt.BorderLayout.LINE_START);
@@ -529,6 +546,17 @@ public class MainGUI extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_lblLogoutMouseClicked
 
+    private void lblChangePassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblChangePassMouseClicked
+        // TODO add your handling code here:
+        if (this.popup == null) {
+            this.popup = new PopUpChangePasswordGUI(this.currentUser);
+            
+        } else {
+            this.popup.toFront();
+            this.popup.center();
+        }
+    }//GEN-LAST:event_lblChangePassMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -574,6 +602,7 @@ public class MainGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblChangePass;
     private javax.swing.JLabel lblExit;
     private javax.swing.JLabel lblLogout;
     private javax.swing.JLabel lblMaximize_Restore;
