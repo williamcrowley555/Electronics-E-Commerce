@@ -29,12 +29,16 @@ import javax.swing.JScrollBar;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 import com.ecommerceapp.gui.menu.MenuItem;
 import com.ecommerceapp.gui.menu.MyScrollBarUI;
+import com.github.javakeyring.BackendNotSupportedException;
+import com.github.javakeyring.PasswordAccessException;
 import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -512,8 +516,15 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void lblLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoutMouseClicked
         // TODO add your handling code here:
-        LoginGUI login = new LoginGUI();
-        login.setVisible(true);
+        LoginGUI login;
+        try {
+            login = new LoginGUI();
+            login.setVisible(true);
+        } catch (PasswordAccessException ex) {
+            Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (BackendNotSupportedException ex) {
+            Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
     }//GEN-LAST:event_lblLogoutMouseClicked
 
@@ -548,7 +559,13 @@ public class MainGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginGUI().setVisible(true);
+                try {
+                    new LoginGUI().setVisible(true);
+                } catch (PasswordAccessException ex) {
+                    Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (BackendNotSupportedException ex) {
+                    Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
