@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Khoa Nguyen
  */
-public class UserDAL extends AbstractDAL<UserDTO> implements IUserDAL{
+public class UserDAL extends AbstractDAL<UserDTO> implements IUserDAL {
     
     @Override
     public List<UserDTO> findAll() {
@@ -54,6 +54,5 @@ public class UserDAL extends AbstractDAL<UserDTO> implements IUserDAL{
         String sql = "DELETE FROM user WHERE id = ?";
         update(sql, id);
     }
-
     
 }

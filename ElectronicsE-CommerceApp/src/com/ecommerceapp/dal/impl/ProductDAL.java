@@ -23,6 +23,12 @@ public class ProductDAL extends AbstractDAL<ProductDTO> implements IProductDAL {
     }
 
     @Override
+    public List<ProductDTO> findBySupplierId(Long supplierId) {
+        String sql = "SELECT * FROM product WHERE supplier_id = ?";
+        return query(sql, new ProductMapper(), supplierId);
+    }
+
+    @Override
     public ProductDTO findById(Long id) {
         String sql = "SELECT * FROM product WHERE id = ?";
         List<ProductDTO> product = query(sql, new ProductMapper(), id);
@@ -31,14 +37,14 @@ public class ProductDAL extends AbstractDAL<ProductDTO> implements IProductDAL {
 
     @Override
     public Long save(ProductDTO product) {
-        String sql = "INSERT INTO product(description, image, name, price, status, brand_id, quantity, catalog_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-        return insert(sql, product.getDescription(), product.getBase64Image(), product.getName(), product.getPrice(), product.isStatus(), product.getBrandId(), product.getQuantity(), product.getCatalogId());
+        String sql = "INSERT INTO product(description, image, name, price, status, brand_id, quantity, catalog_id, supplier_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        return insert(sql, product.getDescription(), product.getBase64Image(), product.getName(), product.getPrice(), product.isStatus(), product.getBrandId(), product.getQuantity(), product.getCatalogId(), product.getSupplierId());
     }
 
     @Override
     public void update(ProductDTO product) {
-        String sql = "UPDATE product SET description = ? , image = ?, price = ?, status = ?, brand_id = ?, quantity = ?, catalog_id = ? WHERE id = ?";
-        update(sql, product.getDescription(), product.getBase64Image(), product.getPrice(), product.isStatus(), product.getBrandId(), product.getQuantity(), product.getCatalogId(), product.getId());
+        String sql = "UPDATE product SET description = ? , image = ?, price = ?, status = ?, brand_id = ?, quantity = ?, catalog_id = ?, supplier_id = ? WHERE id = ?";
+        update(sql, product.getDescription(), product.getBase64Image(), product.getPrice(), product.isStatus(), product.getBrandId(), product.getQuantity(), product.getCatalogId(), product.getSupplierId(), product.getId());
     }
 
     @Override

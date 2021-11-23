@@ -19,20 +19,12 @@ public class ProductDTO {
     private int quantity;
     private long brandId;
     private long catalogId;
-    
-    
-    public ProductDTO(String name, Long price, String description, boolean status, int quantity, long brandId, long catalogId) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.status = status;
-        this.quantity = quantity;
-        this.brandId = brandId;
-        this.catalogId = catalogId;
+    private Long supplierId;
+
+    public ProductDTO() {
     }
 
-
-    public ProductDTO(Long id, String name, Long price, String description, String base64Image, int quantity, long brandId, long catalogId) {
+    public ProductDTO(Long id, String name, Long price, String description, String base64Image, int quantity, long brandId, long catalogId, Long supplierId) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -41,19 +33,20 @@ public class ProductDTO {
         this.quantity = quantity;
         this.brandId = brandId;
         this.catalogId = catalogId;
+        this.supplierId = supplierId;
     }
-    
-    
 
-    public ProductDTO(String name) {
+    public ProductDTO(String name, Long price, String description, String base64Image, int quantity, long brandId, long catalogId, Long supplierId) {
         this.name = name;
-    }
-
-    public ProductDTO() {
+        this.price = price;
+        this.description = description;
+        this.base64Image = base64Image;
+        this.quantity = quantity;
+        this.brandId = brandId;
+        this.catalogId = catalogId;
+        this.supplierId = supplierId;
     }
     
-    
-
     public Long getId() {
         return id;
     }
@@ -110,6 +103,14 @@ public class ProductDTO {
         this.quantity = quantity;
     }
 
+    public Long getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(Long supplierId) {
+        this.supplierId = supplierId;
+    }
+
     public String getBase64Image() {
         return base64Image;
     }
@@ -126,6 +127,8 @@ public class ProductDTO {
         this.catalogId = catalogId;
     }
 
-    
-    
+    @Override
+    public String toString() {
+        return "ProductDTO{" + "id=" + id + ", name=" + name + ", price=" + price + ", description=" + description + ", base64Image=" + base64Image + ", status=" + status + ", quantity=" + quantity + ", brandId=" + brandId + ", catalogId=" + catalogId + ", supplierId=" + supplierId + '}';
+    }
 }

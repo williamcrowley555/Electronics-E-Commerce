@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface IProductBLL {
     List<ProductDTO> findAll();
+    List<ProductDTO> findBySupplierId(Long supplierId);
     ProductDTO findById(Long id);
     Long save(ProductDTO product);
     void update(ProductDTO product);

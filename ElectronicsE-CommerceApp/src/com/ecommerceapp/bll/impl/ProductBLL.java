@@ -29,6 +29,11 @@ public class ProductBLL implements IProductBLL {
     }
 
     @Override
+    public List<ProductDTO> findBySupplierId(Long supplierId) {
+        return productDAL.findBySupplierId(supplierId);
+    }
+
+    @Override
     public ProductDTO findById(Long id) {
         return productDAL.findById(id);
     }

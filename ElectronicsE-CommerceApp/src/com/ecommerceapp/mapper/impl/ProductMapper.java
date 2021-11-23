@@ -35,6 +35,7 @@ public class ProductMapper implements RowMapper<ProductDTO>{
             product.setQuantity(rs.getInt("quantity"));
             product.setBrandId(rs.getLong("brand_id"));
             product.setCatalogId(rs.getLong("catalog_id"));
+            product.setSupplierId(rs.getLong("supplier_id"));
             return product;
         } catch(SQLException e) {
             System.out.println(e.getMessage());
