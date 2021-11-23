@@ -74,4 +74,10 @@ public class UserBLL implements IUserBLL{
         userDAL.delete(id);
     }    
 
+    @Override
+    public void disable(UserDTO user) {
+        user.setEnabled(false);
+        update(user);
+    }
+
 }

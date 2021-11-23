@@ -139,44 +139,51 @@ public class LoginGUI extends javax.swing.JFrame {
             {
                 userBLL = new UserBLL();
                 UserDTO loginUser = userBLL.findByEmail(txtTenDangNhap.getText());
-                if (role.equals("ROLE_CUSTOMER")) 
+                if (loginUser.isEnabled())
                 {
-                    lblCanhBao.setText("Tài khoản khách không thể đăng nhập");
+                    if (role.equals("ROLE_CUSTOMER")) 
+                    {
+                        lblCanhBao.setText("Tài khoản khách không thể đăng nhập");
+                        lblCanhBao.setBackground(new Color(231, 76, 60));
+                        lblCanhBao.setOpaque(true);
+                    } 
+                    else 
+                    {   
+                        if (!txtMatKhau.getText().equals("Mật khẩu"))
+                        {
+                            Boolean authorized = isMatch(txtTenDangNhap.getText(), txtMatKhau.getText());
+
+                            if (authorized)   
+                            {        
+                                MainGUI main = new MainGUI(loginUser, role);
+                                if(checkboxLuuDangNhap.isSelected())
+                                {
+                                    saveLoginInfo(txtTenDangNhap.getText(),txtMatKhau.getText());
+                                } else {
+                                    pref.putBoolean("checked", false);
+                                }
+                                main.setVisible(true);
+                                this.dispose();
+                            } 
+                            else 
+                            {   
+                                lblCanhBao.setText("Mật khẩu không đúng");
+                                lblCanhBao.setBackground(new Color(231, 76, 60));
+                                lblCanhBao.setOpaque(true);
+                            } 
+                        }
+                        else 
+                            {
+                                lblCanhBao.setText("Mật khẩu còn trống");
+                                lblCanhBao.setBackground(new Color(231, 76, 60));
+                                lblCanhBao.setOpaque(true);
+                            } 
+                    } 
+                } else {
+                    lblCanhBao.setText("Tài khoản đã bị vô hiệu");
                     lblCanhBao.setBackground(new Color(231, 76, 60));
                     lblCanhBao.setOpaque(true);
-                } 
-                else 
-                {   
-                    if (!txtMatKhau.getText().equals("Mật khẩu"))
-                    {
-                        Boolean authorized = isMatch(txtTenDangNhap.getText(), txtMatKhau.getText());
-
-                        if (authorized)   
-                        {        
-                            MainGUI main = new MainGUI(loginUser, role);
-                            if(checkboxLuuDangNhap.isSelected())
-                            {
-                                saveLoginInfo(txtTenDangNhap.getText(),txtMatKhau.getText());
-                            } else {
-                                pref.putBoolean("checked", false);
-                            }
-                            main.setVisible(true);
-                            this.dispose();
-                        } 
-                        else 
-                        {   
-                            lblCanhBao.setText("Mật khẩu không đúng");
-                            lblCanhBao.setBackground(new Color(231, 76, 60));
-                            lblCanhBao.setOpaque(true);
-                        } 
-                    }
-                    else 
-                        {
-                            lblCanhBao.setText("Mật khẩu còn trống");
-                            lblCanhBao.setBackground(new Color(231, 76, 60));
-                            lblCanhBao.setOpaque(true);
-                        } 
-                } 
+                }
                 
             } 
             else 

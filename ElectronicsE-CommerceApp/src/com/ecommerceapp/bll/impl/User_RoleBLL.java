@@ -61,8 +61,9 @@ public class User_RoleBLL implements IUser_RoleBLL{
     }
 
     @Override
-    public void update(Long idUser, Long idRole,Long idUserOld,Long idRoleOld) {
-        user_RoleDAL.update(idUser, idRole, idUserOld, idRoleOld);
+    public void update(Long userId, Long roleId, Long oldRoleId) {
+        delete(oldRoleId, userId);
+        save(userId, roleId);
     }
 
     @Override

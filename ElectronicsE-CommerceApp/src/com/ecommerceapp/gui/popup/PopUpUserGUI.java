@@ -52,6 +52,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
     private IRoleBLL roleBLL;
     private IUser_RoleBLL user_roleBLL;
     private RoleDTO role;
+    private Long oldRoleId;
     public PopUpUserGUI(String action) {
         initComponents();
         
@@ -116,7 +117,9 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         txtSDT.setText(user.getPhone());
         txtEmail.setText(user.getEmail());
         setComboBox(ComboboxVaiTro, getVaiTroItems());
+        checkBoxEnable.setSelected(user.isEnabled());
         ComboboxVaiTro.setSelectedItem(getVaiTroItemName(user_roleBLL.findByIdUser(user.getId()).get(0)));
+        oldRoleId = user_roleBLL.findByIdUser(user.getId()).get(0).getId();
        
     }
     public boolean validateForm() 
@@ -223,7 +226,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         user.setDob(DCNgaySinh.getDate());
         user.setAddress(txtDiaChi.getText().trim());
         user.setPhone(txtSDT.getText().trim());
-        
+        user.setEnabled(checkBoxEnable.isSelected());
         if (action.equals("POST")){
             user.setEmail(txtEmail.getText().trim());
             String ernText = BCrypt.hashpw(txtPass.getText().trim(), BCrypt.gensalt());
@@ -353,6 +356,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
         lblValidateEmail = new javax.swing.JLabel();
         lblValidatePassword = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
+        checkBoxEnable = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -512,6 +516,8 @@ public class PopUpUserGUI extends javax.swing.JFrame {
             }
         });
 
+        checkBoxEnable.setText("Kích hoạt");
+
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
         pnlBodyLayout.setHorizontalGroup(
@@ -523,16 +529,6 @@ public class PopUpUserGUI extends javax.swing.JFrame {
                         .addComponent(AreaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblValidateDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlBodyLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(lblSDT)
-                        .addGap(12, 12, 12)
-                        .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(lblValidateSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblGioiTinh))
-                    .addComponent(lblNgaySinh)
                     .addComponent(lblDiaChi)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -558,27 +554,40 @@ public class PopUpUserGUI extends javax.swing.JFrame {
                             .addComponent(lblPass)
                             .addComponent(lblEmail))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(pnlBodyLayout.createSequentialGroup()
+                                .addGap(56, 56, 56)
+                                .addComponent(radioNu, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(checkBoxEnable, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
+                            .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtPass, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(ComboboxVaiTro, 0, 211, Short.MAX_VALUE)
+                                .addGroup(pnlBodyLayout.createSequentialGroup()
+                                    .addGap(0, 0, Short.MAX_VALUE)
+                                    .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtEmail)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblValidateNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                            .addComponent(lblValidateEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblValidatePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlBodyLayout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(radioNam)
-                                .addGap(18, 18, 18)
-                                .addComponent(radioNu, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlBodyLayout.createSequentialGroup()
-                                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtPass, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ComboboxVaiTro, 0, 211, Short.MAX_VALUE)
-                                    .addGroup(pnlBodyLayout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(txtEmail))
+                                .addGap(1, 1, 1)
+                                .addComponent(lblSDT)
+                                .addGap(12, 12, 12)
+                                .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(lblValidateSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblValidateNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                                    .addComponent(lblValidateEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblValidatePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addComponent(lblGioiTinh))
+                            .addComponent(lblNgaySinh))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radioNam)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlBodyLayout.setVerticalGroup(
@@ -624,7 +633,8 @@ public class PopUpUserGUI extends javax.swing.JFrame {
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(radioNam)
-                            .addComponent(radioNu))
+                            .addComponent(radioNu)
+                            .addComponent(checkBoxEnable))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)))
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblValidateNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -732,6 +742,9 @@ public class PopUpUserGUI extends javax.swing.JFrame {
             } else if(this.action.equals("PUT")) {
                 try {
                     userBLL.update(newUser);
+                    String selectedRole = ComboboxVaiTro.getSelectedItem().toString();
+                    Long roleId = Long.parseLong(selectedRole.substring(0, selectedRole.indexOf(" - ")));
+                    user_roleBLL.update(this.user.getId(), roleId, this.oldRoleId);
                     JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                 } catch(Exception e) {
@@ -791,6 +804,7 @@ public class PopUpUserGUI extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btnGroupGioiTinh;
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnLuu;
+    private javax.swing.JCheckBox checkBoxEnable;
     private javax.swing.JLabel lblDiaChi;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblExit;

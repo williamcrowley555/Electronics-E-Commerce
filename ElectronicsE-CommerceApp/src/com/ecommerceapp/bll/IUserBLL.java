@@ -20,5 +20,6 @@ public interface IUserBLL {
     Long save(UserDTO user);
     void update(UserDTO user);
     void changePassword(UserDTO user, String newPassword);
+    void disable(UserDTO user);
     void delete(Long id);
 }

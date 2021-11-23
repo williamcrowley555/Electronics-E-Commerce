@@ -129,17 +129,6 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblValidateDiaChi" min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                          <Component id="lblSDT" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                          <Component id="txtSDT" min="-2" pref="105" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          <Component id="lblValidateSDT" min="-2" pref="24" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblGioiTinh" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="lblNgaySinh" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="lblDiaChi" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -171,34 +160,49 @@
                               <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                  <Component id="radioNam" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                                   <Component id="radioNu" min="-2" pref="49" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="checkBoxEnable" pref="88" max="32767" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="txtPass" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="ComboboxVaiTro" pref="211" max="32767" attributes="0"/>
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          <Group type="103" groupAlignment="1" attributes="0">
-                                              <Component id="btnHuy" min="-2" pref="100" max="-2" attributes="0"/>
-                                              <Component id="btnLuu" min="-2" pref="100" max="-2" attributes="0"/>
-                                          </Group>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="txtPass" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="ComboboxVaiTro" pref="211" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="btnHuy" min="-2" pref="100" max="-2" attributes="0"/>
+                                          <Component id="btnLuu" min="-2" pref="100" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="txtEmail" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="lblValidateNgaySinh" pref="24" max="32767" attributes="0"/>
-                                      <Component id="lblValidateEmail" max="32767" attributes="0"/>
-                                      <Component id="lblValidatePassword" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="txtEmail" max="32767" attributes="0"/>
                               </Group>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblValidateNgaySinh" pref="24" max="32767" attributes="0"/>
+                              <Component id="lblValidateEmail" max="32767" attributes="0"/>
+                              <Component id="lblValidatePassword" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                                  <Component id="lblSDT" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                                  <Component id="txtSDT" min="-2" pref="105" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                  <Component id="lblValidateSDT" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblGioiTinh" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="lblNgaySinh" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="radioNam" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -260,6 +264,7 @@
                               <Component id="lblGioiTinh" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="radioNam" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="radioNu" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="checkBoxEnable" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="19" max="32767" attributes="0"/>
                       </Group>
@@ -580,6 +585,11 @@
         <Component class="javax.swing.JLabel" name="lblValidatePassword">
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtPass">
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="checkBoxEnable">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="K&#xed;ch ho&#x1ea1;t"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
