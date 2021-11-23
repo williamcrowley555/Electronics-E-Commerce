@@ -126,9 +126,6 @@ public class UserDTO {
         this.enabled = enabled;
     }
 
-    
-    
-
     public String getDobFormat() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return dob.format(formatter);

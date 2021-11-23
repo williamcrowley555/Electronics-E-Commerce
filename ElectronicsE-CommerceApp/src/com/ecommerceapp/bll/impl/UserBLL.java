@@ -15,6 +15,7 @@ import com.ecommerceapp.dto.UserDTO;
 import com.ecommerceapp.util.BCrypt;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 /**
  *
  * @author Khoa Nguyen
@@ -40,6 +41,13 @@ public class UserBLL implements IUserBLL{
     public List<UserDTO> findByRoleName(String roleName) {
         RoleDTO role = roleBLL.findByNormalizedName(roleName);
         return user_RoleBLL.findByIdRole(role.getId());
+    }
+
+    @Override
+    public List<UserDTO> findByRoleName(String roleName, boolean isEnabled) {
+        RoleDTO role = roleBLL.findByNormalizedName(roleName);
+        List<UserDTO> users = user_RoleBLL.findByIdRole(role.getId());
+        return users.stream().filter(user -> user.isEnabled() == isEnabled).collect(Collectors.toList());
     }
 
     @Override

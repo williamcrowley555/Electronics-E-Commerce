@@ -76,7 +76,7 @@ public class PopUpTableChonUserGUI extends javax.swing.JFrame {
 
     public void loadTableUser()
     {      
-        tblUser.setModel(new UserTableLoaderUtil().setTable(userBLL.findByRoleName(ERole.ROLE_CUSTOMER.name()), listColumns));
+        tblUser.setModel(new UserTableLoaderUtil().setTable(userBLL.findByRoleName(ERole.ROLE_CUSTOMER.name(), true), listColumns));
         headerColor(14,142,233,tblUser);
     }
     

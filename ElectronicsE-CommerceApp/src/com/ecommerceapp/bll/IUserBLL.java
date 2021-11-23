@@ -15,6 +15,7 @@ import java.util.List;
 public interface IUserBLL {
     List<UserDTO> findAll();
     List<UserDTO> findByRoleName(String roleName);
+    List<UserDTO> findByRoleName(String roleName, boolean isEnabled);
     UserDTO findById(Long id);
     UserDTO findByEmail(String email);
     Long save(UserDTO user);
