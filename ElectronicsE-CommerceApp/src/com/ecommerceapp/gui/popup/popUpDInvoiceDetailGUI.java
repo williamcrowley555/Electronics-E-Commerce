@@ -766,9 +766,6 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
             Logger.getLogger(popUpDInvoiceDetailGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         }
-
-        System.out.println(f.getCurrentDirectory());
-        System.out.println(f.getSelectedFile());
             
         
     }//GEN-LAST:event_btnThemActionPerformed
