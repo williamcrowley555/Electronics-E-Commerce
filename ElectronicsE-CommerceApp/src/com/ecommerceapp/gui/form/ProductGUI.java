@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import com.ecommerceapp.gui.menu.MyScrollBarUI;
 import com.ecommerceapp.gui.popup.PopUpImportGUI;
 import com.ecommerceapp.gui.popup.PopUpProductGUI;
+import com.ecommerceapp.gui.popup.popUpPrintImportGUI;
 import com.ecommerceapp.util.ProductTableLoaderUtil;
 import com.ecommerceapp.util.TableSetupUtil;
 import java.awt.Component;
@@ -23,6 +24,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
@@ -52,6 +54,7 @@ public class ProductGUI extends javax.swing.JPanel {
     
     private PopUpProductGUI popUp = null;
     private PopUpImportGUI popUpImport = null;
+    private popUpPrintImportGUI popUpPrintImport = null;
     TableRowSorter<TableModel> rowSorter = null;
     
     public ProductGUI() {
@@ -145,6 +148,7 @@ public class ProductGUI extends javax.swing.JPanel {
         txtTimKiem = new javax.swing.JTextField();
         lblTitle = new javax.swing.JLabel();
         lblTimKiem = new javax.swing.JLabel();
+        btnPrintImport = new javax.swing.JButton();
         pnlBody = new javax.swing.JPanel();
         scroll = new javax.swing.JScrollPane();
         tblProduct = new javax.swing.JTable();
@@ -206,6 +210,24 @@ public class ProductGUI extends javax.swing.JPanel {
 
         lblTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/search_icon.png"))); // NOI18N
 
+        btnPrintImport.setBackground(new java.awt.Color(77, 77, 77));
+        btnPrintImport.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnPrintImport.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrintImport.setText("In phiếu nhập");
+        btnPrintImport.setContentAreaFilled(false);
+        btnPrintImport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPrintImport.setOpaque(true);
+        btnPrintImport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnPrintImportMousePressed(evt);
+            }
+        });
+        btnPrintImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintImportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlHeadLayout = new javax.swing.GroupLayout(pnlHead);
         pnlHead.setLayout(pnlHeadLayout);
         pnlHeadLayout.setHorizontalGroup(
@@ -218,7 +240,9 @@ public class ProductGUI extends javax.swing.JPanel {
                         .addContainerGap())
                     .addGroup(pnlHeadLayout.createSequentialGroup()
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 437, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPrintImport, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 299, Short.MAX_VALUE)
                         .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,13 +252,14 @@ public class ProductGUI extends javax.swing.JPanel {
             pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeadLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTimKiem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(lblTimKiem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                     .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPrintImport, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(32, 32, 32))
         );
 
@@ -258,6 +283,7 @@ public class ProductGUI extends javax.swing.JPanel {
         tblProduct.setFillsViewportHeight(true);
         tblProduct.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tblProduct.setRowHeight(35);
+        tblProduct.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tblProductMouseReleased(evt);
@@ -369,8 +395,30 @@ public class ProductGUI extends javax.swing.JPanel {
     });
     }//GEN-LAST:event_itemNhapActionPerformed
 
+    private void btnPrintImportMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintImportMousePressed
+        // TODO add your handling code here:
+        if (this.popUpPrintImport == null) {
+            popUpPrintImport = new popUpPrintImportGUI();
+        } else {
+            this.popUpPrintImport.toFront();
+            this.popUpPrintImport.center();
+        }
+        popUpPrintImport.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                popUpPrintImport = null;
+                loadTableData();
+            }
+        });
+    }//GEN-LAST:event_btnPrintImportMousePressed
+
+    private void btnPrintImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintImportActionPerformed
+            
+    }//GEN-LAST:event_btnPrintImportActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPrintImport;
     private javax.swing.JButton btnThem;
     private javax.swing.JMenuItem itemNhap;
     private javax.swing.JMenuItem itemSua;
