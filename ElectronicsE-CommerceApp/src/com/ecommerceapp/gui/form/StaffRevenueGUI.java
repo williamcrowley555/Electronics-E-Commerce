@@ -23,21 +23,36 @@ import javax.swing.table.DefaultTableCellRenderer;
 import com.ecommerceapp.gui.menu.MyScrollBarUI;
 import com.ecommerceapp.gui.popup.PopUpImportGUI;
 import com.ecommerceapp.gui.popup.PopUpProductGUI;
+import com.ecommerceapp.gui.popup.popUpDInvoiceDetailGUI;
 import com.ecommerceapp.util.ProductTableLoaderUtil;
 import com.ecommerceapp.util.RevenueTableLoaderUtil;
 import com.ecommerceapp.util.ShortUserTableLoaderUtil;
 import com.ecommerceapp.util.TableSetupUtil;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -81,6 +96,9 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
      */
     private IInvoiceBLL invoiceBLL;
     private IUserBLL userBLL;
+    private List<RevenueDTO> revenues = new ArrayList<>();
+    private int noTotal = 0;
+    private int total = 0;
     TableRowSorter<TableModel> rowSorter = null;
     
     public StaffRevenueGUI() {
@@ -106,13 +124,12 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
         if (invoiceBLL.getMonthlyProductReport(month, year).isEmpty())
         JOptionPane.showMessageDialog(this, "Không có thống kê doanh thu tháng " + month + " năm " + year, "Thông báo", JOptionPane.INFORMATION_MESSAGE);    
         else {
-            tblRevenue.setModel(new RevenueTableLoaderUtil().setTable(invoiceBLL.getMonthlyProductReport(month, year), this.columnNames));
+            revenues = invoiceBLL.getMonthlyProductReport(month, year);
+            tblRevenue.setModel(new RevenueTableLoaderUtil().setTable(revenues, this.columnNames));
             this.rowSorter = TableSetupUtil.setTableFilter(tblRevenue, txtTimKiemInvoice);
             headerColor(77,77,77,tblRevenue);
             resizeColumnWidth(tblRevenue);
             lblTitle.setText("Thống kê doanh thu tháng " + month + " năm " + year);
-            int total = 0;
-            int noTotal = 0;
             for (int i = 0; i < invoiceBLL.getMonthlyProductReport(month, year).size(); i++)
             {
                  total += Integer.parseInt(tblRevenue.getValueAt(i, 4)+"");
@@ -251,6 +268,7 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
         lblTableStaff1 = new javax.swing.JLabel();
         lblTimKiem1 = new javax.swing.JLabel();
         txtTimKiemStaff = new javax.swing.JTextField();
+        btnPrint = new javax.swing.JButton();
 
         itemSua.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         itemSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/edit_icon.png"))); // NOI18N
@@ -371,14 +389,14 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
                         .addComponent(yearChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(175, 468, Short.MAX_VALUE))))
+                        .addGap(175, 480, Short.MAX_VALUE))))
         );
         pnlHeadLayout.setVerticalGroup(
             pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeadLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(yearChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(monthChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -412,45 +430,61 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
             }
         });
 
+        btnPrint.setBackground(new java.awt.Color(77, 77, 77));
+        btnPrint.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnPrint.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrint.setText("Xuất PDF");
+        btnPrint.setContentAreaFilled(false);
+        btnPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPrint.setOpaque(true);
+        btnPrint.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnPrintMousePressed(evt);
+            }
+        });
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
         pnlBodyLayout.setHorizontalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblTotalQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+                            .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(scroll, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlBodyLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(lblTotalQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlBodyLayout.createSequentialGroup()
-                        .addGap(40, 40, 40)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(scroll)
                             .addGroup(pnlBodyLayout.createSequentialGroup()
-                                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblTableStaff1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlBodyLayout.createSequentialGroup()
+                                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                                        .addComponent(lblTableStaff1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(pnlBodyLayout.createSequentialGroup()
-                                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(pnlBodyLayout.createSequentialGroup()
-                                                .addComponent(lblTableStaff)
-                                                .addGap(263, 263, 263)
-                                                .addComponent(lblTimKiem1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(3, 3, 3)
-                                                .addComponent(txtTimKiemStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(scroll1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTimKiemInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(lblTableStaff)
+                                        .addGap(263, 263, 263)
+                                        .addComponent(lblTimKiem1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(3, 3, 3)
+                                        .addComponent(txtTimKiemStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(scroll1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTimKiemInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30))
             .addGroup(pnlBodyLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         pnlBodyLayout.setVerticalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,10 +512,12 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTotalQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTotalQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0)
                 .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         add(pnlBody, java.awt.BorderLayout.CENTER);
@@ -518,7 +554,7 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
        if (rowindex >=0)
        {
            Long empolyeeId = Long.parseLong(tblStaff.getValueAt(rowindex,0).toString());
-           List<RevenueDTO> revenues = invoiceBLL.getEmployeeSalesStatistics(empolyeeId, monthChooser.getMonth()+1, yearChooser.getYear());
+           revenues = invoiceBLL.getEmployeeSalesStatistics(empolyeeId, monthChooser.getMonth()+1, yearChooser.getYear());
            System.out.println(revenues.size());
            if (revenues.isEmpty())
            {
@@ -537,8 +573,6 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
                 lblTitle.setText("Thống kê doanh thu tháng " + (monthChooser.getMonth()+1) + " năm " + yearChooser.getYear()
                                 + " của nhân viên " + tblStaff.getValueAt(rowindex,1).toString()
                 );
-                int total = 0;
-                int noTotal = 0;
                 for (int i = 0; i < revenues.size(); i++)
                 {
                      total += revenues.get(i).getProductSubTotal();
@@ -558,8 +592,122 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTimKiemStaffActionPerformed
 
+    private void btnPrintMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMousePressed
+        // TODO add your handling code here:
+        
+        BaseFont bf = null;
+        try {
+            bf = BaseFont.createFont("c:/windows/fonts/Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        } catch (DocumentException ex) {
+            Logger.getLogger(popUpDInvoiceDetailGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(popUpDInvoiceDetailGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (revenues.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        JFileChooser f = new JFileChooser();
+        f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        if (f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            // print pdf
+            Document document = new Document();
+            try {
+                // khởi tạo một PdfWriter truyền vào document và FileOutputStream
+                LocalDate today = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                today.format(formatter);
+
+                PdfWriter.getInstance(document, new FileOutputStream(f.getSelectedFile() + "\\TKthang"+ today.toString() + ".pdf"));
+
+                // mở file để thực hiện viết
+                document.open();
+                // thêm nội dung sử dụng add function
+
+                Paragraph brand = new Paragraph(lblTitle.getText(), new com.itextpdf.text.Font(bf, 16, Font.BOLD));
+
+                Paragraph name = new Paragraph("Họ tên:........................................................................... Đơn vị:..................................................", new com.itextpdf.text.Font(bf, 12));
+
+                brand.setAlignment(Element.ALIGN_CENTER);
+
+                
+                document.add(new Paragraph(" "));
+                document.add(brand);
+                document.add(new Paragraph(" "));
+
+                //Khởi tạo một table có 3 cột
+                PdfPTable table = new PdfPTable(4);
+                table.setWidthPercentage(100);
+                table.setHorizontalAlignment(0);
+
+                PdfPCell space = new PdfPCell(new Paragraph(" "));
+
+                PdfPCell h1 = new PdfPCell(new Paragraph("Sản phẩm", new com.itextpdf.text.Font(bf, 12, Font.BOLD)));
+                PdfPCell h2 = new PdfPCell(new Paragraph("Số lượng", new com.itextpdf.text.Font(bf, 12, Font.BOLD)));
+                PdfPCell h3 = new PdfPCell(new Paragraph("Đơn giá", new com.itextpdf.text.Font(bf, 12, Font.BOLD)));
+                PdfPCell h4 = new PdfPCell(new Paragraph("Tổng tiền", new com.itextpdf.text.Font(bf, 12, Font.BOLD)));
+
+                table.addCell(h1);
+                table.addCell(h3);
+                table.addCell(h2);
+                table.addCell(h4);
+                table.setHeaderRows(1);
+
+                for( int i = 0; i < revenues.size(); i++)
+                {
+
+                    PdfPCell data1 = new PdfPCell(new Paragraph(revenues.get(i).getProductName(), new com.itextpdf.text.Font(bf, 12)));
+                    PdfPCell data2 = new PdfPCell(new Paragraph("" + revenues.get(i).getProductTotalQuantity()));
+                    PdfPCell data3 = new PdfPCell(new Paragraph("" + revenues.get(i).getProductPrice()));
+                    PdfPCell data4 = new PdfPCell(new Paragraph("" + revenues.get(i).getProductSubTotal()));
+
+                    table.addCell(data1);
+                    table.addCell(data3);
+                    table.addCell(data2);
+                    table.addCell(data4);
+                }
+                Paragraph totalName = new Paragraph("Tổng cộng: ", new com.itextpdf.text.Font(bf, 12));
+                totalName.setAlignment(Element.ALIGN_RIGHT);
+                
+                PdfPCell totalNameCell = new PdfPCell(totalName);
+                totalNameCell.setColspan(2);
+                totalNameCell.setVerticalAlignment(PdfPCell.ALIGN_RIGHT);
+                
+                PdfPCell totalQuantity = new PdfPCell(new Paragraph(""+ noTotal));
+                PdfPCell totalAmount = new PdfPCell(new Paragraph(""+ total));
+
+                table.addCell(totalNameCell);
+                table.addCell(totalQuantity);
+                table.addCell(totalAmount);
+
+                document.add(table);
+
+                Paragraph dateDetail = new Paragraph("Ngày "+today.getDayOfMonth() + " tháng " + today.getMonthValue() +" năm " + today.getYear() + "                 ", new com.itextpdf.text.Font(bf, 12));
+                Paragraph endDetail = new Paragraph("Người thống kê                          ", new com.itextpdf.text.Font(bf, 12));
+
+                dateDetail.setAlignment(Element.ALIGN_RIGHT);
+                endDetail.setAlignment(Element.ALIGN_RIGHT);
+                document.add(dateDetail);
+                document.add(endDetail);
+
+                // đóng file
+                document.close();
+                JOptionPane.showMessageDialog(this, "Lưu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(popUpDInvoiceDetailGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnPrintMousePressed
+
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPrintActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnThongKe;
     private javax.swing.JMenuItem itemNhap;
     private javax.swing.JMenuItem itemSua;
