@@ -43,8 +43,8 @@ public class ProductDAL extends AbstractDAL<ProductDTO> implements IProductDAL {
 
     @Override
     public void update(ProductDTO product) {
-        String sql = "UPDATE product SET description = ? , image = ?, price = ?, status = ?, brand_id = ?, quantity = ?, catalog_id = ?, supplier_id = ? WHERE id = ?";
-        update(sql, product.getDescription(), product.getBase64Image(), product.getPrice(), product.isStatus(), product.getBrandId(), product.getQuantity(), product.getCatalogId(), product.getSupplierId(), product.getId());
+        String sql = "UPDATE product SET name = ?, description = ? , image = ?, price = ?, status = ?, brand_id = ?, quantity = ?, catalog_id = ?, supplier_id = ? WHERE id = ?";
+        update(sql, product.getName(), product.getDescription(), product.getBase64Image(), product.getPrice(), product.isStatus(), product.getBrandId(), product.getQuantity(), product.getCatalogId(), product.getSupplierId(), product.getId());
     }
 
     @Override

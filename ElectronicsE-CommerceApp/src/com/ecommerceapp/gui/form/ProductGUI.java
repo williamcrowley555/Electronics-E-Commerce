@@ -84,7 +84,6 @@ public class ProductGUI extends javax.swing.JPanel {
         productBLL = new ProductBLL();
         supplierBLL = new SupplierBLL();
         loadTableData();
-        System.out.println("khong co user");
         comboBoxSuplier = myComboBox(comboBoxSuplier, new Color(77,77,77));
         setComboBox(comboBoxSuplier, getSuplierItems());
         headerColor(77,77,77,tblProduct);
@@ -97,7 +96,6 @@ public class ProductGUI extends javax.swing.JPanel {
         supplierBLL = new SupplierBLL();
         this.user = user;
         this.role = getRole(user.getEmail());
-        System.out.println("co user");
         loadTableData();
         comboBoxSuplier = myComboBox(comboBoxSuplier, new Color(77,77,77));
         setComboBox(comboBoxSuplier, getSuplierItems());
