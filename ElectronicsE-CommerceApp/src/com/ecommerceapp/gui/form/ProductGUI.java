@@ -6,7 +6,12 @@
 package com.ecommerceapp.gui.form;
 
 import com.ecommerceapp.bll.IProductBLL;
+import com.ecommerceapp.bll.ISupplierBLL;
 import com.ecommerceapp.bll.impl.ProductBLL;
+import com.ecommerceapp.bll.impl.SupplierBLL;
+import com.ecommerceapp.dto.SupplierDTO;
+import com.ecommerceapp.gui.menu.MyComboBoxEditor;
+import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Vector;
@@ -20,9 +25,18 @@ import com.ecommerceapp.util.TableSetupUtil;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.border.MatteBorder;
+import javax.swing.plaf.basic.BasicArrowButton;
+import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.plaf.basic.BasicComboPopup;
+import javax.swing.plaf.basic.ComboPopup;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
@@ -42,39 +56,25 @@ public class ProductGUI extends javax.swing.JPanel {
                             "Nhãn hiệu",
                             "Loại",
                             "SL",
-                            "Mô tả"                 
+                            "Mô tả",
+                            "Nhà Cung Cấp"
         };
                           
     /**
      * Creates new form Panel1
      */
     private IProductBLL productBLL;
-    
     private PopUpProductGUI popUp = null;
     private PopUpImportGUI popUpImport = null;
     TableRowSorter<TableModel> rowSorter = null;
-    
+    private ISupplierBLL supplierBLL;
     public ProductGUI() {
         initComponents();
         productBLL = new ProductBLL();
-        
+        supplierBLL = new SupplierBLL();
         loadTableData();
-        
-       /* Vector header = createHeader(columnNames);
-        DefaultTableModel model = (DefaultTableModel) tblDiaDiem.getModel();
-        model = new DefaultTableModel(header, 0);
-       
-        Vector row = new Vector();
-        row.add("1");
-        row.add("Vịnh Hạ Long");
-        row.add("4");
-        row.add("Quảng Ninh, Việt Nam");
-        row.add("1 trong 7 kì quan thế giới");
-        row.add("");
-    
-        
-        model.addRow(row);
-        tblDiaDiem.setModel(model);*/
+        comboBoxSuplier = myComboBox(comboBoxSuplier, new Color(77,77,77));
+        setComboBox(comboBoxSuplier, getSuplierItems());
         headerColor(77,77,77,tblProduct);
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
     }
@@ -90,6 +90,63 @@ public class ProductGUI extends javax.swing.JPanel {
         this.rowSorter = TableSetupUtil.setTableFilter(tblProduct, txtTimKiem);
          headerColor(77,77,77,tblProduct);
          resizeColumnWidth(tblProduct);
+    }
+    
+    public void loadTableDataBySupplierId(Long supplierId) {
+        if (supplierId == 0)
+            tblProduct.setModel(new ProductTableLoaderUtil().setTable(productBLL.findAll(), this.columnNames));
+        else 
+            tblProduct.setModel(new ProductTableLoaderUtil().setTable(productBLL.findBySupplierId(supplierId), this.columnNames));
+        this.rowSorter = TableSetupUtil.setTableFilter(tblProduct, txtTimKiem);
+        headerColor(77,77,77,tblProduct);
+        resizeColumnWidth(tblProduct);
+    }
+    
+    public String[] getSuplierItems() {
+        List<SupplierDTO> supplierLists = supplierBLL.findAll();
+        String[] supplierItems = new String[supplierLists.size()+1];
+        supplierItems[0] = 0 + " - " + "Tất cả nhà cung cấp";
+        int index = 1;
+        for(SupplierDTO vt : supplierLists) {
+            supplierItems[index] = vt.getId() + " - " + vt.getCompanyName();
+            ++ index;
+        }
+        return supplierItems;
+    }
+    
+    public void setComboBox(JComboBox<String> comboBox, String[] listItems) {
+        comboBox.setModel(new DefaultComboBoxModel<>(listItems));
+    }
+    
+    public JComboBox myComboBox(JComboBox box, Color color)
+    {   
+        box.setRenderer(new MyComboBoxRenderer());
+        box.setEditor(new MyComboBoxEditor());
+        
+        box.setUI(new BasicComboBoxUI() 
+        {
+            @Override
+            protected ComboPopup createPopup() 
+            {
+                BasicComboPopup basicComboPopup = new BasicComboPopup(comboBox);
+                basicComboPopup.setBorder(new MatteBorder(2,2,2,2,color));
+                return basicComboPopup;
+            }
+            
+            @Override 
+            protected JButton createArrowButton() 
+            {
+                Color matteGrey = new Color(223,230,233);
+                Color flatBlue = new Color(14,142,233);
+        
+                BasicArrowButton custom = new BasicArrowButton(
+                BasicArrowButton.SOUTH, null, null, Color.WHITE, null);
+                custom.setBorder(new MatteBorder(0,0,0,0,flatBlue));
+                return custom;
+            }
+        }); 
+
+       return box;
     }
     
     public void resizeColumnWidth(JTable table) {
@@ -140,14 +197,16 @@ public class ProductGUI extends javax.swing.JPanel {
         rightClickMenu = new javax.swing.JPopupMenu();
         itemSua = new javax.swing.JMenuItem();
         itemNhap = new javax.swing.JMenuItem();
-        pnlHead = new javax.swing.JPanel();
-        btnThem = new javax.swing.JButton();
-        txtTimKiem = new javax.swing.JTextField();
-        lblTitle = new javax.swing.JLabel();
-        lblTimKiem = new javax.swing.JLabel();
         pnlBody = new javax.swing.JPanel();
         scroll = new javax.swing.JScrollPane();
         tblProduct = new javax.swing.JTable();
+        comboBoxSuplier = new javax.swing.JComboBox<>();
+        txtTimKiem = new javax.swing.JTextField();
+        lblTimKiem = new javax.swing.JLabel();
+        lblTinh2 = new javax.swing.JLabel();
+        pnlHead = new javax.swing.JPanel();
+        btnThem = new javax.swing.JButton();
+        lblTitle = new javax.swing.JLabel();
 
         itemSua.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         itemSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/edit_icon.png"))); // NOI18N
@@ -170,75 +229,6 @@ public class ProductGUI extends javax.swing.JPanel {
         rightClickMenu.add(itemNhap);
 
         setLayout(new java.awt.BorderLayout());
-
-        pnlHead.setBackground(new java.awt.Color(255, 255, 255));
-        pnlHead.setPreferredSize(new java.awt.Dimension(808, 150));
-
-        btnThem.setBackground(new java.awt.Color(77, 77, 77));
-        btnThem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnThem.setForeground(new java.awt.Color(255, 255, 255));
-        btnThem.setText("Thêm");
-        btnThem.setContentAreaFilled(false);
-        btnThem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnThem.setOpaque(true);
-        btnThem.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnThemMousePressed(evt);
-            }
-        });
-        btnThem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemActionPerformed(evt);
-            }
-        });
-
-        txtTimKiem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtTimKiem.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(77, 77, 77)));
-        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimKiemActionPerformed(evt);
-            }
-        });
-
-        lblTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTitle.setText("Quản Lý Sản Phẩm");
-
-        lblTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/search_icon.png"))); // NOI18N
-
-        javax.swing.GroupLayout pnlHeadLayout = new javax.swing.GroupLayout(pnlHead);
-        pnlHead.setLayout(pnlHeadLayout);
-        pnlHeadLayout.setHorizontalGroup(
-            pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHeadLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlHeadLayout.createSequentialGroup()
-                        .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(pnlHeadLayout.createSequentialGroup()
-                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 437, Short.MAX_VALUE)
-                        .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32))))
-        );
-        pnlHeadLayout.setVerticalGroup(
-            pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeadLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTimKiem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32))
-        );
-
-        add(pnlHead, java.awt.BorderLayout.PAGE_START);
 
         pnlBody.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -265,19 +255,114 @@ public class ProductGUI extends javax.swing.JPanel {
         });
         scroll.setViewportView(tblProduct);
 
+        comboBoxSuplier.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        comboBoxSuplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
+        comboBoxSuplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxSuplierActionPerformed(evt);
+            }
+        });
+
+        txtTimKiem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtTimKiem.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(77, 77, 77)));
+        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemActionPerformed(evt);
+            }
+        });
+
+        lblTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/search_icon.png"))); // NOI18N
+
+        lblTinh2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lblTinh2.setText("Nhà cung cấp: ");
+
+        pnlHead.setBackground(new java.awt.Color(255, 255, 255));
+        pnlHead.setPreferredSize(new java.awt.Dimension(808, 150));
+
+        btnThem.setBackground(new java.awt.Color(77, 77, 77));
+        btnThem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnThem.setForeground(new java.awt.Color(255, 255, 255));
+        btnThem.setText("Thêm");
+        btnThem.setContentAreaFilled(false);
+        btnThem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnThem.setOpaque(true);
+        btnThem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnThemMousePressed(evt);
+            }
+        });
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
+
+        lblTitle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTitle.setText("Quản Lý Sản Phẩm");
+
+        javax.swing.GroupLayout pnlHeadLayout = new javax.swing.GroupLayout(pnlHead);
+        pnlHead.setLayout(pnlHeadLayout);
+        pnlHeadLayout.setHorizontalGroup(
+            pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlHeadLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+                    .addGroup(pnlHeadLayout.createSequentialGroup()
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        pnlHeadLayout.setVerticalGroup(
+            pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlHeadLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
         pnlBodyLayout.setHorizontalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
+            .addGroup(pnlBodyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(pnlBodyLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
-                .addGap(30, 30, 30))
+                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                        .addComponent(lblTinh2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
+                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlBodyLayout.createSequentialGroup()
+                                .addComponent(comboBoxSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(scroll))
+                        .addGap(30, 30, 30))))
         );
         pnlBodyLayout.setVerticalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBodyLayout.createSequentialGroup()
-                .addComponent(scroll)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
+                .addComponent(pnlHead, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblTinh2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(comboBoxSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTimKiem))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -369,12 +454,20 @@ public class ProductGUI extends javax.swing.JPanel {
     });
     }//GEN-LAST:event_itemNhapActionPerformed
 
+    private void comboBoxSuplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxSuplierActionPerformed
+        String selectedSupplier = comboBoxSuplier.getSelectedItem().toString();
+        Long idSupplier = Long.parseLong(selectedSupplier.substring(0, selectedSupplier.indexOf(" - ")));
+        loadTableDataBySupplierId(idSupplier);
+    }//GEN-LAST:event_comboBoxSuplierActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnThem;
+    private javax.swing.JComboBox<String> comboBoxSuplier;
     private javax.swing.JMenuItem itemNhap;
     private javax.swing.JMenuItem itemSua;
     private javax.swing.JLabel lblTimKiem;
+    private javax.swing.JLabel lblTinh2;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel pnlBody;
     private javax.swing.JPanel pnlHead;

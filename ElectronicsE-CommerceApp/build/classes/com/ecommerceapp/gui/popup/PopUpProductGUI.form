@@ -28,11 +28,8 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelHeader" pref="721" max="32767" attributes="0"/>
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="pnlBody" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
+          <Component id="panelHeader" pref="887" max="32767" attributes="0"/>
+          <Component id="pnlBody" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -81,7 +78,6 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lblMinimize">
           <Properties>
-            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
@@ -91,6 +87,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMinimizeMouseClicked"/>
@@ -98,7 +95,6 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblExit">
           <Properties>
-            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
@@ -108,6 +104,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblExitMouseClicked"/>
@@ -138,50 +135,54 @@
                   </Group>
                   <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                          <Component id="lblTinh1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnHuy" min="-2" pref="98" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnLuu" min="-2" pref="100" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="lblGioiThieu" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblValidateMota" min="-2" pref="24" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="AreaScrollPane1" min="-2" pref="320" max="-2" attributes="0"/>
+                      <Component id="lblGioiThieu" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblTenDiaDiem" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblCatalog" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblTinh" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblTenDiaDiem" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="lblTinh1" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                                          <Component id="lblValidateMota" min="-2" pref="24" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="lblTinh" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblCatalog" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblTinh2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="comboBoxSuplier" max="32767" attributes="0"/>
+                                      <Component id="comboBoxBrand" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="comboBoxCatalog" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtName" alignment="0" max="32767" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="txtPrice" min="-2" pref="146" max="-2" attributes="0"/>
+                                          <EmptySpace min="0" pref="157" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
+                              <Component id="AreaScrollPane1" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="comboBoxCatalog" min="-2" pref="142" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="txtName" min="-2" pref="142" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="lblValidateTen" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="comboBoxBrand" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtPrice" min="-2" pref="142" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="lblValidateGia" min="-2" pref="24" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="lblValidateTen" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblValidateGia" min="-2" pref="24" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                          <Component id="btnHuy" min="-2" pref="98" max="-2" attributes="0"/>
+                          <EmptySpace pref="155" max="32767" attributes="0"/>
+                          <Component id="btnLuu" min="-2" pref="100" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -198,46 +199,50 @@
                               </Group>
                               <Component id="lblValidateTen" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="16" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="lblCatalog" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblCatalog" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                                       <Component id="comboBoxCatalog" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="lblTinh" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="lblTinh1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="lblTinh" min="-2" pref="28" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="lblTinh2" min="-2" pref="22" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
                                   <Component id="comboBoxBrand" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="lblValidateGia" max="32767" attributes="0"/>
-                                      <Component id="txtPrice" pref="23" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lblValidateGia" min="-2" pref="23" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                          <Component id="comboBoxSuplier" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblGioiThieu" min="-2" pref="21" max="-2" attributes="0"/>
                               <Component id="lblValidateMota" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="lblTinh1" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtPrice" min="-2" pref="23" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="AreaScrollPane1" min="-2" pref="126" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                          <Component id="lblGioiThieu" min="-2" pref="21" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="AreaScrollPane1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="lblAnh" min="-2" pref="298" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnHuy" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
-                      <Component id="btnLuu" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                       <Component id="btnChonAnh" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btnLuu" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="15" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -275,15 +280,15 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtName">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                 <MatteColorBorder bottom="2" left="2" right="2" top="2">
                   <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
                 </MatteColorBorder>
               </Border>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
           <Events>
@@ -292,22 +297,25 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblTenDiaDiem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="T&#xea;n s&#x1ea3;n ph&#x1ea9;m:"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="T&#xea;n s&#x1ea3;n ph&#x1ea9;m:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTinh">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nh&#xe3;n hi&#x1ec7;u:"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Nh&#xe3;n hi&#x1ec7;u:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="comboBoxBrand">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
                 <StringItem index="0" value="1"/>
@@ -315,9 +323,6 @@
                 <StringItem index="2" value="3"/>
                 <StringItem index="3" value="4"/>
               </StringArray>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
           <Events>
@@ -329,10 +334,10 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblGioiThieu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="M&#xf4; t&#x1ea3;:"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="M&#xf4; t&#x1ea3;:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnLuu">
@@ -432,23 +437,23 @@
         </Container>
         <Component class="javax.swing.JLabel" name="lblTinh1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Gi&#xe1;:"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Gi&#xe1;:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtPrice">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                 <MatteColorBorder bottom="2" left="2" right="2" top="2">
                   <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
                 </MatteColorBorder>
               </Border>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
           <Events>
@@ -457,14 +462,17 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblCatalog">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Lo&#x1ea1;i:"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Lo&#x1ea1;i:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="comboBoxCatalog">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
                 <StringItem index="0" value="1"/>
@@ -473,12 +481,38 @@
                 <StringItem index="3" value="4"/>
               </StringArray>
             </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
-            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboBoxCatalogActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblTinh2">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Nh&#xe0; cung c&#x1ea5;p: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="comboBoxSuplier">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="1"/>
+                <StringItem index="1" value="2"/>
+                <StringItem index="2" value="3"/>
+                <StringItem index="3" value="4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboBoxSuplierActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

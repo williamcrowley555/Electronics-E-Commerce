@@ -8,9 +8,11 @@ package com.ecommerceapp.util;
 import com.ecommerceapp.bll.IBrandBLL;
 import com.ecommerceapp.bll.ICatalogBLL;
 import com.ecommerceapp.bll.IProductBLL;
+import com.ecommerceapp.bll.ISupplierBLL;
 import com.ecommerceapp.bll.impl.BrandBLL;
 import com.ecommerceapp.bll.impl.CatalogBLL;
 import com.ecommerceapp.bll.impl.ProductBLL;
+import com.ecommerceapp.bll.impl.SupplierBLL;
 import com.ecommerceapp.dto.ProductDTO;
 import java.util.List;
 import java.util.Vector;
@@ -24,6 +26,7 @@ public class ProductTableLoaderUtil implements ITableLoaderUtil<ProductDTO>{
     private IProductBLL productBLL = new ProductBLL();
     private IBrandBLL brandBLL = new BrandBLL();
     private ICatalogBLL catalogBLL = new CatalogBLL();
+    private ISupplierBLL supplierBLL = new SupplierBLL();
     //private ITinhBLL tinhBLL = new TinhBLL();
     
     @Override
@@ -46,6 +49,7 @@ public class ProductTableLoaderUtil implements ITableLoaderUtil<ProductDTO>{
             row.add(catalogBLL.findById(product.getCatalogId()).getName());
             row.add(product.getQuantity());
             row.add(product.getDescription());
+            row.add(supplierBLL.findById(product.getSupplierId()).getCompanyName());
             model.addRow(row);
         }
         
