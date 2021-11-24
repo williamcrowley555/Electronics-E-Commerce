@@ -7,6 +7,7 @@ package com.ecommerceapp.gui.main;
 
 
 import com.ecommerceapp.dto.UserDTO;
+import com.ecommerceapp.enums.ERole;
 import com.ecommerceapp.gui.form.BillGUI;
 import com.ecommerceapp.gui.form.BrandGUI;
 import com.ecommerceapp.gui.form.CatalogGUI;
@@ -17,6 +18,7 @@ import com.ecommerceapp.gui.form.RevenueGUI;
 import com.ecommerceapp.gui.form.UserGUI;
 import com.ecommerceapp.gui.form.RoleGUI;
 import com.ecommerceapp.gui.form.StaffRevenueGUI;
+import com.ecommerceapp.gui.form.SupplierGUI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -139,6 +141,17 @@ public class MainGUI extends javax.swing.JFrame {
             }
         }, menuRole);
         
+        MenuItem menuSupplier = new MenuItem(iconStaff, "Quản Lý NCC", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                panelBody.removeAll();
+                panelBody.add(new SupplierGUI());
+                panelBody.repaint();
+                panelBody.revalidate();
+                Selected(menuSupplier);
+            }
+        });
+        
         MenuItem menuThongKe = new MenuItem(iconThongKe, "Thống kê theo tháng", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -166,26 +179,27 @@ public class MainGUI extends javax.swing.JFrame {
         initComponents();
         invisibleMenuScrollBar(8);
         this.currentUser = currentUser;
-        panelBody.add(new ProductGUI());
+        panelBody.add(new ProductGUI(currentUser));
         panelBody.repaint();
         panelBody.revalidate();
         CustomWindow();
-        switch(role){
-            case "ROLE_ADMIN":
+        
+        switch(ERole.valueOf(role)){
+            case ROLE_ADMIN:
             {   
                 reInitMenusWithUser(currentUser);
-                addMenu(menuProduct,menuInvoice,menuUser, menuThongKe, menuThongKeXuLiDon);
+                addMenu(menuProduct, menuSupplier, menuInvoice,menuUser, menuThongKe, menuThongKeXuLiDon);
                 break;
             }
             
-            case "ROLE_EMPLOYEE":
+            case ROLE_EMPLOYEE:
             {   
                 reInitMenusWithUser(currentUser);
                 addMenu(menuProduct,menuInvoice);
                 break;
             }
             
-            case "ROLE_WAREHOUSE_STAFF":
+            case ROLE_WAREHOUSE_STAFF:
             {   
                 reInitMenusWithUser(currentUser);
                 addMenu(menuProduct);
@@ -204,7 +218,7 @@ public class MainGUI extends javax.swing.JFrame {
         panelBody.repaint();
         panelBody.revalidate();
         CustomWindow();
-        addMenu(menuProduct,menuInvoice,menuUser, menuThongKe, menuThongKeXuLiDon);
+        addMenu(menuProduct, menuSupplier, menuInvoice,menuUser, menuThongKe, menuThongKeXuLiDon, menuSupplier);
         Selected(menuProduct);
     }
     
@@ -219,6 +233,17 @@ public class MainGUI extends javax.swing.JFrame {
                 Selected(menuInvoice);
             }
         });
+       
+      menuProduct = new MenuItem(iconProduct, "Quản Lý Sản Phẩm", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                panelBody.removeAll();
+                panelBody.add(new ProductGUI(user));
+                panelBody.repaint();
+                panelBody.revalidate();
+                Selected(menuProduct);
+            }
+        }, menuBrand, menuCatalog);
     }
     
     public void invisibleMenuScrollBar(int speed)
@@ -283,6 +308,7 @@ public class MainGUI extends javax.swing.JFrame {
        menuUser.setColor(flatBlack);
        menuThongKe.setColor(flatBlack);
        menuThongKeXuLiDon.setColor(flatBlack);
+       menuSupplier.setColor(flatBlack);
     }
    
     public void Selected(MenuItem item)

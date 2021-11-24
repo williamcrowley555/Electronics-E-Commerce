@@ -8,8 +8,14 @@ package com.ecommerceapp.gui.form;
 import com.ecommerceapp.bll.IProductBLL;
 import com.ecommerceapp.bll.ISupplierBLL;
 import com.ecommerceapp.bll.impl.ProductBLL;
+import com.ecommerceapp.bll.impl.RoleBLL;
 import com.ecommerceapp.bll.impl.SupplierBLL;
+import com.ecommerceapp.bll.impl.UserBLL;
+import com.ecommerceapp.bll.impl.User_RoleBLL;
+import com.ecommerceapp.dto.RoleDTO;
 import com.ecommerceapp.dto.SupplierDTO;
+import com.ecommerceapp.dto.UserDTO;
+import com.ecommerceapp.enums.ERole;
 import com.ecommerceapp.gui.menu.MyComboBoxEditor;
 import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
 import java.awt.Color;
@@ -68,10 +74,30 @@ public class ProductGUI extends javax.swing.JPanel {
     private PopUpImportGUI popUpImport = null;
     TableRowSorter<TableModel> rowSorter = null;
     private ISupplierBLL supplierBLL;
+    UserBLL userBLL;
+    User_RoleBLL user_roleBLL;
+    RoleBLL roleBLL;
+    private UserDTO user = null;
+    private String role = null;
     public ProductGUI() {
         initComponents();
         productBLL = new ProductBLL();
         supplierBLL = new SupplierBLL();
+        loadTableData();
+        System.out.println("khong co user");
+        comboBoxSuplier = myComboBox(comboBoxSuplier, new Color(77,77,77));
+        setComboBox(comboBoxSuplier, getSuplierItems());
+        headerColor(77,77,77,tblProduct);
+        scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
+    }
+    
+    public ProductGUI(UserDTO user) {
+        initComponents();
+        productBLL = new ProductBLL();
+        supplierBLL = new SupplierBLL();
+        this.user = user;
+        this.role = getRole(user.getEmail());
+        System.out.println("co user");
         loadTableData();
         comboBoxSuplier = myComboBox(comboBoxSuplier, new Color(77,77,77));
         setComboBox(comboBoxSuplier, getSuplierItems());
@@ -112,6 +138,21 @@ public class ProductGUI extends javax.swing.JPanel {
             ++ index;
         }
         return supplierItems;
+    }
+    
+    public String getRole(String email)
+    {   
+        userBLL = new UserBLL();
+        user_roleBLL =  new User_RoleBLL();
+        roleBLL = new RoleBLL();
+        List<RoleDTO> role;
+        UserDTO user = userBLL.findByEmail(email);
+        if(user != null)
+        {
+            role = user_roleBLL.findByIdUser(user.getId());
+            return role.get(0).getNormalizedName();
+        }
+        return null;
     }
     
     public void setComboBox(JComboBox<String> comboBox, String[] listItems) {
@@ -357,9 +398,9 @@ public class ProductGUI extends javax.swing.JPanel {
                 .addComponent(lblTinh2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(comboBoxSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboBoxSuplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblTimKiem))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -379,7 +420,13 @@ public class ProductGUI extends javax.swing.JPanel {
 
     private void btnThemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMousePressed
         // TODO add your handling code here:
-          if (this.popUp == null) {
+        if (this.role.equals(ERole.ROLE_EMPLOYEE.name()))
+        {
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền thực hiện hành động này", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (this.popUp == null) {
             this.popUp = new PopUpProductGUI("POST");
             
         } else {
@@ -420,6 +467,8 @@ public class ProductGUI extends javax.swing.JPanel {
 
     private void tblProductMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseReleased
         // TODO add your handling code here:
+        if (this.role.equals(ERole.ROLE_EMPLOYEE.name()))
+            return;
         int r = tblProduct.rowAtPoint(evt.getPoint());
         if (r >= 0 && r < tblProduct.getRowCount()) {
             tblProduct.setRowSelectionInterval(r, r);

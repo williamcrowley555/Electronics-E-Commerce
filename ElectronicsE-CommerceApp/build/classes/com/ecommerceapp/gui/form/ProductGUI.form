@@ -106,9 +106,9 @@
                   <Component id="lblTinh2" min="-2" pref="22" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="comboBoxSuplier" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="txtTimKiem" alignment="1" min="-2" pref="34" max="-2" attributes="0"/>
+                          <Component id="comboBoxSuplier" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="lblTimKiem" min="-2" max="-2" attributes="0"/>
                   </Group>
