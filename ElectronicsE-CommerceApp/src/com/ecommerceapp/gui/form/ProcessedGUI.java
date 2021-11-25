@@ -42,6 +42,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,8 +84,8 @@ public class ProcessedGUI extends javax.swing.JPanel {
      * Creates new form Panel1
      */
     private IInvoiceBLL invoiceBLL;
-    private List<InvoiceDTO> processedInvoices;
-    private List<InvoiceDTO> unprocessedInvoices;
+    private List<InvoiceDTO> processedInvoices = new ArrayList<>();
+    private List<InvoiceDTO> unprocessedInvoices = new ArrayList<>();
     TableRowSorter<TableModel> rowSorter = null;
     
     public ProcessedGUI() {
@@ -582,7 +583,7 @@ public class ProcessedGUI extends javax.swing.JPanel {
         } catch (IOException ex) {
             Logger.getLogger(popUpDInvoiceDetailGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (unprocessedInvoices.size() == 0 && processedInvoices.size() == 0) {
+        if (unprocessedInvoices.isEmpty() && processedInvoices.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
