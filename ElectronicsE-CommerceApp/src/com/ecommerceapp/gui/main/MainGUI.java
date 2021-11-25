@@ -175,7 +175,9 @@ public class MainGUI extends javax.swing.JFrame {
         });
     public UserDTO currentUser;
     public PopUpChangePasswordGUI popup;
+    public String role;
     public MainGUI(UserDTO currentUser, String role) {
+        this.role = role;
         initComponents();
         invisibleMenuScrollBar(8);
         this.currentUser = currentUser;
@@ -223,27 +225,39 @@ public class MainGUI extends javax.swing.JFrame {
     }
     
     public void reInitMenusWithUser(UserDTO user){
-       menuInvoice = new MenuItem(iconInvoice, "Quản Lý Đơn Hàng", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                panelBody.removeAll();
-                panelBody.add(new BillGUI(user));
-                panelBody.repaint();
-                panelBody.revalidate();
-                Selected(menuInvoice);
-            }
-        });
+        menuInvoice = new MenuItem(iconInvoice, "Quản Lý Đơn Hàng", new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent ae) {
+                 panelBody.removeAll();
+                 panelBody.add(new BillGUI(user));
+                 panelBody.repaint();
+                 panelBody.revalidate();
+                 Selected(menuInvoice);
+             }
+         });
        
-      menuProduct = new MenuItem(iconProduct, "Quản Lý Sản Phẩm", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                panelBody.removeAll();
-                panelBody.add(new ProductGUI(user));
-                panelBody.repaint();
-                panelBody.revalidate();
-                Selected(menuProduct);
-            }
-        }, menuBrand, menuCatalog);
+        if (ERole.valueOf(role).equals(ERole.ROLE_EMPLOYEE))
+            menuProduct = new MenuItem(iconProduct, "Quản Lý Sản Phẩm", new ActionListener() {
+                  @Override
+                  public void actionPerformed(ActionEvent ae) {
+                      panelBody.removeAll();
+                      panelBody.add(new ProductGUI(user));
+                      panelBody.repaint();
+                      panelBody.revalidate();
+                      Selected(menuProduct);
+                  }
+              });
+        else 
+            menuProduct = new MenuItem(iconProduct, "Quản Lý Sản Phẩm", new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    panelBody.removeAll();
+                    panelBody.add(new ProductGUI(user));
+                    panelBody.repaint();
+                    panelBody.revalidate();
+                    Selected(menuProduct);
+                }
+            }, menuBrand, menuCatalog);
     }
     
     public void invisibleMenuScrollBar(int speed)
