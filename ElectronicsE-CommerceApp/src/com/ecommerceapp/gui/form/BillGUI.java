@@ -419,13 +419,13 @@ public class BillGUI extends javax.swing.JPanel {
     private void itemConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConfirmActionPerformed
         int rowindex = tblInvoice.getSelectedRow();
         Long id = Long.parseLong(tblInvoice.getValueAt(rowindex,0).toString());
-        
         InvoiceDTO invoice = invoiceBLL.findById(id);
         if (invoice.getStatus()==0)
         {
             invoice.setStatus(1);
             invoice.setConfirmationDate(LocalDate.now());
             invoiceBLL.update(invoice);
+            System.out.println(invoice);
             JOptionPane.showMessageDialog(this, "Xác nhận thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             loadTableData();
         } else if (invoice.getStatus()==1 ) JOptionPane.showMessageDialog(this, "Đơn hàng này đã được xác nhận", "Thông báo", JOptionPane.INFORMATION_MESSAGE);

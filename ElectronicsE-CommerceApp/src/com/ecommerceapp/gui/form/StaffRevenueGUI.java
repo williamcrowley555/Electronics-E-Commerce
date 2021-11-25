@@ -109,7 +109,6 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
             tblRevenue.setModel(new RevenueTableLoaderUtil().setTable(invoiceBLL.getMonthlyProductReport(month, year), this.columnNames));
             this.rowSorter = TableSetupUtil.setTableFilter(tblRevenue, txtTimKiemInvoice);
             headerColor(77,77,77,tblRevenue);
-            resizeColumnWidth(tblRevenue);
             lblTitle.setText("Thống kê doanh thu tháng " + month + " năm " + year);
             int total = 0;
             int noTotal = 0;
@@ -130,7 +129,6 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
         tblStaff.setModel(new ShortUserTableLoaderUtil().setTable(userBLL.findByRoleName(ERole.ROLE_EMPLOYEE.name()), this.columnNamesStaff));
         this.rowSorter = TableSetupUtil.setTableFilter(tblStaff, txtTimKiemStaff);
         headerColor(77,77,77,tblStaff);
-        resizeColumnWidth(tblStaff);
     }
     
     public void initNullTable()
@@ -140,21 +138,6 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
         tblRevenue.setModel(emptyModel);
         headerColor(77,77,77,tblRevenue);
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
-    }
-    
-    public void resizeColumnWidth(JTable table) {
-    final TableColumnModel columnModel = table.getColumnModel();
-    for (int column = 0; column < table.getColumnCount(); column++) {
-        int width = 70; // Min width
-        for (int row = 0; row < table.getRowCount(); row++) {
-            TableCellRenderer renderer = table.getCellRenderer(row, column);
-            Component comp = table.prepareRenderer(renderer, row, column);
-            width = Math.max(comp.getPreferredSize().width +1 , width);
-        }
-        if(width > 200)
-            width=200;
-        columnModel.getColumn(column).setPreferredWidth(width);
-        }
     }
     
     public Vector createHeader(Object[] columnNames){
@@ -396,10 +379,10 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
 
         lblTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/search_icon.png"))); // NOI18N
 
-        lblTableStaff.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTableStaff.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblTableStaff.setText("Nhân viên:");
 
-        lblTableStaff1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTableStaff1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblTableStaff1.setText("Đơn hàng:");
 
         lblTimKiem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/search_icon.png"))); // NOI18N
@@ -416,6 +399,10 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
         pnlBody.setLayout(pnlBodyLayout);
         pnlBodyLayout.setHorizontalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBodyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
@@ -427,7 +414,7 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlBodyLayout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(scroll)
+                            .addComponent(scroll1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlBodyLayout.createSequentialGroup()
                                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlBodyLayout.createSequentialGroup()
@@ -435,22 +422,15 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                                        .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(pnlBodyLayout.createSequentialGroup()
-                                                .addComponent(lblTableStaff)
-                                                .addGap(263, 263, 263)
-                                                .addComponent(lblTimKiem1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(3, 3, 3)
-                                                .addComponent(txtTimKiemStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(scroll1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addComponent(lblTableStaff)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblTimKiem1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTimKiemInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtTimKiemInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTimKiemStaff, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(scroll))))
                 .addGap(30, 30, 30))
-            .addGroup(pnlBodyLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlBodyLayout.setVerticalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -460,28 +440,27 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblTableStaff)
-                    .addComponent(lblTimKiem1)
-                    .addComponent(txtTimKiemStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtTimKiemStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTimKiem1, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(18, 18, 18)
+                .addComponent(scroll1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(4, 4, 4)
                         .addComponent(lblTimKiem))
-                    .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlBodyLayout.createSequentialGroup()
-                            .addGap(18, 18, 18)
-                            .addComponent(scroll1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(lblTableStaff1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pnlBodyLayout.createSequentialGroup()
-                            .addGap(177, 177, 177)
-                            .addComponent(txtTimKiemInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(lblTableStaff1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBodyLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(txtTimKiemInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTotalQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         add(pnlBody, java.awt.BorderLayout.CENTER);
@@ -533,7 +512,6 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
            {
                 tblRevenue.setModel(new RevenueTableLoaderUtil().setTable(revenues, this.columnNames));
                 headerColor(77,77,77,tblRevenue);
-                resizeColumnWidth(tblRevenue);
                 lblTitle.setText("Thống kê doanh thu tháng " + (monthChooser.getMonth()+1) + " năm " + yearChooser.getYear()
                                 + " của nhân viên " + tblStaff.getValueAt(rowindex,1).toString()
                 );

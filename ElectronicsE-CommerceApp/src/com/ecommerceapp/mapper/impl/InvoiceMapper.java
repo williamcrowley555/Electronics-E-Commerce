@@ -23,7 +23,7 @@ public class InvoiceMapper implements RowMapper<InvoiceDTO>{
             InvoiceDTO invoice = new InvoiceDTO();
             invoice.setId(rs.getLong("id"));
             invoice.setUserId(rs.getLong("user_id"));
-            invoice.setEmployeeId(rs.getLong("employee_id"));
+            invoice.setEmployeeId(rs.getLong("employee_id") == 0 ? null : rs.getLong("employee_id"));
             invoice.setNote(rs.getString("note"));
             invoice.setPhone(rs.getString("phone"));
             invoice.setStatus(rs.getInt("status"));
