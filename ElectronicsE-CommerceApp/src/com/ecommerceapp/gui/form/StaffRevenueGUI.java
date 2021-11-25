@@ -383,7 +383,7 @@ public class StaffRevenueGUI extends javax.swing.JPanel {
         lblTableStaff.setText("Nhân viên:");
 
         lblTableStaff1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblTableStaff1.setText("Đơn hàng:");
+        lblTableStaff1.setText("Các sản phẩm đã bán:");
 
         lblTimKiem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/search_icon.png"))); // NOI18N
 

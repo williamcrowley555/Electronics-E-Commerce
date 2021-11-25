@@ -66,9 +66,9 @@ public class BillGUI extends javax.swing.JPanel {
                             "Tổng tiền",
                             "Ngày đặt",
                             "Ngày xác nhận",
-                            "Ngày Thanh toán",
-                            "Ngày giao hàng",
-                            "Ngày hủy đơn",
+                            "Ngày Th.Toán",
+                            "Ngày Giao hàng",
+                            "Ngày Hủy đơn",
                             "Trạng thái"
                             };
          

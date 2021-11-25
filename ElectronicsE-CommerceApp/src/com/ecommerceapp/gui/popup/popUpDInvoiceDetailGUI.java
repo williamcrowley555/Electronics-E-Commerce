@@ -512,6 +512,7 @@ public class popUpDInvoiceDetailGUI extends javax.swing.JFrame {
                 btnThemActionPerformed(evt);
             }
         });
+
         lblGioiThieu3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblGioiThieu3.setText("Nhân Viên:");
 
