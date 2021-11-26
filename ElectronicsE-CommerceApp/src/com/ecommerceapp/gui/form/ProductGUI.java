@@ -25,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import com.ecommerceapp.gui.menu.MyScrollBarUI;
 import com.ecommerceapp.gui.popup.PopUpImportGUI;
+import com.ecommerceapp.gui.popup.PopUpPrintImportGUI;
 import com.ecommerceapp.gui.popup.PopUpProductGUI;
 import com.ecommerceapp.util.ProductTableLoaderUtil;
 import com.ecommerceapp.util.TableSetupUtil;
@@ -72,6 +73,7 @@ public class ProductGUI extends javax.swing.JPanel {
     private IProductBLL productBLL;
     private PopUpProductGUI popUp = null;
     private PopUpImportGUI popUpImport = null;
+    private PopUpPrintImportGUI popUpPrintImport = null;
     TableRowSorter<TableModel> rowSorter = null;
     private ISupplierBLL supplierBLL;
     UserBLL userBLL;
@@ -246,6 +248,7 @@ public class ProductGUI extends javax.swing.JPanel {
         pnlHead = new javax.swing.JPanel();
         btnThem = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
+        btnPrintImport = new javax.swing.JButton();
 
         itemSua.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         itemSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ecommerceapp/img/edit_icon.png"))); // NOI18N
@@ -340,6 +343,24 @@ public class ProductGUI extends javax.swing.JPanel {
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTitle.setText("Quản Lý Sản Phẩm");
 
+        btnPrintImport.setBackground(new java.awt.Color(77, 77, 77));
+        btnPrintImport.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnPrintImport.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrintImport.setText("In phiếu nhập");
+        btnPrintImport.setContentAreaFilled(false);
+        btnPrintImport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPrintImport.setOpaque(true);
+        btnPrintImport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnPrintImportMousePressed(evt);
+            }
+        });
+        btnPrintImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintImportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlHeadLayout = new javax.swing.GroupLayout(pnlHead);
         pnlHead.setLayout(pnlHeadLayout);
         pnlHeadLayout.setHorizontalGroup(
@@ -347,9 +368,11 @@ public class ProductGUI extends javax.swing.JPanel {
             .addGroup(pnlHeadLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+                    .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE)
                     .addGroup(pnlHeadLayout.createSequentialGroup()
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPrintImport)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -357,9 +380,11 @@ public class ProductGUI extends javax.swing.JPanel {
             pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeadLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPrintImport, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -370,7 +395,7 @@ public class ProductGUI extends javax.swing.JPanel {
             .addGroup(pnlBodyLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 2, Short.MAX_VALUE))
             .addGroup(pnlBodyLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -507,8 +532,30 @@ public class ProductGUI extends javax.swing.JPanel {
         loadTableDataBySupplierId(idSupplier);
     }//GEN-LAST:event_comboBoxSuplierActionPerformed
 
+    private void btnPrintImportMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintImportMousePressed
+        // TODO add your handling code here:
+        if (this.popUpPrintImport == null) {
+            popUpPrintImport = new PopUpPrintImportGUI();
+        } else {
+            this.popUpPrintImport.toFront();
+            this.popUpPrintImport.center();
+        }
+        popUpPrintImport.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                popUpPrintImport = null;
+                loadTableData();
+            }
+        });
+    }//GEN-LAST:event_btnPrintImportMousePressed
+
+    private void btnPrintImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintImportActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPrintImportActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPrintImport;
     private javax.swing.JButton btnThem;
     private javax.swing.JComboBox<String> comboBoxSuplier;
     private javax.swing.JMenuItem itemNhap;
