@@ -9,6 +9,7 @@ import com.ecommerceapp.bll.IInvoiceBLL;
 import com.ecommerceapp.bll.IProductBLL;
 import com.ecommerceapp.bll.impl.InvoiceBLL;
 import com.ecommerceapp.bll.impl.ProductBLL;
+import com.ecommerceapp.dto.InvoiceDTO;
 import com.ecommerceapp.gui.menu.MyComboBoxEditor;
 import com.ecommerceapp.gui.menu.MyComboBoxRenderer;
 import java.awt.Color;
@@ -23,16 +24,31 @@ import com.ecommerceapp.util.ProcessUnprocessTableLoaderUtil;
 import com.ecommerceapp.util.ProductTableLoaderUtil;
 import com.ecommerceapp.util.RevenueTableLoaderUtil;
 import com.ecommerceapp.util.TableSetupUtil;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -67,6 +83,8 @@ public class ProcessedGUI extends javax.swing.JPanel {
      * Creates new form Panel1
      */
     private IInvoiceBLL invoiceBLL;
+    private List<InvoiceDTO> processedInvoices = new ArrayList<>();
+    private List<InvoiceDTO> unprocessedInvoices = new ArrayList<>();
     TableRowSorter<TableModel> rowSorter = null;
     
     public ProcessedGUI() {
@@ -90,10 +108,11 @@ public class ProcessedGUI extends javax.swing.JPanel {
      */
     public void loadTableData(int month, int year) {
         int noProcess = 0;
-        if (invoiceBLL.getProcessedOrder(month, year).isEmpty())
+        processedInvoices = invoiceBLL.getProcessedOrder(month, year);
+        if (processedInvoices == null || processedInvoices.isEmpty())
             JOptionPane.showMessageDialog(this, "Không có đơn đã xử lý tháng " + month + " năm " + year, "Thông báo", JOptionPane.INFORMATION_MESSAGE);    
         else {
-            tblProcessed.setModel(new ProcessUnprocessTableLoaderUtil().setTable(invoiceBLL.getProcessedOrder(month, year), this.columnNames));
+            tblProcessed.setModel(new ProcessUnprocessTableLoaderUtil().setTable(processedInvoices, this.columnNames));
             this.rowSorter = TableSetupUtil.setTableFilter(tblProcessed, txtTimKiemDaXuli);
             headerColor(77,77,77,tblProcessed);
             resizeColumnWidth(tblProcessed);
@@ -104,10 +123,11 @@ public class ProcessedGUI extends javax.swing.JPanel {
         }
         
         int noUnprocess = 0;
-        if (invoiceBLL.getUnprocessedOrder(month, year).isEmpty())
+        unprocessedInvoices = invoiceBLL.getUnprocessedOrder(month, year);
+        if (unprocessedInvoices == null || unprocessedInvoices.isEmpty())
             JOptionPane.showMessageDialog(this, "Không có đơn chưa xử lý tháng " + month + " năm " + year, "Thông báo", JOptionPane.INFORMATION_MESSAGE);    
         else {
-            tblUnprocessed.setModel(new ProcessUnprocessTableLoaderUtil().setTable(invoiceBLL.getUnprocessedOrder(month, year), this.columnNames));
+            tblUnprocessed.setModel(new ProcessUnprocessTableLoaderUtil().setTable(unprocessedInvoices, this.columnNames));
             this.rowSorter = TableSetupUtil.setTableFilter(tblUnprocessed, txtTimKiemChuaXuLi);
             headerColor(77,77,77,tblUnprocessed);
             resizeColumnWidth(tblUnprocessed);
@@ -227,6 +247,7 @@ public class ProcessedGUI extends javax.swing.JPanel {
         btnThongKe = new javax.swing.JButton();
         yearChooser = new com.toedter.calendar.JYearChooser();
         monthChooser = new com.toedter.calendar.JMonthChooser();
+        btnPrint = new javax.swing.JButton();
         pnlBody = new javax.swing.JPanel();
         lblTotalProcessQuantity = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
@@ -291,6 +312,24 @@ public class ProcessedGUI extends javax.swing.JPanel {
 
         yearChooser.setBackground(new java.awt.Color(204, 204, 204));
 
+        btnPrint.setBackground(new java.awt.Color(77, 77, 77));
+        btnPrint.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnPrint.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrint.setText("Xuất PDF");
+        btnPrint.setContentAreaFilled(false);
+        btnPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPrint.setOpaque(true);
+        btnPrint.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnPrintMousePressed(evt);
+            }
+        });
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlHeadLayout = new javax.swing.GroupLayout(pnlHead);
         pnlHead.setLayout(pnlHeadLayout);
         pnlHeadLayout.setHorizontalGroup(
@@ -298,27 +337,30 @@ public class ProcessedGUI extends javax.swing.JPanel {
             .addGroup(pnlHeadLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlHeadLayout.createSequentialGroup()
-                        .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
+                    .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlHeadLayout.createSequentialGroup()
                         .addComponent(monthChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17)
                         .addComponent(yearChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 645, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 550, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         pnlHeadLayout.setVerticalGroup(
             pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeadLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(yearChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(monthChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                    .addGroup(pnlHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                        .addComponent(btnPrint, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -483,9 +525,7 @@ public class ProcessedGUI extends javax.swing.JPanel {
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBodyLayout.createSequentialGroup()
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(panelLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelLeft, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelRight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -531,8 +571,141 @@ public class ProcessedGUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTimKiemChuaXuLiActionPerformed
 
+    private void btnPrintMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMousePressed
+        // TODO add your handling code here:
+        BaseFont bf = null;
+        try {
+            bf = BaseFont.createFont("c:/windows/fonts/Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        } catch (DocumentException ex) {
+            Logger.getLogger("test").log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger("test").log(Level.SEVERE, null, ex);
+        }
+        if ((unprocessedInvoices == null || unprocessedInvoices.isEmpty())
+                &&(processedInvoices == null || processedInvoices.isEmpty())) {
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        JFileChooser f = new JFileChooser();
+        f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        if (f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            // print pdf
+            Document document = new Document();
+            try {
+                // khởi tạo một PdfWriter truyền vào document và FileOutputStream
+                LocalDate today = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                today.format(formatter);
+
+                PdfWriter.getInstance(document, new FileOutputStream(f.getSelectedFile() + "\\XuLyDon"+ today.toString() + ".pdf"));
+
+                // mở file để thực hiện viết
+                document.open();
+                // thêm nội dung sử dụng add function
+
+                Paragraph brand = new Paragraph(lblTitle.getText(), new com.itextpdf.text.Font(bf, 16, Font.BOLD));
+
+                brand.setAlignment(Element.ALIGN_CENTER);
+
+                
+                document.add(new Paragraph(" "));
+                document.add(brand);
+                document.add(new Paragraph(" "));
+                
+                document.add(new Paragraph("Tổng đơn đã xử lý: " + this.processedInvoices.size(), new com.itextpdf.text.Font(bf, 12, Font.BOLD)));
+                document.add(new Paragraph(" "));
+                //Khởi tạo một table có 3 cột
+                PdfPTable table = new PdfPTable(4);
+                table.setWidthPercentage(100);
+                table.setHorizontalAlignment(0);
+
+                PdfPCell space = new PdfPCell(new Paragraph(" "));
+
+                PdfPCell h1 = new PdfPCell(new Paragraph("Mã đơn", new com.itextpdf.text.Font(bf, 12, Font.BOLD)));
+                PdfPCell h2 = new PdfPCell(new Paragraph("Tên khách hàng", new com.itextpdf.text.Font(bf, 12, Font.BOLD)));
+                PdfPCell h3 = new PdfPCell(new Paragraph("Số điện thoại", new com.itextpdf.text.Font(bf, 12, Font.BOLD)));
+                PdfPCell h4 = new PdfPCell(new Paragraph("Ngày đặt", new com.itextpdf.text.Font(bf, 12, Font.BOLD)));
+
+                table.addCell(h1);
+                table.addCell(h2);
+                table.addCell(h3);
+                table.addCell(h4);
+                table.setHeaderRows(1);
+
+                for( int i = 0; i < processedInvoices.size(); i++)
+                {
+
+                    PdfPCell data1 = new PdfPCell(new Paragraph(processedInvoices.get(i).getId() + "", new com.itextpdf.text.Font(bf, 12)));
+                    PdfPCell data2 = new PdfPCell(new Paragraph(processedInvoices.get(i).getRecipientLastName() + " " + processedInvoices.get(i).getRecipientFirstName(), new com.itextpdf.text.Font(bf, 12)));
+                    PdfPCell data3 = new PdfPCell(new Paragraph(processedInvoices.get(i).getPhone()));
+                    PdfPCell data4 = new PdfPCell(new Paragraph(processedInvoices.get(i).getOrderDateFormat()));
+
+                    table.addCell(data1);
+                    table.addCell(data2);
+                    table.addCell(data3);
+                    table.addCell(data4);
+                }
+                Paragraph totalName = new Paragraph("Tổng cộng: ", new com.itextpdf.text.Font(bf, 12));
+                totalName.setAlignment(Element.ALIGN_RIGHT);
+
+                document.add(table);
+                
+                //////////////////////
+                document.add(new Paragraph(" "));
+                document.add(new Paragraph("Tổng đơn chưa xử lý: " + this.unprocessedInvoices.size(), new com.itextpdf.text.Font(bf, 12, Font.BOLD)));
+                document.add(new Paragraph(" "));
+                //Khởi tạo một table có 3 cột
+                PdfPTable table2 = new PdfPTable(4);
+                table2.setWidthPercentage(100);
+                table2.setHorizontalAlignment(0);
+
+                table2.addCell(h1);
+                table2.addCell(h2);
+                table2.addCell(h3);
+                table2.addCell(h4);
+                table2.setHeaderRows(1);
+
+                for( int i = 0; i < unprocessedInvoices.size(); i++)
+                {
+                    PdfPCell data1 = new PdfPCell(new Paragraph(unprocessedInvoices.get(i).getId() + "", new com.itextpdf.text.Font(bf, 12)));
+                    PdfPCell data2 = new PdfPCell(new Paragraph(unprocessedInvoices.get(i).getRecipientLastName() + " " + unprocessedInvoices.get(i).getRecipientFirstName(), new com.itextpdf.text.Font(bf, 12)));
+                    PdfPCell data3 = new PdfPCell(new Paragraph(unprocessedInvoices.get(i).getPhone()));
+                    PdfPCell data4 = new PdfPCell(new Paragraph(unprocessedInvoices.get(i).getOrderDateFormat()));
+
+                    table2.addCell(data1);
+                    table2.addCell(data2);
+                    table2.addCell(data3);
+                    table2.addCell(data4);
+                }
+
+                document.add(table2);
+
+                Paragraph dateDetail = new Paragraph("Ngày "+today.getDayOfMonth() + " tháng " + today.getMonthValue() +" năm " + today.getYear() + "                 ", new com.itextpdf.text.Font(bf, 12));
+                Paragraph endDetail = new Paragraph("Người thống kê                          ", new com.itextpdf.text.Font(bf, 12));
+
+                dateDetail.setAlignment(Element.ALIGN_RIGHT);
+                endDetail.setAlignment(Element.ALIGN_RIGHT);
+                document.add(dateDetail);
+                document.add(endDetail);
+
+                // đóng file
+                document.close();
+                JOptionPane.showMessageDialog(this, "Lưu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger("test").log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnPrintMousePressed
+
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPrintActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnThongKe;
     private javax.swing.JMenuItem itemNhap;
     private javax.swing.JMenuItem itemSua;

@@ -39,9 +39,19 @@ import com.ecommerceapp.gui.menu.MyScrollBarUI;
 import com.ecommerceapp.util.InputValidatorUtil;
 import com.ecommerceapp.util.ProductTableLoaderUtil;
 import com.ecommerceapp.util.TableSetupUtil;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Component;
 import java.awt.Font;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
@@ -53,6 +63,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -901,22 +912,97 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
             }
 
             if(this.action.equals("POST")) {
-                Long newInvoiceId = invoiceBLL.save(newInvoice);
-                if(newInvoiceId != null) {
-                    InvoiceDetailDTO invoiceDetail;
-                    for (int i = 0; i < productList.size(); ++i) 
-                    {
-                        invoiceDetail = new InvoiceDetailDTO(newInvoiceId, productList.get(i).getId(), productList.get(i).getQuantity(),
-                        productList.get(i).getQuantity() * productList.get(i).getPrice(), productList.get(i).getPrice());
-                        invoiceDetailBLL.save(invoiceDetail);
-                    }
-                    
-                    JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
-
-                } else {
-                    JOptionPane.showMessageDialog(this, "Lưu thất bại!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                BaseFont bf = null;
+                try {
+                    bf = BaseFont.createFont("c:/windows/fonts/Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                } catch (DocumentException ex) {
+                    Logger.getLogger(popUpDInvoiceDetailGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(popUpDInvoiceDetailGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                JFileChooser f = new JFileChooser();
+                f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
+                if (f.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    // save invoice
+                    Long newInvoiceId = invoiceBLL.save(newInvoice);
+                    if(newInvoiceId != null) {
+                        InvoiceDetailDTO invoiceDetail;
+                        for (int i = 0; i < productList.size(); ++i) 
+                        {
+                            invoiceDetail = new InvoiceDetailDTO(newInvoiceId, productList.get(i).getId(), productList.get(i).getQuantity(),
+                            productList.get(i).getQuantity() * productList.get(i).getPrice(), productList.get(i).getPrice());
+                            invoiceDetailBLL.save(invoiceDetail);
+                        }
+//                        JOptionPane.showMessageDialog(this, "Lưu thành công!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//                        dispose();
+                        // print pdf
+                    Document document = new Document();
+                    try {
+                        // khởi tạo một PdfWriter truyền vào document và FileOutputStream
+                        String id = newInvoiceId + "";
+                        PdfWriter.getInstance(document, new FileOutputStream(f.getSelectedFile() + "\\HD"+ id + ".pdf"));
+
+                        // mở file để thực hiện viết
+                        document.open();
+                        // thêm nội dung sử dụng add function
+                        Paragraph stars = new Paragraph("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
+                        Paragraph brand = new Paragraph("Nexus");
+                        Paragraph header = new Paragraph("Sản phẩm             SL                   Đơn giá", new com.itextpdf.text.Font(bf, 12));
+
+                        brand.setIndentationLeft(110);
+                        document.add(stars);
+                        document.add(brand);
+                        document.add(stars);
+                        document.add(header);
+                        document.add(stars);
+
+                        //Khởi tạo một table có 3 cột
+                        PdfPTable table = new PdfPTable(3);
+                        table.setTotalWidth(260);
+                        table.setLockedWidth(true);
+                        table.setHorizontalAlignment(0);
+
+                        List<ProductDTO> products = invoiceDetailBLL.findByIdInvoice(newInvoiceId);
+                        PdfPCell space = new PdfPCell(new Paragraph(" "));
+                        space.setBorder(Rectangle.NO_BORDER);
+                        for( int i = 0; i < products.size(); i++)
+                        {
+                            InvoiceDetailDTO detail = invoiceDetailBLL.findById(newInvoiceId, products.get(i).getId());
+
+                            PdfPCell data1 = new PdfPCell(new Paragraph(products.get(i).getName(), new com.itextpdf.text.Font(bf, 12)));
+                            PdfPCell data2 = new PdfPCell(new Paragraph("" + detail.getQuantity()));
+                            PdfPCell data3 = new PdfPCell(new Paragraph("" + detail.getPrice()));
+
+                            data1.setBorder(Rectangle.NO_BORDER);
+                            data2.setBorder(Rectangle.NO_BORDER);
+                            data3.setBorder(Rectangle.NO_BORDER);
+
+                            table.addCell(data1);
+                            table.addCell(data2);
+                            table.addCell(data3);
+
+                            table.addCell(space);
+                            table.addCell(space);
+                            table.addCell(space);
+                        }
+                        document.add(table);
+                        document.add(stars);
+                        document.add(new Paragraph("Tổng tiền                                     " + total, new com.itextpdf.text.Font(bf, 12)));
+                        document.add(stars);
+                        document.add(new Paragraph("         Xin cảm ơn. Hẹn gặp lại Quý khách!            ", new com.itextpdf.text.Font(bf, 12)));
+                        document.add(stars);
+                        // đóng file
+                        document.close();
+                        JOptionPane.showMessageDialog(this, "Lưu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (DocumentException e) {
+                        e.printStackTrace();
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(popUpDInvoiceDetailGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Lưu thất bại!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
             } else if(this.action.equals("PUT")) {
                 try {
 //                    newProduct.setQuantity(this.product.getQuantity());
@@ -929,6 +1015,7 @@ public class popUpInvoiceGUI extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Lưu thất bại!!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
                     e.printStackTrace();
                 }
+            }
             }
         }
     }//GEN-LAST:event_btnLuuActionPerformed
