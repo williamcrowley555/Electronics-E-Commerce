@@ -55,10 +55,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -558,7 +563,7 @@ public class PopUpPrintImportGUI extends javax.swing.JFrame {
 
             Long id = Long.parseLong(tblProduct.getValueAt(rowindex,0).toString());
             ProductDTO selected = productBLL.findById(id);
-            if (InputValidatorUtil.isVailidNumber(txtSoLuong.getText(), 1, selected.getQuantity()).isEmpty())
+            if (InputValidatorUtil.isVailidNumber(txtSoLuong.getText(), 1, 999).isEmpty())
             {
                 boolean duplicate = false;
                 for (ProductDTO product : productList)
@@ -617,7 +622,7 @@ public class PopUpPrintImportGUI extends javax.swing.JFrame {
                     }
                 }
                 headerColor(77,77,77,tblInvoice_Product);
-            } else JOptionPane.showMessageDialog(this, InputValidatorUtil.isVailidNumber(txtSoLuong.getText(), 1, selected.getQuantity()), "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else JOptionPane.showMessageDialog(this, InputValidatorUtil.isVailidNumber(txtSoLuong.getText(), 1, 999), "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }    else JOptionPane.showMessageDialog(this, "Hãy chọn 1 sản phẩm để thêm", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -682,11 +687,9 @@ public class PopUpPrintImportGUI extends javax.swing.JFrame {
                     Document document = new Document();
                     try {
                         // khởi tạo một PdfWriter truyền vào document và FileOutputStream
-                        LocalDate today = LocalDate.now();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                        today.format(formatter);
-
-                        PdfWriter.getInstance(document, new FileOutputStream(f.getSelectedFile() + "\\NhapHang"+ today.toString() + ".pdf"));
+                        Date date = new Date();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss") ;
+                        PdfWriter.getInstance(document, new FileOutputStream(f.getSelectedFile() + "\\NhapHang"+ dateFormat.format(date)+ ".pdf"));
 
                         // mở file để thực hiện viết
                         document.open();
@@ -740,7 +743,7 @@ public class PopUpPrintImportGUI extends javax.swing.JFrame {
 
                         document.add(table);
 
-                        Paragraph dateDetail = new Paragraph("Ngày "+today.getDayOfMonth() + " tháng " + today.getMonthValue() +" năm " + today.getYear() + "                 ", new com.itextpdf.text.Font(bf, 12));
+                        Paragraph dateDetail = new Paragraph("Ngày " + date.getDate() + " tháng " + (date.getMonth()+1) +" năm " + (date.getYear() + 1900) + "                 ", new com.itextpdf.text.Font(bf, 12));
                         Paragraph endDetail = new Paragraph("Người lập giấy                          ", new com.itextpdf.text.Font(bf, 12));
 
                         dateDetail.setAlignment(Element.ALIGN_RIGHT);

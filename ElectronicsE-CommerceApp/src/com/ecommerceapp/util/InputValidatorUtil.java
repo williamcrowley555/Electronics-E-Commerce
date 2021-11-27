@@ -172,12 +172,12 @@ public class InputValidatorUtil {
         Integer num = Integer.parseInt(number);
         if(min != null) {
             if(num < min) {
-                return "Số nhập vào tối thiểu là " + min;
+                return "Số lượng sản phẩm nhập vào tối thiểu là " + min;
             }
         }
         if(max != null) {
             if(num > max) {
-                return "Số nhập vào tối đa là " + max;
+                return "Số lượng sản phẩm nhập vào tối đa là " + max;
             }
         }
         return "";
